@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import { useOktaAuth } from '@okta/okta-react';
 
 import RenderHomePage from './RenderHomePage';
+import { setCurrentUser } from '../../../redux/users/userActions';
 
 function HomeContainer({ LoadingComponent }) {
+  const dispatch = useDispatch();
   const { authState, authService } = useOktaAuth();
   const [userInfo, setUserInfo] = useState(null);
   // eslint-disable-next-line
@@ -11,6 +14,12 @@ function HomeContainer({ LoadingComponent }) {
 
   useEffect(() => {
     let isSubscribed = true;
+
+    console.log(
+      JSON.parse(localStorage.getItem('okta-token-storage'))?.idToken?.value
+    );
+
+    dispatch(setCurrentUser());
 
     memoAuthService
       .getUser()
