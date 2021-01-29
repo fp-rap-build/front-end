@@ -1,5 +1,5 @@
 module.exports = {
-  '@primary-color': '#ec3944',
+  '@pmodule.exportsrimary-color': '#ec3944',
   '@link-color': ' #ec3944',
   '@success-color': '#52c41a',
   '@warning-color': '#faad14',
