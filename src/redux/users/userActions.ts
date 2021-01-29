@@ -2,10 +2,6 @@ import { axiosWithAuth } from '../../api/axiosWithAuth';
 
 export const setCurrentUser = () => async dispatch => {
   dispatch({ type: 'SET_LOADING', payload: true });
-  dispatch({
-    type: 'SET_CURRENT_USER',
-    payload: { email: 'test', name: 'test' },
-  });
   try {
     let currentUser = await axiosWithAuth()
       .get('/users/me')
