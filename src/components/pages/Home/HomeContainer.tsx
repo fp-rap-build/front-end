@@ -12,6 +12,10 @@ function HomeContainer({ LoadingComponent }) {
   // eslint-disable-next-line
   const [memoAuthService] = useMemo(() => [authService], []);
 
+  const fetchCurrentUser = () => {
+    dispatch(setCurrentUser());
+  };
+
   useEffect(() => {
     let isSubscribed = true;
 
@@ -19,7 +23,7 @@ function HomeContainer({ LoadingComponent }) {
       JSON.parse(localStorage.getItem('okta-token-storage'))?.idToken?.value
     );
 
-    dispatch(setCurrentUser());
+    fetchCurrentUser();
 
     memoAuthService
       .getUser()
@@ -35,6 +39,7 @@ function HomeContainer({ LoadingComponent }) {
         return setUserInfo(null);
       });
     return () => (isSubscribed = false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memoAuthService]);
 
   return (
