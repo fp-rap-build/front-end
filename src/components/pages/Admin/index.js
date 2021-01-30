@@ -8,8 +8,6 @@ import { axiosWithAuth } from '../../../api';
 
 import { tableIcons } from '../../../utils/tableIcons';
 
-import DeleteIcon from '@material-ui/icons/Delete';
-
 export default function Index() {
   const [isFetching, setIsFetching] = useState(false);
   const [state, setState] = useState({
@@ -46,6 +44,7 @@ export default function Index() {
 
   useEffect(() => {
     fetchUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -65,7 +64,7 @@ export default function Index() {
                 setState({
                   ...state,
                   data: state.data.map(row => {
-                    if (row.id == oldData.id) {
+                    if (row.id === oldData.id) {
                       return newData;
                     }
                     return row;

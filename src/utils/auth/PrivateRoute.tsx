@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { SecureRoute } from '@okta/okta-react';
 import { Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';

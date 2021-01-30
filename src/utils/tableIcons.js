@@ -11,16 +11,13 @@ import Edit from '@material-ui/icons/Edit';
 import FilterList from '@material-ui/icons/FilterList';
 import FirstPage from '@material-ui/icons/FirstPage';
 import LastPage from '@material-ui/icons/LastPage';
-import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 export const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
-  Delete: forwardRef((props, ref) => <DeleteIcon {...props} ref={ref} />),
   Check: forwardRef((props, ref) => (
     <Check {...props} ref={ref} style={{ color: 'green' }} />
   )),
