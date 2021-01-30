@@ -8,6 +8,8 @@ import { axiosWithAuth } from '../../../api';
 
 import { tableIcons } from '../../../utils/tableIcons';
 
+import DeleteIcon from '@material-ui/icons/Delete';
+
 export default function Index() {
   const [state, setState] = useState({
     columns: [
@@ -39,7 +41,27 @@ export default function Index() {
         <MaterialTable
           options={{
             exportButton: true,
+            actionsColumnIndex: -1,
           }}
+          actions={[
+            rowData => ({
+              icon: DeleteIcon,
+              tooltip: 'Delete User',
+              onClick: (event, rowData) => {
+                let confirmed = window.confirm(
+                  'Are you sure you want to delete this user'
+                );
+
+                if (!confirmed) return;
+
+                setState({
+                  ...state,
+                  data: state.data.filter(row => row.id !== rowData.id),
+                });
+              },
+              disabled: rowData.role == 'admin',
+            }),
+          ]}
           icons={tableIcons}
           title="Users"
           columns={state.columns}

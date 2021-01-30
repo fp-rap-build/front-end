@@ -16,9 +16,11 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 export const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+  Delete: forwardRef((props, ref) => <DeleteIcon {...props} ref={ref} />),
   Check: forwardRef((props, ref) => (
     <Check {...props} ref={ref} style={{ color: 'green' }} />
   )),
