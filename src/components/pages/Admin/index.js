@@ -15,8 +15,17 @@ export default function Index() {
     columns: [
       { title: 'First', field: 'firstName' },
       { title: 'Last ', field: 'lastName' },
-      { title: 'email', field: 'email', type: 'date' },
-      { title: 'role', field: 'role' },
+      { title: 'email', field: 'email', type: 'email' },
+      {
+        title: 'role',
+        field: 'role',
+        lookup: {
+          admin: 'admin',
+          tenant: 'tenant',
+          landlord: 'landlord',
+          pending: 'pending',
+        },
+      },
     ],
     data: [],
   });
@@ -41,27 +50,33 @@ export default function Index() {
         <MaterialTable
           options={{
             exportButton: true,
-            actionsColumnIndex: -1,
           }}
-          actions={[
-            rowData => ({
-              icon: DeleteIcon,
-              tooltip: 'Delete User',
-              onClick: (event, rowData) => {
-                let confirmed = window.confirm(
-                  'Are you sure you want to delete this user'
-                );
+          editable={{
+            isDeletable: rowData => rowData.role !== 'admin',
+            isEditable: rowData => rowData.role !== 'admin',
+            onRowUpdate: (newData, oldData) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  alert('Hello');
+                  resolve();
+                }, 1000);
+              }),
+            onRowDelete: oldData =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  const index = oldData.tableData.id;
 
-                if (!confirmed) return;
-
-                setState({
-                  ...state,
-                  data: state.data.filter(row => row.id !== rowData.id),
-                });
-              },
-              disabled: rowData.role == 'admin',
-            }),
-          ]}
+                  resolve();
+                }, 1000);
+              }),
+            onRowAdd: newData =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  setState({ ...state, data: [...state.data, newData] });
+                  resolve();
+                }, 1000);
+              }),
+          }}
           icons={tableIcons}
           title="Users"
           columns={state.columns}
