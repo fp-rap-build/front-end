@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useOktaAuth } from '@okta/okta-react';
 
 import RenderHomePage from './RenderHomePage';
@@ -7,6 +7,7 @@ import { setCurrentUser } from '../../../redux/users/userActions';
 
 function HomeContainer({ LoadingComponent }) {
   const dispatch = useDispatch();
+  const isLoading = useSelector(state => state.global.isLoading);
   const { authState, authService } = useOktaAuth();
   const [userInfo, setUserInfo] = useState(null);
   // eslint-disable-next-line
@@ -18,10 +19,6 @@ function HomeContainer({ LoadingComponent }) {
 
   useEffect(() => {
     let isSubscribed = true;
-
-    console.log(
-      JSON.parse(localStorage.getItem('okta-token-storage'))?.idToken?.value
-    );
 
     fetchCurrentUser();
 
@@ -44,8 +41,11 @@ function HomeContainer({ LoadingComponent }) {
 
   return (
     <>
-      {authState.isAuthenticated && !userInfo && (
-        <LoadingComponent message="Fetching user profile..." />
+      {isLoading && (
+        <div>
+          {alert('test')}
+          <LoadingComponent message="Fetching user profile..." />
+        </div>
       )}
       {authState.isAuthenticated && userInfo && (
         <RenderHomePage userInfo={userInfo} authService={authService} />

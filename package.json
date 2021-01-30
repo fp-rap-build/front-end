@@ -18,7 +18,7 @@
     "axios": "^0.21.1",
     "craco-less": "^1.17.0",
     "install": "^0.13.0",
-    "material-table": "^1.67.0",
+    "material-table": "^1.69.2",
     "npm": "^6.14.11",
     "plotly.js": "^1.54.6",
     "react": "^16.13.1",

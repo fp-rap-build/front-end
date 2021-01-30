@@ -14,7 +14,7 @@ export default function Index() {
     columns: [
       { title: 'First', field: 'firstName' },
       { title: 'Last ', field: 'lastName' },
-      { title: 'email', field: 'email', type: 'email', editable: 'never' },
+      { title: 'email', field: 'email', type: 'string', editable: 'never' },
       {
         title: 'role',
         field: 'role',
