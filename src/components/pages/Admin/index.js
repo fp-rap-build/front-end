@@ -11,11 +11,12 @@ import { tableIcons } from '../../../utils/tableIcons';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 export default function Index() {
+  const [isFetching, setIsFetching] = useState(false);
   const [state, setState] = useState({
     columns: [
       { title: 'First', field: 'firstName' },
       { title: 'Last ', field: 'lastName' },
-      { title: 'email', field: 'email', type: 'email' },
+      { title: 'email', field: 'email', type: 'email', editable: 'never' },
       {
         title: 'role',
         field: 'role',
@@ -31,12 +32,15 @@ export default function Index() {
   });
 
   const fetchUsers = async () => {
+    setIsFetching(true);
     try {
       let res = await axiosWithAuth().get('/users');
       setState({ ...state, data: res.data });
     } catch (error) {
       console.log(error);
       alert('error');
+    } finally {
+      setIsFetching(false);
     }
   };
 
@@ -48,6 +52,7 @@ export default function Index() {
     <div className={styles.container}>
       <div className={styles.table}>
         <MaterialTable
+          isLoading={isFetching}
           options={{
             exportButton: true,
           }}
@@ -57,22 +62,15 @@ export default function Index() {
             onRowUpdate: (newData, oldData) =>
               new Promise((resolve, reject) => {
                 setTimeout(() => {
-                  alert('Hello');
-                  resolve();
-                }, 1000);
-              }),
-            onRowDelete: oldData =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  const index = oldData.tableData.id;
-
-                  resolve();
-                }, 1000);
-              }),
-            onRowAdd: newData =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  setState({ ...state, data: [...state.data, newData] });
+                  setState({
+                    ...state,
+                    data: state.data.map(row => {
+                      if (row.id == oldData.id) {
+                        return newData;
+                      }
+                      return row;
+                    }),
+                  });
                   resolve();
                 }, 1000);
               }),
