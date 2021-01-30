@@ -49,4 +49,15 @@ const getProfileData = authState => {
   }
 };
 
-export { sleep, getExampleData, getProfileData, getDSData };
+const axiosWithAuth = () => {
+  const token = JSON.parse(localStorage.getItem('okta-token-storage'))?.idToken
+    ?.value;
+  return axios.create({
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    baseURL: process.env.REACT_APP_API_URI,
+  });
+};
+
+export { sleep, getExampleData, getProfileData, getDSData, axiosWithAuth };
