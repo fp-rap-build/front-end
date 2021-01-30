@@ -61,18 +61,26 @@ export default function Index() {
             isEditable: rowData => rowData.role !== 'admin',
             onRowUpdate: (newData, oldData) =>
               new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  setState({
-                    ...state,
-                    data: state.data.map(row => {
-                      if (row.id == oldData.id) {
-                        return newData;
-                      }
-                      return row;
-                    }),
-                  });
-                  resolve();
-                }, 1000);
+                resolve();
+                setState({
+                  ...state,
+                  data: state.data.map(row => {
+                    if (row.id == oldData.id) {
+                      return newData;
+                    }
+                    return row;
+                  }),
+                });
+
+                const updatedUser = {
+                  firstName: newData.firstName,
+                  lastName: newData.lastName,
+                  role: newData.role,
+                };
+
+                axiosWithAuth()
+                  .put(`/users/${oldData.id}`, updatedUser)
+                  .catch(err => alert('Failed to update user'));
               }),
           }}
           icons={tableIcons}
