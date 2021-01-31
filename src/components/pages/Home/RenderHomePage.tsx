@@ -2,31 +2,32 @@ import React from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
+
+import TenantHome from './components/TenantHome';
+import LandlordHome from './components/LandlordHome';
+import styles from '../../../styles/pages/home.module.css';
 
 function RenderHomePage(props) {
   const { authService } = props;
 
   const currentUser = useSelector(state => state.user.currentUser);
 
+  const history = useHistory();
+
+  //Evt Handler to send to form
+  const routeToForm = () => {
+    history.push('/request');
+  };
+
   switch (currentUser.role) {
     case 'admin':
       return <Redirect to="/admin" />;
+    case 'tenant':
+      return <TenantHome currentUser={currentUser} />;
   }
 
-  return (
-    <div>
-      <h1>
-        Hi {currentUser.firstName} Welcome to the Family Promise Rental
-        Assistance Program
-      </h1>
-      <h1>your role is {currentUser.role} </h1>
-      <div>
-        <p>
-          <button onClick={() => authService.logout()}>Logout</button>
-        </p>
-      </div>
-    </div>
-  );
+  //Add landlordHome to switch and ditch catch-all return here??
+  return <LandlordHome currentUser={currentUser} />;
 }
 export default RenderHomePage;
