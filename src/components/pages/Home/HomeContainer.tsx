@@ -43,8 +43,7 @@ function HomeContainer({ LoadingComponent }) {
     <>
       {isLoading && (
         <div>
-          {alert('test')}
-          <LoadingComponent message="Fetching user profile..." />
+          <LoadingComponent />
         </div>
       )}
       {authState.isAuthenticated && userInfo && (
