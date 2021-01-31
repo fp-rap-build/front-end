@@ -42,7 +42,7 @@ function HomeContainer({ LoadingComponent }) {
   return (
     <>
       {isLoading && <LoadingComponent />}
-      {authState.isAuthenticated && userInfo && (
+      {authState.isAuthenticated && !isLoading && (
         <RenderHomePage userInfo={userInfo} authService={authService} />
       )}
     </>
