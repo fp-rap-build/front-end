@@ -21,16 +21,24 @@ const LoginContainer = () => {
       // add your custom logo to your signing/register widget here.
       i18n: {
         en: {
-          'primaryauth.title': 'Welcome to Labs Basic SPA Please sign in',
+          'primaryauth.title': 'Family Promise RAP',
           // change title for your app
         },
       },
       authParams: {
+        responseType: 'id_token',
         pkce,
         issuer,
         display: 'page',
         scopes,
       },
+      idpDisplay: 'PRIMARY',
+      idps: [
+        {
+          type: 'FACEBOOK',
+          id: '0oa4rsjhl410yClnx5d6',
+        },
+      ],
     });
 
     widget.renderEl(
