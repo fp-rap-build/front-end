@@ -1,9 +1,15 @@
 import React from 'react';
 
-export default function index() {
+import UsersTable from './components/UsersTable';
+
+import styles from '../../../styles/pages/admin.module.css';
+
+export default function Index() {
   return (
-    <div>
-      <h1>Welcome back admin</h1>
+    <div className={styles.container}>
+      <div className={styles.table}>
+        <UsersTable />
+      </div>
     </div>
   );
 }

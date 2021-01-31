@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
-
-import { useSelector } from 'react-redux';
+import React from 'react';
 
 import { useHistory } from 'react-router-dom';
 
@@ -10,8 +8,6 @@ import { useOktaAuth } from '@okta/okta-react';
 
 function Navbar() {
   const { authState, authService } = useOktaAuth();
-
-  const currentUser = useSelector(state => state.user.currentUser);
 
   const redirectToHome = () => {
     if (authState.isAuthenticated) {
@@ -46,13 +42,5 @@ function Navbar() {
     </nav>
   );
 }
-
-const AdminActions = () => {
-  return (
-    <>
-      <li>Users</li>
-    </>
-  );
-};
 
 export default Navbar;

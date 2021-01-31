@@ -1,14 +1,15 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
-function LoadingComponent(props) {
-  const { message } = props;
+import styles from '../../styles/common/loader.module.css';
 
-  return <div>{message}</div>;
+const antIcon = <LoadingOutlined style={{ fontSize: 34 }} spin />;
+
+export default function LoadingComponent() {
+  return (
+    <div className={styles.container}>
+      <Spin indicator={antIcon} />
+    </div>
+  );
 }
-
-export default LoadingComponent;
-
-LoadingComponent.propTypes = {
-  message: PropTypes.string.isRequired,
-};
