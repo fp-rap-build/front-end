@@ -3,7 +3,7 @@ const config = {
   redirectUri: window.location.origin + '/implicit/callback',
   clientId: process.env.REACT_APP_CLIENT_ID,
   pkce: true,
-  scopes: ['openid', 'email', 'profile'],
+  scopes: ['email', 'openid', 'profile'],
 };
 
 export { config };
