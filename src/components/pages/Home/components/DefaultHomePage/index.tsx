@@ -8,7 +8,8 @@ import styles from '../../../../../styles/pages/home.module.css';
 import { Button } from 'antd';
 
 import LandlordBlurb from './components/LandlordBlurb';
-import TenantBlurb from './components/TenantBlurb';
+
+import RentalAssistanceProgramBlurb from './components/RentalAssistanceProgramBlurb';
 
 export default function Index() {
   const history = useHistory();
@@ -22,12 +23,16 @@ export default function Index() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.blurb}>
+      <div className={styles.info}>
         <h1>
           Hi {currentUser.firstName}, Welcome to the Family Promise Rental
           Assistance Program
         </h1>
-        {currentUser.role === 'landlord' ? <LandlordBlurb /> : <TenantBlurb />}
+        {currentUser.role === 'landlord' ? (
+          <LandlordBlurb />
+        ) : (
+          <RentalAssistanceProgramBlurb />
+        )}
       </div>
 
       <p>

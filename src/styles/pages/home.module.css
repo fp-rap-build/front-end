@@ -8,6 +8,12 @@
     gap: 2rem;
 }
 
-.blurb{
+.info{
     width: 75%;
+}
+
+@media(max-width: 500px){
+    .info{
+        width: 95%;
+    }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function TenantBlurb() {
+export default function RentalAssistanceProgramBlurb() {
   return (
     <div>
       <h2>About the Rental Assitance Program</h2>
