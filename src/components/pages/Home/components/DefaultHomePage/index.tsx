@@ -4,6 +4,9 @@ import { useSelector } from 'react-redux';
 
 import { useHistory } from 'react-router-dom';
 import styles from '../../../../../styles/pages/home.module.css';
+
+import { Button } from 'antd';
+
 import LandlordBlurb from './components/LandlordBlurb';
 import TenantBlurb from './components/TenantBlurb';
 
@@ -19,13 +22,13 @@ export default function Index() {
 
   return (
     <div className={styles.container}>
-      <h1>
-        Hi {currentUser.firstName}, Welcome to the Family Promise Rental
-        Assistance Program
-      </h1>
-
-      {currentUser.role === 'landlord' && <LandlordBlurb />}
-      {currentUser.role === 'tenant' && <TenantBlurb />}
+      <div className={styles.blurb}>
+        <h1>
+          Hi {currentUser.firstName}, Welcome to the Family Promise Rental
+          Assistance Program
+        </h1>
+        {currentUser.role === 'landlord' ? <LandlordBlurb /> : <TenantBlurb />}
+      </div>
 
       <p>
         {currentUser.isRequestingAssistance ? (
@@ -34,9 +37,9 @@ export default function Index() {
             Current Application Status <span>{currentUser.requestStatus}</span>
           </p>
         ) : (
-          <button onClick={routeToForm}>
-            Apply for Rental Assistance Program
-          </button>
+          <Button type="primary" size="large" onClick={routeToForm}>
+            Apply for Rental Assistance
+          </Button>
         )}
       </p>
     </div>

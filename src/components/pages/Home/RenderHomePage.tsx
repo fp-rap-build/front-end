@@ -16,8 +16,6 @@ function RenderHomePage(props) {
   switch (currentUser.role) {
     case 'admin':
       return <Redirect to="/admin" />;
-    case 'pending':
-      return <h1>Please contact an admin to get a role </h1>;
     default:
       return <DefaultHomePage />;
   }
