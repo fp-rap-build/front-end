@@ -1,8 +1,16 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 
-const LandLordHome = ({ currentUser }) => {
+import { useSelector } from 'react-redux';
+
+import { useHistory } from 'react-router-dom';
+import styles from '../../../../../styles/pages/home.module.css';
+import LandlordBlurb from './components/LandlordBlurb';
+import TenantBlurb from './components/TenantBlurb';
+
+export default function Index() {
   const history = useHistory();
+
+  const currentUser = useSelector(state => state.user.currentUser);
 
   //Evt Handler to send to form
   const routeToForm = () => {
@@ -10,28 +18,15 @@ const LandLordHome = ({ currentUser }) => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1>
         Hi {currentUser.firstName}, Welcome to the Family Promise Rental
         Assistance Program
       </h1>
-      <div>your role is {currentUser.role} </div>
-      <div>
-        Landlord features (from trello):
-        <ul>
-          <li>
-            Submit name, contact info, property info, and tenant info (via
-            profile portal?)
-          </li>
-          <li>Submit Request for rent assistance (via form)</li>
-          <li>See status of Request</li>
-          <li>See Requests for info from my tenants</li>
-          <li>
-            Question?? are RFI's from tenants standard or are these custom
-            messages that need to be handled in BE?
-          </li>
-        </ul>
-      </div>
+
+      {currentUser.role === 'landlord' && <LandlordBlurb />}
+      {currentUser.role === 'tenant' && <TenantBlurb />}
+
       <p>
         {currentUser.isRequestingAssistance ? (
           <p>
@@ -46,6 +41,4 @@ const LandLordHome = ({ currentUser }) => {
       </p>
     </div>
   );
-};
-
-export default LandLordHome;
+}
