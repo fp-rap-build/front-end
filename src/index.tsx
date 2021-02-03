@@ -17,6 +17,8 @@ import { HomePage } from './components/pages/Home';
 
 import Admin from './components/pages/Admin';
 
+import Apply from './components/pages/Apply';
+
 import { config } from './utils/oktaConfig';
 import store from './redux/store';
 import { Provider } from 'react-redux';
@@ -63,6 +65,12 @@ function RAP() {
           {/* Any routes you need secured by role should be registered as PrivateRoutes */}
 
           <PrivateRoute path="/admin" roles={['admin']} component={Admin} />
+          <PrivateRoute
+            path="/apply"
+            roles={['pending', 'tenant', 'landlord']}
+            component={Apply}
+          />
+
           <Route component={NotFoundPage} />
         </Switch>
       </Layout>

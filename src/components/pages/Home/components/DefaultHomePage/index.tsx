@@ -18,7 +18,7 @@ export default function Index() {
 
   //Evt Handler to send to form
   const routeToForm = () => {
-    history.push('/request');
+    history.push('/apply');
   };
 
   return (
