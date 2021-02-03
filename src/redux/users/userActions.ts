@@ -15,3 +15,8 @@ export const setCurrentUser = () => async dispatch => {
     dispatch(setLoading(false));
   }
 };
+
+export const setCurrentUserStatic = (user, history) => {
+  history.push('/');
+  return { type: 'SET_CURRENT_USER', payload: user };
+};
