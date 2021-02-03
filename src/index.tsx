@@ -25,6 +25,7 @@ import LoadingComponent from './components/common/LoadingComponent';
 import PrivateRoute from './utils/auth/PrivateRoute';
 
 import Layout from './components/Layout';
+import RequestsTable from './components/pages/Admin/components/RequestsTable';
 
 ReactDOM.render(
   <Router>
@@ -63,6 +64,11 @@ function RAP() {
           {/* Any routes you need secured by role should be registered as PrivateRoutes */}
 
           <PrivateRoute path="/admin" roles={['admin']} component={Admin} />
+          <PrivateRoute
+            path="/requests"
+            roles={['admin']}
+            component={RequestsTable}
+          />
           <Route component={NotFoundPage} />
         </Switch>
       </Layout>
