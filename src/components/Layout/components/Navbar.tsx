@@ -28,7 +28,7 @@ function Navbar() {
 
   const redirectToRequestsPage = () => {
     return (
-      <Link to="admin/requests">
+      <Link to="/requests">
         <h2>Requests</h2>
       </Link>
     );
