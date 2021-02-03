@@ -45,11 +45,7 @@ function Navbar() {
       <div onClick={redirectToHome} className={styles.logo}>
         <h2>RAP</h2>
       </div>
-      <div>
-        {currentUser.role === 'admin'
-          ? redirectToRequestsPage()
-          : 'You cant see this'}
-      </div>
+      <div>{currentUser.role === 'admin' ? redirectToRequestsPage() : ''}</div>
       <ul className={styles.navActions}>
         {authState.isAuthenticated ? (
           <li onClick={handleLogout}>Logout</li>
