@@ -8,9 +8,6 @@ export default function Index() {
   return (
     <div className={styles.container}>
       <div className={styles.table}>
-        <Route exact path="admin/requests">
-          <RequestsTable />
-        </Route>
         <UsersTable />
       </div>
     </div>
