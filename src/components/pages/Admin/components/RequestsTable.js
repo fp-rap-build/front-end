@@ -11,7 +11,17 @@ export default function RequestsTable() {
     columns: [
       { title: 'First', field: 'firstName' },
       { title: 'Last ', field: 'lastName' },
-      { title: 'Request Status', field: 'request_status' },
+      {
+        title: 'Request Status',
+        field: 'request_status',
+        lookup: {
+          received: 'Received',
+          in_review: 'In Review',
+          pending: 'Pending',
+          approved: 'Approved',
+          denied: 'Denied',
+        },
+      },
       { title: 'Requesting Assistance', field: 'is_requesting_assistance' },
     ],
     data: [],
