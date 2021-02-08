@@ -12,7 +12,7 @@ const INITIAL_VALUES = {
   email: '',
   password: 'familypromise',
   role: 'account manager',
-  organization: '',
+  organization_id: 1,
   // organization: 'Family Promise of Spokane',
   // role: 'account manager',
 };
@@ -31,22 +31,29 @@ const AcctMgrForm = () => {
     }
   };
 
+  useEffect(() => {
+    fetchOrgs();
+  }, []);
+
+  //Evt Handlers
   const onChange = e => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
 
   const onOrgChange = value => {
-    setFormValues({ ...formValues, organization: value });
+    setFormValues({ ...formValues, organization_id: value });
   };
 
-  const handleSumbit = e => {
-    const oktaID = createAcctMgr(INITIAL_VALUES);
-    console.log(oktaID);
+  const handleSumbit = async e => {
+    e.preventDefault();
+    try {
+      const oktaID = await createAcctMgr(formValues);
+      console.log(oktaID);
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
   };
-
-  useEffect(() => {
-    fetchOrgs();
-  }, []);
 
   return (
     <div>
@@ -93,9 +100,7 @@ const AcctMgrForm = () => {
       >
         <Select onChange={onOrgChange} placeholder="Select an Organization">
           {orgs.map(org => (
-            <Select.Option value={org.organization}>
-              {org.organization}
-            </Select.Option>
+            <Select.Option value={org.id}>{org.organization}</Select.Option>
           ))}
         </Select>
       </Form.Item>
