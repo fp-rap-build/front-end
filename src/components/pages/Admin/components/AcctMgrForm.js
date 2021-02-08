@@ -8,10 +8,10 @@ import { axiosWithAuth } from '../../../../api/axiosWithAuth';
 const INITIAL_VALUES_DEV = {
   firstName: 'Program',
   lastName: 'Manager',
-  email: 'pm@gmail.com',
+  email: 'pmtest6@gmail.com',
   password: 'familypromise',
-  organization: 'Family Promise of Spokane',
-  role: 'account manager',
+  // organization: 'Family Promise of Spokane',
+  // role: 'account manager',
 };
 
 const AcctMgrForm = () => {
@@ -29,7 +29,8 @@ const AcctMgrForm = () => {
   };
 
   const handleSumbit = e => {
-    createAcctMgr(INITIAL_VALUES_DEV);
+    const oktaID = createAcctMgr(INITIAL_VALUES_DEV);
+    console.log(oktaID);
   };
 
   useEffect(() => {
