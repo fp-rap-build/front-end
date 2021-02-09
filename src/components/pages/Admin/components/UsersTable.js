@@ -45,49 +45,51 @@ export default function UsersTable() {
   }, []);
 
   return (
-    <MaterialTable
-      isLoading={isFetching}
-      options={{
-        // Allows users to export the data as a CSV file
-        exportButton: true,
-      }}
-      editable={{
-        // Disable deleting and editing if the user is an Admin
+    <>
+      <MaterialTable
+        isLoading={isFetching}
+        options={{
+          // Allows users to export the data as a CSV file
+          exportButton: true,
+        }}
+        editable={{
+          // Disable deleting and editing if the user is an Admin
 
-        isDeletable: rowData => rowData.role !== 'admin',
-        isEditable: rowData => rowData.role !== 'admin',
-        onRowUpdate: (newData, oldData) =>
-          new Promise((resolve, reject) => {
-            resolve();
-            // Set the state first to instantly update the table
+          isDeletable: rowData => rowData.role !== 'admin',
+          isEditable: rowData => rowData.role !== 'admin',
+          onRowUpdate: (newData, oldData) =>
+            new Promise((resolve, reject) => {
+              resolve();
+              // Set the state first to instantly update the table
 
-            setState({
-              ...state,
-              data: state.data.map(row => {
-                if (row.id === oldData.id) {
-                  return newData;
-                }
-                return row;
-              }),
-            });
+              setState({
+                ...state,
+                data: state.data.map(row => {
+                  if (row.id === oldData.id) {
+                    return newData;
+                  }
+                  return row;
+                }),
+              });
 
-            // Persist those changes
+              // Persist those changes
 
-            const updatedUser = {
-              firstName: newData.firstName,
-              lastName: newData.lastName,
-              role: newData.role,
-            };
+              const updatedUser = {
+                firstName: newData.firstName,
+                lastName: newData.lastName,
+                role: newData.role,
+              };
 
-            axiosWithAuth()
-              .put(`/users/${oldData.id}`, updatedUser)
-              .catch(err => alert('Failed to update user'));
-          }),
-      }}
-      icons={tableIcons}
-      title="Users"
-      columns={state.columns}
-      data={state.data}
-    />
+              axiosWithAuth()
+                .put(`/users/${oldData.id}`, updatedUser)
+                .catch(err => alert('Failed to update user'));
+            }),
+        }}
+        icons={tableIcons}
+        title="Users"
+        columns={state.columns}
+        data={state.data}
+      />
+    </>
   );
 }
