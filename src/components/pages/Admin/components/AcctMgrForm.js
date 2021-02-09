@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Form, Input, Select, Button } from 'antd';
 
 import styles from '../../../../styles/pages/create.module.css';
@@ -20,6 +21,8 @@ const INITIAL_VALUES = {
 const AcctMgrForm = () => {
   const [formValues, setFormValues] = useState(INITIAL_VALUES);
   const [orgs, setOrgs] = useState([]);
+
+  const history = useHistory();
 
   const fetchOrgs = async () => {
     try {
@@ -46,7 +49,7 @@ const AcctMgrForm = () => {
   const handleSumbit = async e => {
     const msg = await createAcctMgr(formValues);
     setFormValues(INITIAL_VALUES);
-    //Lets Push them back to home page after this
+    history.push('/admin');
     alert(msg);
   };
 
