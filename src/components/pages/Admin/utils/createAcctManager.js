@@ -1,17 +1,17 @@
 import axios from 'axios';
 import { axiosWithAuth } from '../../../../api/axiosWithAuth';
 
-//This component is working and it returns the Okta User ID
 const okta_register_url =
   'https://dev-79515564.okta.com/api/v1/registration/reg4nxrwnAoXBkKJ75d6/register';
 const okta_activate_url = 'https://dev-79515564.okta.com/api/v1/authn';
 
 const createAcctMgr = async user => {
-  const { firstName, lastName, email, password, role, organization_id } = user;
+  const { firstName, lastName, email, role, organization_id } = user;
 
   const oktaObj = {
     email: email,
-    password: password,
+    //Default password for new Acct Mgr's
+    password: 'familypromise',
     firstName: firstName,
     lastName: lastName,
   };
@@ -26,14 +26,19 @@ const createAcctMgr = async user => {
   };
 
   try {
+    //POST to registration URL - returning activation token
     const activationToken = await axios
       .post(okta_register_url, { userProfile: oktaObj })
       .then(res => res.data.activationToken);
+    //POST to activation url w/ activation token from registration
+    //Returns our users - ID -- user is succesfully created
     const oktaID = await axios
       .post(okta_activate_url, { token: activationToken })
       .then(res => res.data._embedded.user.id);
+
     newAcctMgr.id = oktaID;
-    const createdMgr = await axiosWithAuth().post('/user', newAcctMgr);
+    //Post new user to app's DB
+    await axiosWithAuth().post('/user', newAcctMgr);
     return `Succesfully created Account Manager ${firstName} ${lastName}`;
   } catch (error) {
     alert(error);
