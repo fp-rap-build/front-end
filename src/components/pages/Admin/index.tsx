@@ -12,7 +12,11 @@ export default function Index() {
     <div className={styles.container}>
       <div className={styles.table}>
         <UsersTable />
-        <Button type="primary" onClick={() => history.push('/create')}>
+        <Button
+          type="primary"
+          className={styles.button}
+          onClick={() => history.push('/create')}
+        >
           Create Account Manager
         </Button>
       </div>
