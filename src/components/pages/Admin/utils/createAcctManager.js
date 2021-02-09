@@ -9,7 +9,7 @@ const okta_activate_url = 'https://dev-79515564.okta.com/api/v1/authn';
 const createAcctMgr = async user => {
   const { firstName, lastName, email, password, role, organization_id } = user;
 
-  const uktaObj = {
+  const oktaObj = {
     email: email,
     password: password,
     firstName: firstName,
@@ -27,14 +27,14 @@ const createAcctMgr = async user => {
 
   try {
     const activationToken = await axios
-      .post(okta_register_url, { userProfile: uktaObj })
+      .post(okta_register_url, { userProfile: oktaObj })
       .then(res => res.data.activationToken);
     const oktaID = await axios
       .post(okta_activate_url, { token: activationToken })
       .then(res => res.data._embedded.user.id);
     newAcctMgr.id = oktaID;
     const createdMgr = await axiosWithAuth().post('/user', newAcctMgr);
-    return createdMgr;
+    return `Succesfully created Account Manager ${firstName} ${lastName}`;
   } catch (error) {
     alert(error);
     console.log(error);

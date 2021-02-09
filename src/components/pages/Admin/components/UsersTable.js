@@ -5,8 +5,6 @@ import MaterialTable from 'material-table';
 import { tableIcons } from '../../../../utils/tableIcons';
 import { axiosWithAuth } from '../../../../api';
 
-import AcctMgrForm from './AcctMgrForm';
-
 export default function UsersTable() {
   const [isFetching, setIsFetching] = useState(false);
   const [state, setState] = useState({
@@ -92,7 +90,6 @@ export default function UsersTable() {
         columns={state.columns}
         data={state.data}
       />
-      <AcctMgrForm />
     </>
   );
 }

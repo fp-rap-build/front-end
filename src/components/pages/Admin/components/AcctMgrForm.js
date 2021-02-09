@@ -45,8 +45,11 @@ const AcctMgrForm = () => {
     setFormValues({ ...formValues, organization_id: value });
   };
 
-  const handleSumbit = e => {
-    createAcctMgr(formValues);
+  const handleSumbit = async e => {
+    const msg = await createAcctMgr(formValues);
+    setFormValues(INITIAL_VALUES);
+    //Lets Push them back to home page after this
+    alert(msg);
   };
 
   return (
