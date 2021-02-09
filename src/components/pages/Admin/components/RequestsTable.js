@@ -22,7 +22,14 @@ export default function RequestsTable() {
           denied: 'Denied',
         },
       },
-      { title: 'Requesting Assistance', field: 'is_requesting_assistance' },
+      {
+        title: 'Requesting Assistance',
+        field: 'is_requesting_assistance',
+        lookup: {
+          true: 'true',
+          false: 'false',
+        },
+      },
     ],
     data: [],
   });
