@@ -4,6 +4,7 @@ import { Form, Input, Select, Button } from 'antd';
 import createAcctMgr from '../utils/createAcctManager';
 
 import { axiosWithAuth } from '../../../../api/axiosWithAuth';
+import { create } from 'domain';
 
 const INITIAL_VALUES = {
   id: '',
@@ -44,15 +45,8 @@ const AcctMgrForm = () => {
     setFormValues({ ...formValues, organization_id: value });
   };
 
-  const handleSumbit = async e => {
-    e.preventDefault();
-    try {
-      const oktaID = await createAcctMgr(formValues);
-      console.log(oktaID);
-    } catch (error) {
-      console.log(error);
-      alert(error);
-    }
+  const handleSumbit = e => {
+    createAcctMgr(formValues);
   };
 
   return (
