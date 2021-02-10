@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useHistory } from 'react-router-dom';
 
@@ -17,6 +17,7 @@ import Family from './forms/Family';
 import { setCurrentUserStatic } from '../../../redux/users/userActions';
 
 import emailjs, { init } from 'emailjs-com';
+import useSelection from 'antd/lib/table/hooks/useSelection';
 
 init('user_zfW4LQVBXyGr4lWRUgfZE');
 // const INITIAL_VALUES_DEV = {
@@ -55,6 +56,9 @@ const INITIAL_VALUES_PROD = {
 
 export default function Index() {
   const dispatch = useDispatch();
+
+  const userName = useSelector(theState => theState.user.currentUser);
+
   const history = useHistory();
   const [step, setStep] = useState(0);
 
@@ -69,9 +73,7 @@ export default function Index() {
       ...formValues,
       [e.target.name]: e.target.value,
     });
-    console.log(formValues);
   };
-
   const handleSubmit = e => {
     const user = {
       ...formValues,
@@ -81,11 +83,14 @@ export default function Index() {
     dispatch(setCurrentUserStatic(user, history));
   };
 
+  const fullName = userName.firstName + ' ' + userName.lastName;
+  console.log(fullName);
+
   const tempParams = {
     to_name: 'Chris',
-    from_name: 'Joe',
+    from_name: fullName,
     user_email: 'chrisharwellproseo@gmail.com',
-    message: 'Hope this works',
+    message: 'Enter whatever message J has for us to send plus an invite link',
   };
 
   const sendEmail = e => {
