@@ -16,6 +16,9 @@ import styles from '../../../styles/pages/apply.module.css';
 import Family from './forms/Family';
 import { setCurrentUserStatic } from '../../../redux/users/userActions';
 
+import emailjs, { init } from 'emailjs-com';
+
+init('user_zfW4LQVBXyGr4lWRUgfZE');
 // const INITIAL_VALUES_DEV = {
 //   address: '3211 East Ave',
 //   city: 'Erie',
@@ -62,7 +65,10 @@ export default function Index() {
   const [formValues, setFormValues] = useState(INITIAL_VALUES_PROD);
 
   const handleChange = e => {
-    setFormValues({ ...formValues, [e.target.name]: e.target.value });
+    setFormValues({
+      ...formValues,
+      [e.target.name]: e.target.value,
+    });
     console.log(formValues);
   };
 
@@ -73,6 +79,26 @@ export default function Index() {
     };
 
     dispatch(setCurrentUserStatic(user, history));
+  };
+
+  const tempParams = {
+    to_name: 'Chris',
+    from_name: 'Joe',
+    user_email: 'chrisharwellproseo@gmail.com',
+    message: 'Hope this works',
+  };
+
+  const sendEmail = e => {
+    e.preventDefault();
+
+    emailjs.send('service_24af83w', 'contact_form', tempParams).then(
+      result => {
+        console.log('success', result.status, result.text);
+      },
+      error => {
+        console.log(error.text);
+      }
+    );
   };
 
   return (
@@ -87,8 +113,11 @@ export default function Index() {
           {step > 0 && <Button onClick={() => goBackwards()}>Previous</Button>}
           {step === 2 ? (
             <Button
-              onClick={handleSubmit}
-              style={{ backgroundColor: '#198754', borderColor: '#198754' }}
+              onClick={sendEmail}
+              style={{
+                backgroundColor: '#198754',
+                borderColor: '#198754',
+              }}
               type="primary"
             >
               Submit
