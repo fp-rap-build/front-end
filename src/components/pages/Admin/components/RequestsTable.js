@@ -13,7 +13,7 @@ export default function RequestsTable() {
       { title: 'Last ', field: 'lastName' },
       {
         title: 'Request Status',
-        field: 'request_status',
+        field: 'requestStatus',
         lookup: {
           received: 'Received',
           in_review: 'In Review',
@@ -24,7 +24,7 @@ export default function RequestsTable() {
       },
       {
         title: 'Requesting Assistance',
-        field: 'is_requesting_assistance',
+        field: 'isRequestingAssistance',
         lookup: {
           true: 'true',
           false: 'false',
@@ -37,10 +37,10 @@ export default function RequestsTable() {
   const fetchUsers = async () => {
     setIsFetching(true);
     try {
-      let res = await axiosWithAuth().get('/users');
+      let res = await axiosWithAuth().get('/users/requests');
       setState({ ...state, data: res.data });
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
       alert('error');
     } finally {
       setIsFetching(false);
@@ -85,7 +85,7 @@ export default function RequestsTable() {
               firstName: newData.firstName,
               lastName: newData.lastName,
               request_status: newData.request_status,
-              is_requesting_assistance: newData.is_requesting_assistance,
+              isRequestingAssistance: newData.isRequestingAssistance,
             };
 
             axiosWithAuth()
