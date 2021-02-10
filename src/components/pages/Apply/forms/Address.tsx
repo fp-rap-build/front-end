@@ -2,7 +2,7 @@ import React from 'react';
 
 import { states } from '../../../../utils/data/states';
 
-import { Form, Input, Select } from 'antd';
+import { Form, Input, Select, InputNumber } from 'antd';
 
 const { Option } = Select;
 
@@ -54,9 +54,9 @@ export default function Address({ formValues, setFormValues }) {
         </Select>
       </Form.Item>
       <Form.Item
-        initialValue={formValues.city}
+        initialValue={formValues.cityName}
         label="City"
-        name="city"
+        name="cityName"
         rules={[{ required: true, message: 'City is required' }]}
       >
         <Input name="city" value={formValues.city} />
@@ -70,7 +70,6 @@ export default function Address({ formValues, setFormValues }) {
       >
         <Input name="address" />
       </Form.Item>
-
       <Form.Item
         initialValue={formValues.zipCode}
         label="Postal Code"
@@ -78,6 +77,36 @@ export default function Address({ formValues, setFormValues }) {
         rules={[{ required: true, message: 'Postal is required' }]}
       >
         <Input name="zipCode" />
+      </Form.Item>
+      <Form.Item
+        name="familySize"
+        initialValue={formValues.familySize}
+        label="Family Size"
+        required
+        rules={[{ required: true, message: 'required' }]}
+      >
+        <Input
+          type="number"
+          name="familySize"
+          value={formValues.familySize}
+          min={1}
+          max={20}
+        />
+      </Form.Item>
+      <Form.Item
+        name="monthlyIncome"
+        initialValue={formValues.monthlyIncome}
+        label="Monthly Income"
+        rules={[{ required: true, message: 'required' }]}
+      >
+        <InputNumber
+          style={{ width: '100%' }}
+          formatter={value =>
+            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+          }
+          parser={value => value.replace(/\$\s?|(,*)/g, '')}
+          min={0}
+        />
       </Form.Item>
     </div>
   );

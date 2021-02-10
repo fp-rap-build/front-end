@@ -16,6 +16,26 @@ export const setCurrentUser = () => async dispatch => {
   }
 };
 
+export const applyForRentalAssistance = (
+  userInfo,
+  addressInfo,
+  history
+) => async dispatch => {
+  dispatch(setLoading(true));
+
+  try {
+    await axiosWithAuth().put('/users/me', userInfo);
+    await axiosWithAuth().put('/users/me/address', addressInfo);
+
+    history.push('/');
+  } catch (error) {
+    alert('error');
+    console.log(error.response);
+  } finally {
+    setLoading(false);
+  }
+};
+
 export const setCurrentUserStatic = (user, history) => {
   history.push('/');
   return { type: 'SET_CURRENT_USER', payload: user };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useHistory } from 'react-router-dom';
 
@@ -14,43 +14,21 @@ import Button from 'antd/lib/button';
 
 import styles from '../../../styles/pages/apply.module.css';
 import Family from './forms/Family';
-import { setCurrentUserStatic } from '../../../redux/users/userActions';
-
-// const INITIAL_VALUES_DEV = {
-//   address: '3211 East Ave',
-//   city: 'Erie',
-//   zipCode: '16504',
-//   state: 'Pennsylvania',
-//   role: 'tenant',
-//   familySize: 2,
-//   beds: 4,
-//   income: 1000,
-//   tenantName: 'tenant',
-//   tenantEmail: 'tenant@gmail.com',
-//   tenantPhoneNumber: '111-222-3333',
-//   landlordName: 'landlord',
-//   landlordEmail: 'landlord@gmail.com',
-//   landlordPhoneNumber: '111-222-3333',
-// };
+import { applyForRentalAssistance } from '../../../redux/users/userActions';
+import { axiosWithAuth } from '../../../api';
 
 const INITIAL_VALUES_PROD = {
-  address: '',
-  city: '',
-  zipCode: '',
-  state: '',
-  role: '',
-  familySize: '',
-  beds: '',
-  income: '',
-  tenantName: '',
-  tenantEmail: '',
-  tenantPhoneNumber: '',
-  landlordName: '',
-  landlordEmail: '',
-  landlordPhoneNumber: '',
+  address: '3211 East Ave',
+  cityName: 'Erie',
+  zipCode: '16504',
+  state: 'Pennsylvania',
+  role: 'tenant',
+  monthlyIncome: 100,
+  familySize: 2,
 };
 
 export default function Index() {
+  const loading = useSelector(state => state.global.isLoading);
   const dispatch = useDispatch();
   const history = useHistory();
   const [step, setStep] = useState(0);
@@ -66,13 +44,22 @@ export default function Index() {
     console.log(formValues);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async () => {
     const user = {
-      ...formValues,
+      familySize: formValues.familySize,
+      role: formValues.role,
+      monthlyIncome: formValues.monthlyIncome,
       isRequestingAssistance: true,
     };
 
-    dispatch(setCurrentUserStatic(user, history));
+    const address = {
+      address: formValues.address,
+      cityName: formValues.cityName,
+      zipCode: formValues.zipCode,
+      state: formValues.state,
+    };
+
+    dispatch(applyForRentalAssistance(user, address, history));
   };
 
   return (
@@ -80,18 +67,23 @@ export default function Index() {
       <Form
         layout="vertical"
         onChange={handleChange}
-        onFinish={() => goForward()}
+        onFinish={step == 0 ? handleSubmit : () => goForward()}
         className={styles.form}
       >
-        <div>
+        <RenderForm
+          step={step}
+          formValues={formValues}
+          setFormValues={setFormValues}
+        />
+        <div className={styles.formNavigation}>
           {step > 0 && <Button onClick={() => goBackwards()}>Previous</Button>}
-          {step === 2 ? (
+          {step === 0 ? (
             <Button
-              onClick={handleSubmit}
+              htmlType="submit"
               style={{ backgroundColor: '#198754', borderColor: '#198754' }}
               type="primary"
             >
-              Submit
+              {loading ? 'Loading. . .' : 'Submit'}
             </Button>
           ) : (
             <Button type="primary" htmlType="submit">
@@ -99,12 +91,6 @@ export default function Index() {
             </Button>
           )}
         </div>
-
-        <RenderForm
-          step={step}
-          formValues={formValues}
-          setFormValues={setFormValues}
-        />
       </Form>
     </div>
   );
@@ -116,9 +102,5 @@ const RenderForm = ({ step, formValues, setFormValues }) => {
   switch (step) {
     case 0:
       return <Address {...props} />;
-    case 1:
-      return <Family {...props} />;
-    case 2:
-      return <Landlord {...props} />;
   }
 };
