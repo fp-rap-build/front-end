@@ -4,7 +4,6 @@ export const axiosWithAuth = () => {
   const token = JSON.parse(localStorage.getItem('okta-token-storage'))?.idToken
     ?.value;
 
-  console.log(token);
   return axios.create({
     headers: {
       Authorization: `Bearer ${token}`,
