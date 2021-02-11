@@ -17,7 +17,7 @@ export default function Index() {
           className={styles.button}
           onClick={() => history.push('/create')}
         >
-          Create Account Manager
+          Create Program Manager
         </Button>
       </div>
     </div>

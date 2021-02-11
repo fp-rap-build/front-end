@@ -5,8 +5,8 @@ const okta_register_url =
   'https://dev-79515564.okta.com/api/v1/registration/reg4nxrwnAoXBkKJ75d6/register';
 const okta_activate_url = 'https://dev-79515564.okta.com/api/v1/authn';
 
-const createAcctMgr = async user => {
-  const { firstName, lastName, email, role, organization_id } = user;
+const createProgramMgr = async user => {
+  const { firstName, lastName, email, role, organizationId } = user;
 
   const oktaObj = {
     email: email,
@@ -22,7 +22,7 @@ const createAcctMgr = async user => {
     firstName: firstName,
     lastName: lastName,
     role: role,
-    organization_id: organization_id,
+    organizationId: organizationId,
   };
 
   try {
@@ -39,11 +39,11 @@ const createAcctMgr = async user => {
     newAcctMgr.id = oktaID;
     //Post new user to app's DB
     await axiosWithAuth().post('/user', newAcctMgr);
-    return `Succesfully created Account Manager ${firstName} ${lastName}`;
+    return `Succesfully created Program Manager ${firstName} ${lastName}`;
   } catch (error) {
     alert(error);
     console.log(error);
   }
 };
 
-export default createAcctMgr;
+export default createProgramMgr;
