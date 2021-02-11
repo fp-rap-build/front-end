@@ -48,7 +48,7 @@ const Dash = () => {
           name="requestsTable"
           onClick={onClick}
         >
-          Manage Applications
+          Manage Requests
         </Button>
         <Button
           type="primary"
