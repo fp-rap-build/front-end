@@ -6,7 +6,6 @@ import UsersTable from './UsersTable';
 import styles from '../../../../styles/pages/admin.module.css';
 
 import { Button } from 'antd';
-import { NONAME } from 'dns';
 
 const Dash = () => {
   const initialDisplay = {
@@ -38,6 +37,7 @@ const Dash = () => {
           disabled={display.usersTable}
           name="usersTable"
           onClick={onClick}
+          className={styles.button}
         >
           Manage Users
         </Button>
@@ -47,6 +47,7 @@ const Dash = () => {
           disabled={display.requestsTable}
           name="requestsTable"
           onClick={onClick}
+          className={styles.button}
         >
           Manage Requests
         </Button>
@@ -56,11 +57,12 @@ const Dash = () => {
           disabled={display.programMgrForm}
           name="programMgrForm"
           onClick={onClick}
+          className={styles.button}
         >
           Create Account Manager
         </Button>
       </div>
-      <div>
+      <div className={styles.dashboard}>
         {display.usersTable && <UsersTable />}
         {display.requestsTable && <RequestsTable />}
         {display.programMgrForm && <ProgramMgrForm />}

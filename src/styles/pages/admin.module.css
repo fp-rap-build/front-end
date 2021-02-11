@@ -11,7 +11,7 @@
 }
 
 .button{
-  margin-top: 3%;
+  box-shadow: 0 8px 6px -6px black;
 }
 
 .dashNav {
@@ -19,4 +19,12 @@
   flex-flow: row nowrap;
   justify-content: space-around;
   align-items: center;
+  padding: 2% 0;
+  background-color: #617183;
+}
+
+.dashboard {
+  border: 3px solid #617183;
+  padding: 1% 0;
+  box-shadow: 0 8px 6px -6px black;
 }
