@@ -17,7 +17,6 @@ export default function RequestsTable() {
         lookup: {
           received: 'Received',
           inReview: 'In Review',
-          pending: 'Pending',
           approved: 'Approved',
           denied: 'Denied',
         },
