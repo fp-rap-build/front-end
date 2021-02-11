@@ -14,6 +14,10 @@ export default function RequestsTable() {
       { title: 'First', field: 'firstName' },
       { title: 'Last ', field: 'lastName' },
       {
+        title: 'email',
+        field: 'email',
+      },
+      {
         title: 'Request Status',
         field: 'requestStatus',
         lookup: {
@@ -22,14 +26,6 @@ export default function RequestsTable() {
           pending: 'Pending',
           approved: 'Approved',
           denied: 'Denied',
-        },
-      },
-      {
-        title: 'Requesting Assistance',
-        field: 'isRequestingAssistance',
-        lookup: {
-          true: 'true',
-          false: 'false',
         },
       },
     ],
@@ -62,40 +58,6 @@ export default function RequestsTable() {
           options={{
             // Allows users to export the data as a CSV file
             exportButton: true,
-          }}
-          editable={{
-            // Disable deleting and editing if the user is an Admin
-
-            isDeletable: rowData => rowData.role !== 'admin',
-            isEditable: rowData => rowData.role !== 'admin',
-            onRowUpdate: (newData, oldData) =>
-              new Promise((resolve, reject) => {
-                resolve();
-                // Set the state first to instantly update the table
-
-                setState({
-                  ...state,
-                  data: state.data.map(row => {
-                    if (row.id === oldData.id) {
-                      return newData;
-                    }
-                    return row;
-                  }),
-                });
-
-                // Persist those changes
-
-                const updatedUser = {
-                  firstName: newData.firstName,
-                  lastName: newData.lastName,
-                  request_status: newData.request_status,
-                  isRequestingAssistance: newData.isRequestingAssistance,
-                };
-
-                axiosWithAuth()
-                  .put(`/users/${oldData.id}`, updatedUser)
-                  .catch(err => alert('Failed to update user'));
-              }),
           }}
           icons={tableIcons}
           title="Requests for rental assistance"

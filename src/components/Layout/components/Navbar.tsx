@@ -29,7 +29,7 @@ function Navbar() {
   const redirectToRequestsPage = () => {
     return (
       <Link to="/requests">
-        <h2>Requests</h2>
+        <li style={{ color: 'black' }}>Requests</li>
       </Link>
     );
   };
@@ -45,8 +45,9 @@ function Navbar() {
       <div onClick={redirectToHome} className={styles.logo}>
         <h2>RAP</h2>
       </div>
-      <div>{currentUser.role === 'admin' ? redirectToRequestsPage() : ''}</div>
       <ul className={styles.navActions}>
+        {currentUser.role == 'admin' && <AdminActions />}
+
         {authState.isAuthenticated ? (
           <li onClick={handleLogout}>Logout</li>
         ) : (
@@ -56,5 +57,15 @@ function Navbar() {
     </nav>
   );
 }
+
+const AdminActions = () => {
+  const history = useHistory();
+  return (
+    <>
+      <li onClick={() => history.push('/requests')}>Requests</li>
+      <li onClick={() => history.push('/admin')}>Users</li>
+    </>
+  );
+};
 
 export default Navbar;
