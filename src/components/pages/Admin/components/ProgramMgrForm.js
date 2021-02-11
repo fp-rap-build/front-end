@@ -4,7 +4,7 @@ import { Form, Input, Select, Button } from 'antd';
 
 import styles from '../../../../styles/pages/create.module.css';
 
-import createAcctMgr from '../utils/createAcctManager';
+import createProgramMgr from '../utils/createProgramMgr';
 import { axiosWithAuth } from '../../../../api/axiosWithAuth';
 
 const INITIAL_VALUES = {
@@ -12,13 +12,13 @@ const INITIAL_VALUES = {
   firstName: '',
   lastName: '',
   email: '',
-  role: 'account manager',
-  organization_id: 1,
+  role: 'programManager',
+  organizationId: 1,
   // organization: 'Family Promise of Spokane',
   // role: 'account manager',
 };
 
-const AcctMgrForm = () => {
+const ProgramMgrForm = () => {
   const [formValues, setFormValues] = useState(INITIAL_VALUES);
   const [orgs, setOrgs] = useState([]);
 
@@ -43,11 +43,11 @@ const AcctMgrForm = () => {
   };
 
   const onOrgChange = value => {
-    setFormValues({ ...formValues, organization_id: value });
+    setFormValues({ ...formValues, organizationId: value });
   };
 
   const handleSumbit = async e => {
-    const msg = await createAcctMgr(formValues);
+    const msg = await createProgramMgr(formValues);
     setFormValues(INITIAL_VALUES);
     history.push('/admin');
     alert(msg);
@@ -110,4 +110,4 @@ const AcctMgrForm = () => {
   );
 };
 
-export default AcctMgrForm;
+export default ProgramMgrForm;

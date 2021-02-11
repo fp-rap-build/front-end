@@ -17,7 +17,7 @@ export default function UsersTable() {
         field: 'role',
         lookup: {
           admin: 'admin',
-          'account manager': 'account manager',
+          programManager: 'program manager',
           tenant: 'tenant',
           landlord: 'landlord',
           pending: 'pending',

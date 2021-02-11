@@ -13,10 +13,10 @@ export default function RequestsTable() {
       { title: 'Last ', field: 'lastName' },
       {
         title: 'Request Status',
-        field: 'request_status',
+        field: 'requestStatus',
         lookup: {
           received: 'Received',
-          in_review: 'In Review',
+          inReview: 'In Review',
           pending: 'Pending',
           approved: 'Approved',
           denied: 'Denied',
@@ -24,7 +24,7 @@ export default function RequestsTable() {
       },
       {
         title: 'Requesting Assistance',
-        field: 'is_requesting_assistance',
+        field: 'isRequestingAssistance',
         lookup: {
           true: 'true',
           false: 'false',
@@ -84,8 +84,8 @@ export default function RequestsTable() {
             const updatedUser = {
               firstName: newData.firstName,
               lastName: newData.lastName,
-              request_status: newData.request_status,
-              is_requesting_assistance: newData.is_requesting_assistance,
+              requestStatus: newData.requestStatus,
+              isRequestingAssistance: newData.isRequestingAssistance,
             };
 
             axiosWithAuth()
