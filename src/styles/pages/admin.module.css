@@ -13,3 +13,11 @@
 .button{
   margin-top: 3%;
 }
+
+.dashNav {
+  border: 1px solid green;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
