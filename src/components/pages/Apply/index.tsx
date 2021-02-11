@@ -20,22 +20,22 @@ import emailjs, { init } from 'emailjs-com';
 import useSelection from 'antd/lib/table/hooks/useSelection';
 
 init('user_zfW4LQVBXyGr4lWRUgfZE');
-// const INITIAL_VALUES_DEV = {
-//   address: '3211 East Ave',
-//   city: 'Erie',
-//   zipCode: '16504',
-//   state: 'Pennsylvania',
-//   role: 'tenant',
-//   familySize: 2,
-//   beds: 4,
-//   income: 1000,
-//   tenantName: 'tenant',
-//   tenantEmail: 'tenant@gmail.com',
-//   tenantPhoneNumber: '111-222-3333',
-//   landlordName: 'landlord',
-//   landlordEmail: 'landlord@gmail.com',
-//   landlordPhoneNumber: '111-222-3333',
-// };
+const INITIAL_VALUES_DEV = {
+  address: '3211 East Ave',
+  city: 'Erie',
+  zipCode: '16504',
+  state: 'Pennsylvania',
+  role: 'tenant',
+  familySize: 2,
+  beds: 4,
+  income: 1000,
+  tenantName: 'tenant',
+  tenantEmail: 'tenant@gmail.com',
+  tenantPhoneNumber: '111-222-3333',
+  landlordName: 'landlord',
+  landlordEmail: 'landlord@gmail.com',
+  landlordPhoneNumber: '111-222-3333',
+};
 
 const INITIAL_VALUES_PROD = {
   address: '',
@@ -66,7 +66,7 @@ export default function Index() {
 
   const goBackwards = () => setStep(step - 1);
 
-  const [formValues, setFormValues] = useState(INITIAL_VALUES_PROD);
+  const [formValues, setFormValues] = useState(INITIAL_VALUES_DEV);
 
   const handleChange = e => {
     setFormValues({
@@ -75,28 +75,41 @@ export default function Index() {
     });
   };
   const handleSubmit = e => {
+    e.preventDefault();
+
     const user = {
       ...formValues,
       isRequestingAssistance: true,
     };
 
-    dispatch(setCurrentUserStatic(user, history));
+    let name,
+      email = null;
+
+    if (user.role == 'tenant') {
+      name = user.landlordName;
+      email = user.landlordEmail;
+    } else {
+      name = user.tenantName;
+      email = user.tenantEmail;
+    }
+
+    const emailPayload = {
+      to_name: name,
+      from_name: fullName,
+      user_email: email,
+      message:
+        'Enter whatever message J has for us to send plus an invite link',
+    };
+
+    sendEmail(emailPayload);
+
+    // dispatch(setCurrentUserStatic(user, history));
   };
 
   const fullName = userName.firstName + ' ' + userName.lastName;
-  console.log(fullName);
 
-  const tempParams = {
-    to_name: 'Chris',
-    from_name: fullName,
-    user_email: 'chrisharwellproseo@gmail.com',
-    message: 'Enter whatever message J has for us to send plus an invite link',
-  };
-
-  const sendEmail = e => {
-    e.preventDefault();
-
-    emailjs.send('service_24af83w', 'contact_form', tempParams).then(
+  const sendEmail = emailPayload => {
+    emailjs.send('service_24af83w', 'contact_form', emailPayload).then(
       result => {
         console.log('success', result.status, result.text);
       },
@@ -118,7 +131,7 @@ export default function Index() {
           {step > 0 && <Button onClick={() => goBackwards()}>Previous</Button>}
           {step === 2 ? (
             <Button
-              onClick={sendEmail}
+              onClick={handleSubmit}
               style={{
                 backgroundColor: '#198754',
                 borderColor: '#198754',
