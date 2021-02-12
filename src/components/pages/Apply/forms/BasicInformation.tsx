@@ -6,7 +6,7 @@ import { Form, Input, Select, InputNumber } from 'antd';
 
 const { Option } = Select;
 
-export default function Address({ formValues, setFormValues }) {
+export default function BasicInformation({ formValues, setFormValues }) {
   function onChange(value) {
     setFormValues({ ...formValues, state: value });
   }

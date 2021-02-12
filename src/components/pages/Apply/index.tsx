@@ -6,14 +6,13 @@ import { useHistory } from 'react-router-dom';
 
 import { Form } from 'antd';
 
-import Address from './forms/Address';
+import BasicInformation from './forms/BasicInformation';
 
-import Landlord from './forms/Landlord';
+import SecondaryContact from './forms/SecondaryContact';
 
 import Button from 'antd/lib/button';
 
 import styles from '../../../styles/pages/apply.module.css';
-import Family from './forms/Family';
 import { applyForRentalAssistance } from '../../../redux/users/userActions';
 import { axiosWithAuth } from '../../../api';
 import { setCurrentUserStatic } from '../../../redux/users/userActions';
@@ -30,7 +29,7 @@ const INITIAL_VALUES_DEV = {
   role: 'tenant',
   familySize: 2,
   beds: 4,
-  income: 1000,
+  monthlyIncome: 1000,
   tenantName: 'tenant',
   tenantEmail: 'tenant@gmail.com',
   tenantPhoneNumber: '111-222-3333',
@@ -40,13 +39,17 @@ const INITIAL_VALUES_DEV = {
 };
 
 const INITIAL_VALUES_PROD = {
-  address: '3211 East Ave',
-  cityName: 'Erie',
-  zipCode: '16504',
-  state: 'Pennsylvania',
-  role: 'tenant',
-  monthlyIncome: 100,
-  familySize: 2,
+  address: '',
+  cityName: '',
+  zipCode: '',
+  state: '',
+  role: '',
+  familySize: null,
+  monthlyIncome: 1000,
+  tenantName: '',
+  tenantEmail: '',
+  landlordName: '',
+  landlordEmail: '',
 };
 
 export default function Index() {
@@ -70,11 +73,12 @@ export default function Index() {
       [e.target.name]: e.target.value,
     });
   };
-  const handleSubmit = e => {
-    e.preventDefault();
 
+  const handleSubmit = () => {
     const user = {
-      ...formValues,
+      role: formValues.role,
+      monthlyIncome: formValues.monthlyIncome,
+      familySize: formValues.familySize,
       isRequestingAssistance: true,
     };
 
@@ -91,11 +95,11 @@ export default function Index() {
       email = null;
 
     if (user.role == 'tenant') {
-      name = user.landlordName;
-      email = user.landlordEmail;
+      name = formValues.landlordName;
+      email = formValues.landlordEmail;
     } else {
-      name = user.tenantName;
-      email = user.tenantEmail;
+      name = formValues.tenantName;
+      email = formValues.tenantEmail;
     }
 
     const emailPayload = {
@@ -107,8 +111,6 @@ export default function Index() {
     };
 
     sendEmail(emailPayload);
-
-    // dispatch(setCurrentUserStatic(user, history));
   };
 
   const fullName = userName.firstName + ' ' + userName.lastName;
@@ -124,45 +126,51 @@ export default function Index() {
     );
   };
 
+  let props = { formValues, step, setFormValues, goBackwards, loading };
+
   return (
     <div className={styles.container}>
       <Form
         layout="vertical"
         onChange={handleChange}
-        onFinish={step == 0 ? handleSubmit : () => goForward()}
+        onFinish={step == 1 ? handleSubmit : () => goForward()}
         className={styles.form}
       >
-        <RenderForm
-          step={step}
-          formValues={formValues}
-          setFormValues={setFormValues}
-        />
-        <div className={styles.formNavigation}>
-          {step > 0 && <Button onClick={() => goBackwards()}>Previous</Button>}
-          {step === 0 ? (
-            <Button
-              htmlType="submit"
-              style={{ backgroundColor: '#198754', borderColor: '#198754' }}
-              type="primary"
-            >
-              {loading ? 'Loading. . .' : 'Submit'}
-            </Button>
-          ) : (
-            <Button type="primary" htmlType="submit">
-              Next
-            </Button>
-          )}
-        </div>
+        <RenderForm {...props} />
+        <FormNavigation {...props} />
       </Form>
     </div>
   );
 }
+
+const FormNavigation = ({ step, goBackwards, loading }) => {
+  return (
+    <div className={styles.formNavigation}>
+      {step > 0 && <Button onClick={() => goBackwards()}>Previous</Button>}
+      {step === 1 ? (
+        <Button
+          htmlType="submit"
+          style={{ backgroundColor: '#198754', borderColor: '#198754' }}
+          type="primary"
+        >
+          {loading ? 'Loading. . .' : 'Submit'}
+        </Button>
+      ) : (
+        <Button type="primary" htmlType="submit">
+          Next
+        </Button>
+      )}
+    </div>
+  );
+};
 
 const RenderForm = ({ step, formValues, setFormValues }) => {
   const props = { formValues, setFormValues };
 
   switch (step) {
     case 0:
-      return <Address {...props} />;
+      return <BasicInformation {...props} />;
+    case 1:
+      return <SecondaryContact {...props} />;
   }
 };
