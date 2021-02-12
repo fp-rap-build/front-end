@@ -22,8 +22,7 @@ export default function RequestsTable() {
         field: 'requestStatus',
         lookup: {
           received: 'Received',
-          in_review: 'In Review',
-          pending: 'Pending',
+          inReview: 'In Review',
           approved: 'Approved',
           denied: 'Denied',
         },

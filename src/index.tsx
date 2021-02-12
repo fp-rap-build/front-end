@@ -28,7 +28,7 @@ import PrivateRoute from './utils/auth/PrivateRoute';
 
 import Layout from './components/Layout';
 import RequestsTable from './components/pages/Admin/components/RequestsTable';
-import AcctMgrForm from './components/pages/Admin/components/AcctMgrForm';
+import ProgramMgrForm from './components/pages/Admin/components/ProgramMgrForm';
 
 ReactDOM.render(
   <Router>
@@ -67,16 +67,6 @@ function RAP() {
           {/* Any routes you need secured by role should be registered as PrivateRoutes */}
 
           <PrivateRoute path="/admin" roles={['admin']} component={Admin} />
-          <PrivateRoute
-            path="/requests"
-            roles={['admin']}
-            component={RequestsTable}
-          />
-          <PrivateRoute
-            path="/create"
-            roles={['admin']}
-            component={AcctMgrForm}
-          />
           <PrivateRoute
             path="/apply"
             roles={['pending', 'tenant', 'landlord']}

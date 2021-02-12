@@ -1,15 +1,50 @@
-.container{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.table{
-    width: 80%;
+.table {
+  width: 80%;
 }
 
-.button{
-  margin-top: 3%;
+.dashContainer {
+  border: 3px solid #617183;
+  border-radius: 5px;
+  box-shadow: 0 8px 6px -6px black;
+}
+
+.button {
+  box-shadow: 0 8px 6px -6px black;
+}
+
+.dashNav {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 2% 0;
+  background-color: #617183;
+}
+
+.dashboard {
+  padding: 1% 0;
+}
+
+@media(max-width: 700px){
+  .dashNav {
+    flex-flow: column nowrap;
+  }
+
+  .button {
+    margin: 1% 0;
+    width: 200px;
+  }
+}
+
+
+@media(max-width: 400px){
+
 }

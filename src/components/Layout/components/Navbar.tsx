@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import styles from '../../../styles/Layout/navbar.module.css';
 
 import { useOktaAuth } from '@okta/okta-react';
 
 import { useSelector } from 'react-redux';
-
-import RequestsTable from '../../pages/Admin/components/RequestsTable';
 
 function Navbar() {
   const { authState, authService } = useOktaAuth();
@@ -24,14 +22,6 @@ function Navbar() {
 
   const redirectToLogin = () => {
     history.push('/login');
-  };
-
-  const redirectToRequestsPage = () => {
-    return (
-      <Link to="/requests">
-        <li style={{ color: 'black' }}>Requests</li>
-      </Link>
-    );
   };
 
   const history = useHistory();
