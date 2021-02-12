@@ -19,7 +19,6 @@ import { setCurrentUserStatic } from '../../../redux/users/userActions';
 import emailjs, { init } from 'emailjs-com';
 import useSelection from 'antd/lib/table/hooks/useSelection';
 
-init('user_zfW4LQVBXyGr4lWRUgfZE');
 const INITIAL_VALUES_DEV = {
   address: '3211 East Ave',
   city: 'Erie',
@@ -53,6 +52,10 @@ const INITIAL_VALUES_PROD = {
   landlordEmail: '',
   landlordPhoneNumber: '',
 };
+
+//initiating connection to email service
+
+init(process.env.REACT_APP_EMAIL_USER_ID);
 
 export default function Index() {
   const dispatch = useDispatch();
@@ -109,14 +112,20 @@ export default function Index() {
   const fullName = userName.firstName + ' ' + userName.lastName;
 
   const sendEmail = emailPayload => {
-    emailjs.send('service_24af83w', 'contact_form', emailPayload).then(
-      result => {
-        console.log('success', result.status, result.text);
-      },
-      error => {
-        console.log(error.text);
-      }
-    );
+    emailjs
+      .send(
+        process.env.REACT_APP_EMAIL_SERVICE_ID,
+        'contact_form',
+        emailPayload
+      )
+      .then(
+        result => {
+          console.log('success', result.status, result.text);
+        },
+        error => {
+          console.log(error.text);
+        }
+      );
   };
 
   return (

@@ -27,8 +27,6 @@ import LoadingComponent from './components/common/LoadingComponent';
 import PrivateRoute from './utils/auth/PrivateRoute';
 
 import Layout from './components/Layout';
-import RequestsTable from './components/pages/Admin/components/RequestsTable';
-import ProgramMgrForm from './components/pages/Admin/components/ProgramMgrForm';
 
 ReactDOM.render(
   <Router>
