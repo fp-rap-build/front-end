@@ -22,7 +22,7 @@
 
 .dashNav {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   justify-content: space-around;
   align-items: center;
   padding: 2% 0;
@@ -31,4 +31,20 @@
 
 .dashboard {
   padding: 1% 0;
+}
+
+@media(max-width: 700px){
+  .dashNav {
+    flex-flow: column nowrap;
+  }
+
+  .button {
+    margin: 1% 0;
+    width: 200px;
+  }
+}
+
+
+@media(max-width: 400px){
+
 }

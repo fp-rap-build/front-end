@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import ProgramMgrForm from './ProgramMgrForm';
 import RequestsTable from './RequestsTable';
@@ -8,6 +9,8 @@ import styles from '../../../../styles/pages/admin.module.css';
 import { Button } from 'antd';
 
 const Dash = () => {
+  const currentUser = useSelector(state => state.user.currentUser);
+  // console.log(currentUser)
   const initialDisplay = {
     usersTable: true,
     requestsTable: false,
@@ -29,7 +32,7 @@ const Dash = () => {
 
   return (
     <>
-      <h1>ADMIN DASH</h1>
+      <h1>Hello {currentUser.firstName}, welcome to your dashboard!</h1>
       <div className={styles.dashContainer}>
         <div className={styles.dashNav}>
           <Button
