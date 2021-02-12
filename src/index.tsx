@@ -68,16 +68,6 @@ function RAP() {
 
           <PrivateRoute path="/admin" roles={['admin']} component={Admin} />
           <PrivateRoute
-            path="/requests"
-            roles={['admin']}
-            component={RequestsTable}
-          />
-          <PrivateRoute
-            path="/create"
-            roles={['admin']}
-            component={ProgramMgrForm}
-          />
-          <PrivateRoute
             path="/apply"
             roles={['pending', 'tenant', 'landlord']}
             component={Apply}
