@@ -1,16 +1,22 @@
-.container{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.table{
-    width: 80%;
+.table {
+  width: 80%;
 }
 
-.button{
+.dashContainer {
+  border: 3px solid #617183;
+  border-radius: 5px;
+  box-shadow: 0 8px 6px -6px black;
+}
+
+.button {
   box-shadow: 0 8px 6px -6px black;
 }
 
@@ -24,7 +30,5 @@
 }
 
 .dashboard {
-  border: 3px solid #617183;
   padding: 1% 0;
-  box-shadow: 0 8px 6px -6px black;
 }

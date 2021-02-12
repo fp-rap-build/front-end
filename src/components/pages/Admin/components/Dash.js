@@ -30,42 +30,44 @@ const Dash = () => {
   return (
     <>
       <h1>ADMIN DASH</h1>
-      <div className={styles.dashNav}>
-        <Button
-          type="primary"
-          size="large"
-          disabled={display.usersTable}
-          name="usersTable"
-          onClick={onClick}
-          className={styles.button}
-        >
-          Manage Users
-        </Button>
-        <Button
-          type="primary"
-          size="large"
-          disabled={display.requestsTable}
-          name="requestsTable"
-          onClick={onClick}
-          className={styles.button}
-        >
-          Manage Requests
-        </Button>
-        <Button
-          type="primary"
-          size="large"
-          disabled={display.programMgrForm}
-          name="programMgrForm"
-          onClick={onClick}
-          className={styles.button}
-        >
-          Create Account Manager
-        </Button>
-      </div>
-      <div className={styles.dashboard}>
-        {display.usersTable && <UsersTable />}
-        {display.requestsTable && <RequestsTable />}
-        {display.programMgrForm && <ProgramMgrForm />}
+      <div className={styles.dashContainer}>
+        <div className={styles.dashNav}>
+          <Button
+            type="primary"
+            size="large"
+            disabled={display.usersTable}
+            name="usersTable"
+            onClick={onClick}
+            className={styles.button}
+          >
+            Manage Users
+          </Button>
+          <Button
+            type="primary"
+            size="large"
+            disabled={display.requestsTable}
+            name="requestsTable"
+            onClick={onClick}
+            className={styles.button}
+          >
+            Manage Requests
+          </Button>
+          <Button
+            type="primary"
+            size="large"
+            disabled={display.programMgrForm}
+            name="programMgrForm"
+            onClick={onClick}
+            className={styles.button}
+          >
+            Create Account Manager
+          </Button>
+        </div>
+        <div className={styles.dashboard}>
+          {display.usersTable && <UsersTable />}
+          {display.requestsTable && <RequestsTable />}
+          {display.programMgrForm && <ProgramMgrForm />}
+        </div>
       </div>
     </>
   );
