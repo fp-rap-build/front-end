@@ -60,9 +60,27 @@ const extraContent = user => (
   </div>
 );
 
-export default function Index({ setIsOpen, user, setUser }) {
+export default function Index({ setIsOpen, user, setUser, setState, state }) {
   const handleReviewSubmit = async status => {
-    setUser({ ...user, requestStatus: status });
+    setState({
+      ...state,
+      data: state.data.map(row => {
+        if (row.id === user.id) {
+          row['requestStatus'] = status;
+        }
+        return row;
+      }),
+    });
+
+    let confirm = window.confirm(
+      `Are you sure you want to ${
+        status == 'approved' ? 'approve' : 'deny'
+      } this user?`
+    );
+
+    if (!confirm) return;
+
+    setIsOpen(false);
 
     try {
       await axiosWithAuth().put(`/users/${user.id}`, { requestStatus: status });

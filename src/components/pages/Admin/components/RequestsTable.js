@@ -62,6 +62,8 @@ export default function RequestsTable() {
           setIsOpen={setIsOpen}
           user={userBeingReviewed}
           setUser={setUserBeingReviewed}
+          setState={setState}
+          state={state}
         />
       )}
       <div className={styles.table}>
