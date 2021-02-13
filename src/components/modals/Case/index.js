@@ -8,6 +8,7 @@ import ModalContainer from '../ModalContainer';
 import styles from '../../../styles/modals/case.module.css';
 
 import { PageHeader, Tabs, Button, Statistic, Descriptions } from 'antd';
+import { axiosWithAuth } from '../../../api/axiosWithAuth';
 
 const { TabPane } = Tabs;
 
@@ -60,6 +61,15 @@ const extraContent = user => (
 );
 
 export default function Index({ setIsOpen, user }) {
+  const handleReviewSubmit = async status => {
+    try {
+      await axiosWithAuth().put(`/users/${user.id}`, { requestStatus: status });
+      alert('success');
+    } catch (error) {
+      alert('Failed to review user');
+    }
+  };
+
   return (
     <ModalContainer>
       <div className={styles.container}>
@@ -67,7 +77,7 @@ export default function Index({ setIsOpen, user }) {
           className="site-page-header-responsive"
           onBack={() => setIsOpen(false)}
           title="Review"
-          extra={[<JudgeDropdown />]}
+          extra={[<JudgeDropdown handleReviewSubmit={handleReviewSubmit} />]}
         >
           <Content extra={extraContent(user)}>{renderContent(user)}</Content>
         </PageHeader>
@@ -76,22 +86,19 @@ export default function Index({ setIsOpen, user }) {
   );
 }
 
-const JudgeDropdown = () => {
-  const [value, setValue] = useState('approve');
-
-  function handleButtonClick(e) {
-    alert(value);
-  }
+const JudgeDropdown = ({ handleReviewSubmit }) => {
+  const [status, setStatus] = useState('approved');
 
   function handleMenuClick(e) {
-    setValue(e.key);
+    setStatus(e.key);
   }
+
   const menu = (
     <Menu onClick={handleMenuClick}>
-      <Menu.Item value="approve" key="approve" icon={<UserOutlined />}>
+      <Menu.Item key="approved" icon={<UserOutlined />}>
         Approve
       </Menu.Item>
-      <Menu.Item key="deny" icon={<UserOutlined />}>
+      <Menu.Item key="denied" icon={<UserOutlined />}>
         Deny
       </Menu.Item>
     </Menu>
@@ -101,10 +108,10 @@ const JudgeDropdown = () => {
     <Space wrap>
       <Dropdown.Button
         type="primary"
-        onClick={handleButtonClick}
+        onClick={() => handleReviewSubmit(status)}
         overlay={menu}
       >
-        {value}
+        {status == 'approved' ? 'approve' : 'deny'}
       </Dropdown.Button>
     </Space>
   );
