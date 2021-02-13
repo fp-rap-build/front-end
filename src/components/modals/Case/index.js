@@ -7,6 +7,10 @@ import ModalContainer from '../ModalContainer';
 
 import styles from '../../../styles/modals/case.module.css';
 
+import { init } from 'emailjs-com';
+
+import sendEmail from '../../../utils/sendEmail';
+
 import { PageHeader, Tabs, Button, Statistic, Descriptions } from 'antd';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 
@@ -61,6 +65,8 @@ const extraContent = user => (
 );
 
 export default function Index({ setIsOpen, user, setUser, setState, state }) {
+  init('user_zfW4LQVBXyGr4lWRUgfZE');
+
   const handleReviewSubmit = async status => {
     setState({
       ...state,
@@ -84,6 +90,20 @@ export default function Index({ setIsOpen, user, setUser, setState, state }) {
 
     try {
       await axiosWithAuth().put(`/users/${user.id}`, { requestStatus: status });
+
+      let message =
+        status == 'approved'
+          ? 'You have been approved for our Rental Assistance Program'
+          : 'You have been denied the rental assistance program';
+
+      const emailPayload = {
+        to_name: user.firstName + ' ' + user.lastName,
+        from_name: 'Family Promise Rental Assistance Program (RAP)',
+        user_email: user.email,
+        message,
+      };
+
+      sendEmail(emailPayload);
     } catch (error) {
       alert('Failed to review user');
     }

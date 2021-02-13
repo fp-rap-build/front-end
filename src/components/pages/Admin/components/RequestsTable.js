@@ -77,8 +77,15 @@ export default function RequestsTable() {
             {
               icon: GavelIcon,
               tooltip: 'Review',
-              onClick: (event, rowData) => {
-                // Do save operation
+              onClick: async (event, rowData) => {
+                // Update the users request to be in review
+
+                if (rowData.requestStatus == 'received') {
+                  await axiosWithAuth().put(`/users/${rowData.id}`, {
+                    requestStatus: 'inReview',
+                  });
+                }
+
                 setUserBeingReviewed(rowData);
                 setIsOpen(true);
               },
