@@ -57,7 +57,13 @@ export default function RequestsTable() {
 
   return (
     <div className={styles.container}>
-      {isOpen && <Case setIsOpen={setIsOpen} user={userBeingReviewed} />}
+      {isOpen && (
+        <Case
+          setIsOpen={setIsOpen}
+          user={userBeingReviewed}
+          setUser={setUserBeingReviewed}
+        />
+      )}
       <div className={styles.table}>
         <MaterialTable
           isLoading={isFetching}

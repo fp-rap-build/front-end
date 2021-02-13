@@ -60,11 +60,12 @@ const extraContent = user => (
   </div>
 );
 
-export default function Index({ setIsOpen, user }) {
+export default function Index({ setIsOpen, user, setUser }) {
   const handleReviewSubmit = async status => {
+    setUser({ ...user, requestStatus: status });
+
     try {
       await axiosWithAuth().put(`/users/${user.id}`, { requestStatus: status });
-      alert('success');
     } catch (error) {
       alert('Failed to review user');
     }
