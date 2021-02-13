@@ -11,18 +11,16 @@ import { PageHeader, Tabs, Button, Statistic, Descriptions } from 'antd';
 
 const { TabPane } = Tabs;
 
-const renderContent = (column = 2) => (
-  <Descriptions size="small" column={column}>
-    <Descriptions.Item label="Name">Lili Qu</Descriptions.Item>
-    <Descriptions.Item label="State">
-      <a>421421</a>
-    </Descriptions.Item>
-    <Descriptions.Item label="Email">someemail@email.com</Descriptions.Item>
-    <Descriptions.Item label="City">Pennsylvania</Descriptions.Item>
-    <Descriptions.Item label="Role">Erie</Descriptions.Item>
-    <Descriptions.Item label="Zip">16504</Descriptions.Item>
-    <Descriptions.Item label="Organization">3211 East Ave</Descriptions.Item>
-    <Descriptions.Item label="Address">3211 East Ave</Descriptions.Item>
+const renderContent = (user, column = 2) => (
+  <Descriptions size="large" column={column}>
+    <Descriptions.Item label="Name">{`${user.firstName} ${user.lastName}`}</Descriptions.Item>
+    <Descriptions.Item label="State">{user.state}</Descriptions.Item>
+    <Descriptions.Item label="Email">{user.email}</Descriptions.Item>
+    <Descriptions.Item label="City">{user.cityName}</Descriptions.Item>
+    <Descriptions.Item label="Role">{user.role}</Descriptions.Item>
+    <Descriptions.Item label="Zip">{user.zipCode}</Descriptions.Item>
+    <Descriptions.Item label="Organization">none</Descriptions.Item>
+    <Descriptions.Item label="Address">{user.address}</Descriptions.Item>
   </Descriptions>
 );
 
@@ -33,7 +31,7 @@ const Content = ({ children, extra }) => (
   </div>
 );
 
-const extraContent = (
+const extraContent = user => (
   <div
     style={{
       display: 'flex',
@@ -44,7 +42,7 @@ const extraContent = (
   >
     <Statistic
       title="Status"
-      value="Pending"
+      value={user.requestStatus}
       style={{
         marginRight: 32,
       }}
@@ -52,28 +50,26 @@ const extraContent = (
 
     <Statistic
       title="Residents"
-      value={2}
+      value={user.familySize}
       style={{
         marginRight: 32,
       }}
     />
-
-    <Statistic title="Monthly Income" prefix="$" value={568.08} />
+    <Statistic title="Monthly Income" prefix="$" value={user.monthlyIncome} />
   </div>
 );
 
-export default function Index() {
+export default function Index({ setIsOpen, user }) {
   return (
     <ModalContainer>
       <div className={styles.container}>
         <PageHeader
           className="site-page-header-responsive"
-          onBack={() => alert('back')}
-          title="Case"
-          subTitle="Case"
+          onBack={() => setIsOpen(false)}
+          title="Review"
           extra={[<JudgeDropdown />]}
         >
-          <Content extra={extraContent}>{renderContent()}</Content>
+          <Content extra={extraContent(user)}>{renderContent(user)}</Content>
         </PageHeader>
       </div>
     </ModalContainer>

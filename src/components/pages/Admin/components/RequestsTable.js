@@ -12,6 +12,8 @@ import GavelIcon from '@material-ui/icons/Gavel';
 import Case from '../../../modals/Case';
 
 export default function RequestsTable() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [userBeingReviewed, setUserBeingReviewed] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
   const [state, setState] = useState({
     columns: [
@@ -55,7 +57,7 @@ export default function RequestsTable() {
 
   return (
     <div className={styles.container}>
-      <Case />
+      {isOpen && <Case setIsOpen={setIsOpen} user={userBeingReviewed} />}
       <div className={styles.table}>
         <MaterialTable
           isLoading={isFetching}
@@ -69,7 +71,8 @@ export default function RequestsTable() {
               tooltip: 'Review',
               onClick: (event, rowData) => {
                 // Do save operation
-                alert('in review');
+                setUserBeingReviewed(rowData);
+                setIsOpen(true);
               },
             },
           ]}
