@@ -4,13 +4,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-bottom: 1rem;
 }
 
-.table {
-  width: 80%;
+.table{
+  width: 100%;
 }
 
 .dashContainer {
+  width: 80%;
   border: 3px solid #617183;
   border-radius: 5px;
   box-shadow: 0 8px 6px -6px black;
@@ -27,10 +29,6 @@
   align-items: center;
   padding: 2% 0;
   background-color: #617183;
-}
-
-.dashboard {
-  padding: 1% 0;
 }
 
 @media(max-width: 700px){

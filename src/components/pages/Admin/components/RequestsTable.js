@@ -7,6 +7,8 @@ import styles from '../../../../styles/pages/admin.module.css';
 import { tableIcons } from '../../../../utils/tableIcons';
 import { axiosWithAuth } from '../../../../api';
 
+import GavelIcon from '@material-ui/icons/Gavel';
+
 export default function RequestsTable() {
   const [isFetching, setIsFetching] = useState(false);
   const [state, setState] = useState({
@@ -58,6 +60,16 @@ export default function RequestsTable() {
             // Allows users to export the data as a CSV file
             exportButton: true,
           }}
+          actions={[
+            {
+              icon: GavelIcon,
+              tooltip: 'Review',
+              onClick: (event, rowData) => {
+                // Do save operation
+                alert('in review');
+              },
+            },
+          ]}
           icons={tableIcons}
           title="Requests for rental assistance"
           columns={state.columns}

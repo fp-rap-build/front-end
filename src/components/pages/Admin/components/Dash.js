@@ -31,7 +31,7 @@ const Dash = () => {
   };
 
   return (
-    <>
+    <div className={styles.container}>
       <h1>Hello {currentUser.firstName}, welcome to your dashboard!</h1>
       <div className={styles.dashContainer}>
         <div className={styles.dashNav}>
@@ -72,7 +72,7 @@ const Dash = () => {
           {display.programMgrForm && <ProgramMgrForm />}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

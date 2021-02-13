@@ -144,10 +144,11 @@ export default function Index() {
 }
 
 const FormNavigation = ({ step, goBackwards, loading }) => {
+  let finalStep = 1;
   return (
     <div className={styles.formNavigation}>
       {step > 0 && <Button onClick={() => goBackwards()}>Previous</Button>}
-      {step === 1 ? (
+      {step === finalStep ? (
         <Button
           htmlType="submit"
           style={{ backgroundColor: '#198754', borderColor: '#198754' }}
