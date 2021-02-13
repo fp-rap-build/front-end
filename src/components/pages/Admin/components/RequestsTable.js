@@ -9,6 +9,8 @@ import { axiosWithAuth } from '../../../../api';
 
 import GavelIcon from '@material-ui/icons/Gavel';
 
+import Case from '../../../modals/Case';
+
 export default function RequestsTable() {
   const [isFetching, setIsFetching] = useState(false);
   const [state, setState] = useState({
@@ -53,6 +55,7 @@ export default function RequestsTable() {
 
   return (
     <div className={styles.container}>
+      <Case />
       <div className={styles.table}>
         <MaterialTable
           isLoading={isFetching}
