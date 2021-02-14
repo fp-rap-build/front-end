@@ -14,28 +14,25 @@ import Button from 'antd/lib/button';
 
 import styles from '../../../styles/pages/apply.module.css';
 import { applyForRentalAssistance } from '../../../redux/users/userActions';
-import { axiosWithAuth } from '../../../api';
-import { setCurrentUserStatic } from '../../../redux/users/userActions';
 
 import emailjs, { init } from 'emailjs-com';
-import useSelection from 'antd/lib/table/hooks/useSelection';
 
-const INITIAL_VALUES_DEV = {
-  address: '3211 East Ave',
-  cityName: 'Erie',
-  zipCode: '16504',
-  state: 'Pennsylvania',
-  role: 'tenant',
-  familySize: 2,
-  beds: 4,
-  monthlyIncome: 1000,
-  tenantName: 'tenant',
-  tenantEmail: 'tenant@gmail.com',
-  tenantPhoneNumber: '111-222-3333',
-  landlordName: 'landlord',
-  landlordEmail: 'landlord@gmail.com',
-  landlordPhoneNumber: '111-222-3333',
-};
+// const INITIAL_VALUES_DEV = {
+//   address: '3211 East Ave',
+//   cityName: 'Erie',
+//   zipCode: '16504',
+//   state: 'Pennsylvania',
+//   role: 'tenant',
+//   familySize: 2,
+//   beds: 4,
+//   monthlyIncome: 1000,
+//   tenantName: 'tenant',
+//   tenantEmail: 'tenant@gmail.com',
+//   tenantPhoneNumber: '111-222-3333',
+//   landlordName: 'landlord',
+//   landlordEmail: 'landlord@gmail.com',
+//   landlordPhoneNumber: '111-222-3333',
+// };
 
 const INITIAL_VALUES_PROD = {
   address: '',
@@ -43,7 +40,7 @@ const INITIAL_VALUES_PROD = {
   zipCode: '',
   state: '',
   role: '',
-  familySize: null,
+  familySize: 1,
   monthlyIncome: 1000,
   tenantName: '',
   tenantEmail: '',
@@ -68,7 +65,7 @@ export default function Index() {
 
   const goBackwards = () => setStep(step - 1);
 
-  const [formValues, setFormValues] = useState(INITIAL_VALUES_DEV);
+  const [formValues, setFormValues] = useState(INITIAL_VALUES_PROD);
 
   const handleChange = e => {
     setFormValues({
@@ -97,7 +94,7 @@ export default function Index() {
     let name,
       email = null;
 
-    if (user.role == 'tenant') {
+    if (user.role === 'tenant') {
       name = formValues.landlordName;
       email = formValues.landlordEmail;
     } else {
@@ -142,7 +139,7 @@ export default function Index() {
       <Form
         layout="vertical"
         onChange={handleChange}
-        onFinish={step == 1 ? handleSubmit : () => goForward()}
+        onFinish={step === 1 ? handleSubmit : () => goForward()}
         className={styles.form}
       >
         <RenderForm {...props} />

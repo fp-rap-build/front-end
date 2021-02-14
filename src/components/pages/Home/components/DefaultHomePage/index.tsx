@@ -7,8 +7,6 @@ import styles from '../../../../../styles/pages/home.module.css';
 
 import { Button } from 'antd';
 
-import LandlordBlurb from './components/LandlordBlurb';
-
 import RentalAssistanceProgramBlurb from './components/RentalAssistanceProgramBlurb';
 
 export default function Index() {
@@ -28,25 +26,27 @@ export default function Index() {
           Hi {currentUser.firstName}, Welcome to the Family Promise Rental
           Assistance Program
         </h1>
-        {currentUser.role === 'landlord' ? (
-          <LandlordBlurb />
-        ) : (
+        {!currentUser.isRequestingAssistance && (
           <RentalAssistanceProgramBlurb />
+        )}
+        {currentUser.requestStatus === 'approved' && (
+          <h2>
+            Your request for rental assistance has been accepted. An agent will
+            reach out to you shortly
+          </h2>
+        )}
+        {currentUser.requestStatus === 'denied' && (
+          <h2>Your request for rental assistance has been denied.</h2>
         )}
       </div>
 
-      <p>
-        {currentUser.isRequestingAssistance ? (
-          <p>
-            {' '}
-            Current Application Status <span>{currentUser.requestStatus}</span>
-          </p>
-        ) : (
+      {!currentUser.isRequestingAssistance && (
+        <p>
           <Button type="primary" size="large" onClick={routeToForm}>
             Apply for Rental Assistance
           </Button>
-        )}
-      </p>
+        </p>
+      )}
     </div>
   );
 }

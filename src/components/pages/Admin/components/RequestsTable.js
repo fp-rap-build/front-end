@@ -80,7 +80,7 @@ export default function RequestsTable() {
               onClick: async (event, rowData) => {
                 // Update the users request to be in review
 
-                if (rowData.requestStatus == 'received') {
+                if (rowData.requestStatus === 'received') {
                   await axiosWithAuth().put(`/users/${rowData.id}`, {
                     requestStatus: 'inReview',
                   });
