@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Form, Input } from 'antd';
 
-export default function Address({ formValues, setFormValues }) {
+export default function SecondaryContact({ formValues, setFormValues }) {
   return (
     <>
       {formValues.role === 'tenant' ? (

@@ -15,6 +15,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import GavelIcon from '@material-ui/icons/Gavel';
 
 export const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -43,4 +44,5 @@ export const tableIcons = {
   )),
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
   Family: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
+  Hammer: forwardRef((props, ref) => <GavelIcon {...props} ref={ref} />),
 };

@@ -6,12 +6,8 @@ import styles from '../../../styles/Layout/navbar.module.css';
 
 import { useOktaAuth } from '@okta/okta-react';
 
-import { useSelector } from 'react-redux';
-
 function Navbar() {
   const { authState, authService } = useOktaAuth();
-
-  // const currentUser = useSelector(state => state.user.currentUser);
 
   const redirectToHome = () => {
     if (authState.isAuthenticated) {

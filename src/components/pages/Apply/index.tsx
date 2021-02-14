@@ -6,51 +6,46 @@ import { useHistory } from 'react-router-dom';
 
 import { Form } from 'antd';
 
-import Address from './forms/Address';
+import BasicInformation from './forms/BasicInformation';
 
-import Landlord from './forms/Landlord';
+import SecondaryContact from './forms/SecondaryContact';
 
 import Button from 'antd/lib/button';
 
 import styles from '../../../styles/pages/apply.module.css';
-import Family from './forms/Family';
-import { setCurrentUserStatic } from '../../../redux/users/userActions';
+import { applyForRentalAssistance } from '../../../redux/users/userActions';
 
 import emailjs, { init } from 'emailjs-com';
-import useSelection from 'antd/lib/table/hooks/useSelection';
 
-const INITIAL_VALUES_DEV = {
-  address: '3211 East Ave',
-  city: 'Erie',
-  zipCode: '16504',
-  state: 'Pennsylvania',
-  role: 'tenant',
-  familySize: 2,
-  beds: 4,
-  income: 1000,
-  tenantName: 'tenant',
-  tenantEmail: 'tenant@gmail.com',
-  tenantPhoneNumber: '111-222-3333',
-  landlordName: 'landlord',
-  landlordEmail: 'landlord@gmail.com',
-  landlordPhoneNumber: '111-222-3333',
-};
+// const INITIAL_VALUES_DEV = {
+//   address: '3211 East Ave',
+//   cityName: 'Erie',
+//   zipCode: '16504',
+//   state: 'Pennsylvania',
+//   role: 'tenant',
+//   familySize: 2,
+//   beds: 4,
+//   monthlyIncome: 1000,
+//   tenantName: 'tenant',
+//   tenantEmail: 'tenant@gmail.com',
+//   tenantPhoneNumber: '111-222-3333',
+//   landlordName: 'landlord',
+//   landlordEmail: 'landlord@gmail.com',
+//   landlordPhoneNumber: '111-222-3333',
+// };
 
 const INITIAL_VALUES_PROD = {
   address: '',
-  city: '',
+  cityName: '',
   zipCode: '',
   state: '',
   role: '',
-  familySize: '',
-  beds: '',
-  income: '',
+  familySize: 1,
+  monthlyIncome: 1000,
   tenantName: '',
   tenantEmail: '',
-  tenantPhoneNumber: '',
   landlordName: '',
   landlordEmail: '',
-  landlordPhoneNumber: '',
 };
 
 //initiating connection to email service
@@ -58,6 +53,7 @@ const INITIAL_VALUES_PROD = {
 init(process.env.REACT_APP_EMAIL_USER_ID);
 
 export default function Index() {
+  const loading = useSelector(state => state.global.isLoading);
   const dispatch = useDispatch();
 
   const userName = useSelector(theState => theState.user.currentUser);
@@ -69,7 +65,7 @@ export default function Index() {
 
   const goBackwards = () => setStep(step - 1);
 
-  const [formValues, setFormValues] = useState(INITIAL_VALUES_DEV);
+  const [formValues, setFormValues] = useState(INITIAL_VALUES_PROD);
 
   const handleChange = e => {
     setFormValues({
@@ -77,23 +73,33 @@ export default function Index() {
       [e.target.name]: e.target.value,
     });
   };
-  const handleSubmit = e => {
-    e.preventDefault();
 
+  const handleSubmit = () => {
     const user = {
-      ...formValues,
+      role: formValues.role,
+      monthlyIncome: formValues.monthlyIncome,
+      familySize: formValues.familySize,
       isRequestingAssistance: true,
     };
+
+    const address = {
+      address: formValues.address,
+      cityName: formValues.cityName,
+      zipCode: formValues.zipCode,
+      state: formValues.state,
+    };
+
+    dispatch(applyForRentalAssistance(user, address, history));
 
     let name,
       email = null;
 
-    if (user.role == 'tenant') {
-      name = user.landlordName;
-      email = user.landlordEmail;
+    if (user.role === 'tenant') {
+      name = formValues.landlordName;
+      email = formValues.landlordEmail;
     } else {
-      name = user.tenantName;
-      email = user.tenantEmail;
+      name = formValues.tenantName;
+      email = formValues.tenantEmail;
     }
 
     const emailPayload = {
@@ -105,8 +111,6 @@ export default function Index() {
     };
 
     sendEmail(emailPayload);
-
-    // dispatch(setCurrentUserStatic(user, history));
   };
 
   const fullName = userName.firstName + ' ' + userName.lastName;
@@ -128,53 +132,52 @@ export default function Index() {
       );
   };
 
+  let props = { formValues, step, setFormValues, goBackwards, loading };
+
   return (
     <div className={styles.container}>
       <Form
         layout="vertical"
         onChange={handleChange}
-        onFinish={() => goForward()}
+        onFinish={step === 1 ? handleSubmit : () => goForward()}
         className={styles.form}
       >
-        <div>
-          {step > 0 && <Button onClick={() => goBackwards()}>Previous</Button>}
-          {step === 2 ? (
-            <Button
-              onClick={handleSubmit}
-              style={{
-                backgroundColor: '#198754',
-                borderColor: '#198754',
-              }}
-              type="primary"
-            >
-              Submit
-            </Button>
-          ) : (
-            <Button type="primary" htmlType="submit">
-              Next
-            </Button>
-          )}
-        </div>
-
-        <RenderForm
-          step={step}
-          formValues={formValues}
-          setFormValues={setFormValues}
-        />
+        <RenderForm {...props} />
+        <FormNavigation {...props} />
       </Form>
     </div>
   );
 }
+
+const FormNavigation = ({ step, goBackwards, loading }) => {
+  let finalStep = 1;
+  return (
+    <div className={styles.formNavigation}>
+      {step > 0 && <Button onClick={() => goBackwards()}>Previous</Button>}
+      {step === finalStep ? (
+        <Button
+          htmlType="submit"
+          style={{ backgroundColor: '#198754', borderColor: '#198754' }}
+          type="primary"
+        >
+          {loading ? 'Loading. . .' : 'Submit'}
+        </Button>
+      ) : (
+        <Button type="primary" htmlType="submit">
+          Next
+        </Button>
+      )}
+    </div>
+  );
+};
 
 const RenderForm = ({ step, formValues, setFormValues }) => {
   const props = { formValues, setFormValues };
 
   switch (step) {
     case 0:
-      return <Address {...props} />;
+      return <BasicInformation {...props} />;
     case 1:
-      return <Family {...props} />;
-    case 2:
-      return <Landlord {...props} />;
+      return <SecondaryContact {...props} />;
   }
 };
