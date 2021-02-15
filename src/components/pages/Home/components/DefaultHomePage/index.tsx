@@ -38,6 +38,18 @@ export default function Index() {
         {currentUser.requestStatus === 'denied' && (
           <h2>Your request for rental assistance has been denied.</h2>
         )}
+        {currentUser.requestStatus === 'received' && (
+          <h2>
+            Thank you for using RAP. You will receive an email once an agent has
+            reviewed your request
+          </h2>
+        )}
+        {currentUser.requestStatus === 'inReview' && (
+          <h2>
+            Your request is currently being reviewed. You will receive an email
+            shortly
+          </h2>
+        )}
       </div>
 
       {!currentUser.isRequestingAssistance && (

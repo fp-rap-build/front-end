@@ -59,7 +59,7 @@ export default function BasicInformation({ formValues, setFormValues }) {
         name="cityName"
         rules={[{ required: true, message: 'City is required' }]}
       >
-        <Input name="city" value={formValues.city} />
+        <Input name="cityName" value={formValues.city} />
       </Form.Item>
 
       <Form.Item
@@ -99,14 +99,7 @@ export default function BasicInformation({ formValues, setFormValues }) {
         label="Monthly Income"
         rules={[{ required: true, message: 'required' }]}
       >
-        <InputNumber
-          style={{ width: '100%' }}
-          formatter={value =>
-            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-          }
-          parser={value => value.replace(/\$\s?|(,*)/g, '')}
-          min={0}
-        />
+        <InputNumber name="monthlyIncome" style={{ width: '100%' }} min={0} />
       </Form.Item>
     </div>
   );

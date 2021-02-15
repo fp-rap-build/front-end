@@ -72,14 +72,16 @@ export default function Index() {
       ...formValues,
       [e.target.name]: e.target.value,
     });
+    console.log(formValues);
   };
 
   const handleSubmit = () => {
     const user = {
       role: formValues.role,
-      monthlyIncome: formValues.monthlyIncome,
+      monthlyIncome: Number(formValues.monthlyIncome),
       familySize: formValues.familySize,
       isRequestingAssistance: true,
+      requestStatus: 'received',
     };
 
     const address = {
