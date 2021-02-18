@@ -13,7 +13,7 @@ const INITIAL_VALUES = {
   lastName: '',
   email: '',
   role: 'programManager',
-  organizationId: 1,
+  organizationId: null,
   // organization: 'Family Promise of Spokane',
   // role: 'account manager',
 };
@@ -133,7 +133,16 @@ const ProgramMgrForm = () => {
         </Form.Item>
       </Form>
 
-      <Button onClick={handleSumbit}>Submit</Button>
+      <Button
+        onClick={handleSumbit}
+        disabled={
+          !formValues.firstName || !formValues.lastName || !formValues.email
+            ? true
+            : false
+        }
+      >
+        Submit
+      </Button>
     </div>
   );
 };
