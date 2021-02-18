@@ -13,7 +13,7 @@ const INITIAL_VALUES = {
   lastName: '',
   email: '',
   role: 'programManager',
-  organizationId: 1,
+  organizationId: null,
   // organization: 'Family Promise of Spokane',
   // role: 'account manager',
 };
@@ -61,6 +61,14 @@ const ProgramMgrForm = () => {
           initialValue={formValues.firstName}
           label="First Name"
           name="firstName"
+          hasFeedback
+          rules={[
+            { required: true, message: 'First Name is required' },
+            {
+              min: 2,
+              message: 'First Name must be a minimum of two characters.',
+            },
+          ]}
         >
           <Input
             name="firstName"
@@ -74,6 +82,14 @@ const ProgramMgrForm = () => {
           initialValue={formValues.lastName}
           label="Last Name"
           name="lastName"
+          hasFeedback
+          rules={[
+            { required: true, message: 'Last Name is required' },
+            {
+              min: 3,
+              message: 'Last Name must be a minimum of three characters.',
+            },
+          ]}
         >
           <Input
             name="lastName"
@@ -83,7 +99,19 @@ const ProgramMgrForm = () => {
           />
         </Form.Item>
 
-        <Form.Item initialValue={formValues.email} label="E-mail" name="email">
+        <Form.Item
+          initialValue={formValues.email}
+          label="E-mail"
+          name="email"
+          hasFeedback
+          rules={[
+            { required: true, message: 'Email is required' },
+            {
+              type: 'email',
+              message: 'Input a valid Email!',
+            },
+          ]}
+        >
           <Input
             name="email"
             placeholder="example@mail.com"
@@ -105,7 +133,16 @@ const ProgramMgrForm = () => {
         </Form.Item>
       </Form>
 
-      <Button onClick={handleSumbit}>Submit</Button>
+      <Button
+        onClick={handleSumbit}
+        disabled={
+          !formValues.firstName || !formValues.lastName || !formValues.email
+            ? true
+            : false
+        }
+      >
+        Submit
+      </Button>
     </div>
   );
 };
