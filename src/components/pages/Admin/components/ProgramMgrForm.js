@@ -64,7 +64,10 @@ const ProgramMgrForm = () => {
           hasFeedback
           rules={[
             { required: true, message: 'First Name is required' },
-            { min: 2, message: 'First Name must be minimum two characters.' },
+            {
+              min: 2,
+              message: 'First Name must be a minimum of two characters.',
+            },
           ]}
         >
           <Input
@@ -82,7 +85,10 @@ const ProgramMgrForm = () => {
           hasFeedback
           rules={[
             { required: true, message: 'Last Name is required' },
-            { min: 3, message: 'Last Name must be minimum three characters.' },
+            {
+              min: 3,
+              message: 'Last Name must be a minimum of three characters.',
+            },
           ]}
         >
           <Input
