@@ -62,7 +62,10 @@ const ProgramMgrForm = () => {
           label="First Name"
           name="firstName"
           hasFeedback
-          rules={[{ required: true, message: 'First Name is required' }]}
+          rules={[
+            { required: true, message: 'First Name is required' },
+            { min: 2, message: 'First Name must be minimum two characters.' },
+          ]}
         >
           <Input
             name="firstName"
@@ -77,7 +80,10 @@ const ProgramMgrForm = () => {
           label="Last Name"
           name="lastName"
           hasFeedback
-          rules={[{ required: true, message: 'Last Name is required' }]}
+          rules={[
+            { required: true, message: 'Last Name is required' },
+            { min: 3, message: 'Last Name must be minimum three characters.' },
+          ]}
         >
           <Input
             name="lastName"
@@ -92,7 +98,13 @@ const ProgramMgrForm = () => {
           label="E-mail"
           name="email"
           hasFeedback
-          rules={[{ required: true, message: 'Email is required' }]}
+          rules={[
+            { required: true, message: 'Email is required' },
+            {
+              type: 'email',
+              message: 'Input a valid Email!',
+            },
+          ]}
         >
           <Input
             name="email"
