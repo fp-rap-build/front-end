@@ -61,6 +61,8 @@ const ProgramMgrForm = () => {
           initialValue={formValues.firstName}
           label="First Name"
           name="firstName"
+          hasFeedback
+          rules={[{ required: true, message: 'First Name is required' }]}
         >
           <Input
             name="firstName"
@@ -74,6 +76,8 @@ const ProgramMgrForm = () => {
           initialValue={formValues.lastName}
           label="Last Name"
           name="lastName"
+          hasFeedback
+          rules={[{ required: true, message: 'Last Name is required' }]}
         >
           <Input
             name="lastName"
@@ -83,7 +87,13 @@ const ProgramMgrForm = () => {
           />
         </Form.Item>
 
-        <Form.Item initialValue={formValues.email} label="E-mail" name="email">
+        <Form.Item
+          initialValue={formValues.email}
+          label="E-mail"
+          name="email"
+          hasFeedback
+          rules={[{ required: true, message: 'Email is required' }]}
+        >
           <Input
             name="email"
             placeholder="example@mail.com"
