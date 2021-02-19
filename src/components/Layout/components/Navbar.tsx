@@ -2,6 +2,8 @@ import React from 'react';
 
 import { useHistory } from 'react-router-dom';
 
+import logo from '../../../assets/logo.png';
+
 import styles from '../../../styles/Layout/navbar.module.css';
 
 import { useOktaAuth } from '@okta/okta-react';
@@ -27,18 +29,18 @@ function Navbar() {
   };
 
   return (
-    <nav className={styles.nav}>
-      <div onClick={redirectToHome} className={styles.logo}>
-        <h2>RAP</h2>
-      </div>
-      <ul className={styles.navActions}>
-        {authState.isAuthenticated ? (
-          <li onClick={handleLogout}>Logout</li>
-        ) : (
-          <li onClick={redirectToLogin}>Login</li>
-        )}
-      </ul>
-    </nav>
+    <div className={styles.container}>
+      <nav className={styles.nav}>
+        <img src={logo} />
+        <ul className={styles.navActions}>
+          {authState.isAuthenticated ? (
+            <li onClick={handleLogout}>Logout</li>
+          ) : (
+            <li onClick={redirectToLogin}>Login</li>
+          )}
+        </ul>
+      </nav>
+    </div>
   );
 }
 
