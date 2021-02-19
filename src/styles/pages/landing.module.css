@@ -1,0 +1,12 @@
+.header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 98vh;
+	background-image: linear-gradient(to right bottom,  #006FBA,  #0070ba54),
+		url('../../assets/rentdue.png');
+
+	background-size: cover;
+	background-position: center;
+	color: #fff;
+}
