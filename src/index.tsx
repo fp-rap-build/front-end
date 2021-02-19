@@ -17,6 +17,8 @@ import { HomePage } from './components/pages/Home';
 
 import Admin from './components/pages/Admin';
 
+import LandingPage from './components/pages/Landing';
+
 import Apply from './components/pages/Apply';
 
 import { config } from './utils/oktaConfig';
@@ -47,13 +49,14 @@ function RAP() {
   const authHandler = () => {
     // We pass this to our <Security /> component that wraps our routes.
     // It'll automatically check if userToken is available and push back to login if not :)
-    history.push('/login');
+    history.push('/landing');
   };
 
   return (
     <Security {...config} onAuthRequired={authHandler}>
       <Layout>
         <Switch>
+          <Route path="/landing" component={LandingPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/implicit/callback" component={LoginCallback} />
           {/* any of the routes you need secured should be registered as SecureRoutes */}
