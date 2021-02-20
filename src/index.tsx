@@ -70,11 +70,7 @@ function RAP() {
           {/* Any routes you need secured by role should be registered as PrivateRoutes */}
 
           <PrivateRoute path="/admin" roles={['admin']} component={Admin} />
-          <PrivateRoute
-            path="/apply"
-            roles={['pending', 'tenant', 'landlord']}
-            component={Apply}
-          />
+          <Route path="/apply" component={Apply} />
 
           <Route component={NotFoundPage} />
         </Switch>
