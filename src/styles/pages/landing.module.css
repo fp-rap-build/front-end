@@ -4,7 +4,7 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  height: 98vh;
+  height: 100vh;
   background-image: linear-gradient(to right bottom, #8D4982, #8d49826e),
     url('../../assets/rentdue.png');
 
@@ -28,4 +28,35 @@
 
 .header p {
     width: 60%;
+}
+
+@media(max-width: 1200px){
+    .header{
+        /* font-size: 1.1rem; */
+    }
+    .header p {
+        width: 80%;
+    }
+}
+
+@media(max-width: 992px){
+    .header{
+        font-size: 1.3rem;
+    }
+
+   .header p {
+        width: 90%;
+    }
+}
+
+@media(max-width: 768px){
+    .header{
+        font-size: 1.1rem;
+    }
+}
+
+@media(max-width: 738px){
+    h1{
+        font-size: 2rem;
+    }
 }
