@@ -12,10 +12,7 @@ function Navbar() {
   const { authState, authService } = useOktaAuth();
 
   const redirectToHome = () => {
-    if (authState.isAuthenticated) {
-      history.push('/');
-    }
-    return;
+    history.push('/');
   };
 
   const redirectToLogin = () => {
@@ -31,7 +28,7 @@ function Navbar() {
   return (
     <div className={styles.container}>
       <nav className={styles.nav}>
-        <img src={logo} />
+        <img onClick={redirectToHome} src={logo} />
         <ul className={styles.navActions}>
           {authState.isAuthenticated ? (
             <li onClick={handleLogout}>Logout</li>

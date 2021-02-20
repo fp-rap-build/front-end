@@ -10,6 +10,8 @@ import { Security, LoginCallback, SecureRoute } from '@okta/okta-react';
 
 import 'antd/dist/antd.less';
 
+import './styles/global.css';
+
 import { NotFoundPage } from './components/pages/NotFound';
 
 import { LoginPage } from './components/pages/Login';
