@@ -1,10 +1,18 @@
 import React from 'react';
 
+import { useHistory } from 'react-router-dom';
+
 import styles from '../../../styles/pages/landing.module.css';
 
 import Button from '../../common/Button';
 
 export default function Index() {
+  const history = useHistory();
+
+  const redirectToRentalAssistanceForm = () => {
+    history.push('/apply');
+  };
+
   return (
     <div>
       <header className={styles.header}>
@@ -16,7 +24,9 @@ export default function Index() {
             to the pandemic. Landlords are also encouraged to request assistance
             with past due rent owed to them
           </p>
-          <Button>Apply for Rental Assistance</Button>
+          <Button onClick={redirectToRentalAssistanceForm}>
+            Apply for Rental Assistance
+          </Button>
         </div>
       </header>
     </div>

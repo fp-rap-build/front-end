@@ -28,7 +28,11 @@ function Navbar() {
   return (
     <div className={styles.container}>
       <nav className={styles.nav}>
-        <img onClick={redirectToHome} src={logo} />
+        <img
+          alt="Calendar showing that rent is past due"
+          onClick={redirectToHome}
+          src={logo}
+        />
         <ul className={styles.navActions}>
           {authState.isAuthenticated ? (
             <li onClick={handleLogout}>Logout</li>
