@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Form, Input, Select, Button } from 'antd';
-
+import { Form, Input, Select, Button, message } from 'antd';
 import styles from '../../../../styles/pages/create.module.css';
 
 import createProgramMgr from '../utils/createProgramMgr';
@@ -19,6 +18,8 @@ const INITIAL_VALUES = {
 };
 
 const ProgramMgrForm = () => {
+  const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
   const [formValues, setFormValues] = useState(INITIAL_VALUES);
   const [orgs, setOrgs] = useState([]);
 
@@ -47,20 +48,27 @@ const ProgramMgrForm = () => {
   };
 
   const handleSumbit = async e => {
-    const msg = await createProgramMgr(formValues);
-    setFormValues(INITIAL_VALUES);
-    history.push('/admin');
-    alert(msg);
+    setLoading(true);
+    try {
+      await createProgramMgr(formValues);
+      setFormValues(INITIAL_VALUES);
+      message.success('Successfully created program manager');
+    } catch (error) {
+      message.error('Failed to create program manager');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className={styles.container}>
       <h2>Create a Program Manager:</h2>
-      <Form className={styles.form} layout="vertical">
+      <Form onFinish={handleSumbit} className={styles.form} layout="vertical">
         <Form.Item
           initialValue={formValues.firstName}
           label="First Name"
           name="firstName"
+          rules={[{ required: true, message: 'required' }]}
         >
           <Input
             name="firstName"
@@ -74,6 +82,7 @@ const ProgramMgrForm = () => {
           initialValue={formValues.lastName}
           label="Last Name"
           name="lastName"
+          rules={[{ required: true, message: 'required' }]}
         >
           <Input
             name="lastName"
@@ -83,7 +92,12 @@ const ProgramMgrForm = () => {
           />
         </Form.Item>
 
-        <Form.Item initialValue={formValues.email} label="E-mail" name="email">
+        <Form.Item
+          initialValue={formValues.email}
+          rules={[{ required: true, message: 'required' }]}
+          label="E-mail"
+          name="email"
+        >
           <Input
             name="email"
             placeholder="example@mail.com"
@@ -93,7 +107,21 @@ const ProgramMgrForm = () => {
         </Form.Item>
 
         <Form.Item
+          initialValue={formValues.password}
+          rules={[{ required: true, message: 'required' }]}
+          label="Password"
+          name="password"
+        >
+          <Input
+            name="password"
+            value={formValues.password}
+            onChange={onChange}
+          />
+        </Form.Item>
+
+        <Form.Item
           initialValue={formValues.organization}
+          rules={[{ required: true, message: 'required' }]}
           label="Organization"
           name="organization"
         >
@@ -103,9 +131,10 @@ const ProgramMgrForm = () => {
             ))}
           </Select>
         </Form.Item>
+        <Button type="primary" htmlType="submit">
+          {loading ? 'Creating program manager..' : 'Submit'}
+        </Button>
       </Form>
-
-      <Button onClick={handleSumbit}>Submit</Button>
     </div>
   );
 };
