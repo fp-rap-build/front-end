@@ -4,7 +4,11 @@ import { setLoading } from '../global/globalActions';
 
 import createOktaAccount from './utils/createOktaAccount';
 
-export const setCurrentUser = () => async dispatch => {
+export const setCurrentUser = currentUser => {
+  return { type: 'SET_CURRENT_USER', payload: currentUser };
+};
+
+export const fetchCurrentUser = () => async dispatch => {
   dispatch(setLoading(true));
   try {
     let res = await axiosWithAuth().get('/users/me');
@@ -12,6 +16,38 @@ export const setCurrentUser = () => async dispatch => {
     let currentUser = res.data.user;
     dispatch({ type: 'SET_CURRENT_USER', payload: currentUser });
   } catch (error) {
+    alert('error');
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
+
+export const logIn = (user, history) => async dispatch => {
+  dispatch(setLoading(true));
+
+  try {
+    // Login
+
+    const res = await axiosWithAuth().post('/auth/login', user);
+
+    // Store the token in localStorage
+
+    const token = res.data.token;
+
+    localStorage.setItem('token', token);
+
+    // Set the user in state
+
+    const currentUser = res.data.user;
+
+    dispatch(setCurrentUser(currentUser));
+
+    // Nothing went wrong, let's redirect the user to the homepage
+
+    history.push('/');
+  } catch (error) {
+    // Set error into global state
+
     alert('error');
   } finally {
     dispatch(setLoading(false));

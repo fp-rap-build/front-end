@@ -14,7 +14,7 @@ import './styles/global.css';
 
 import { NotFoundPage } from './components/pages/NotFound';
 
-import { LoginPage } from './components/pages/Login';
+import LoginPage from './components/pages/Login';
 import { HomePage } from './components/pages/Home';
 
 import Admin from './components/pages/Admin';

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useOktaAuth } from '@okta/okta-react';
 
 import RenderHomePage from './RenderHomePage';
-import { setCurrentUser } from '../../../redux/users/userActions';
+import { fetchCurrentUser } from '../../../redux/users/userActions';
 
 function HomeContainer({ LoadingComponent }) {
   const dispatch = useDispatch();
@@ -13,14 +13,14 @@ function HomeContainer({ LoadingComponent }) {
   // eslint-disable-next-line
   const [memoAuthService] = useMemo(() => [authService], []);
 
-  const fetchCurrentUser = () => {
-    dispatch(setCurrentUser());
-  };
+  useEffect(() => {
+    // Set the current user in state
+
+    dispatch(fetchCurrentUser());
+  }, []);
 
   useEffect(() => {
     let isSubscribed = true;
-
-    fetchCurrentUser();
 
     memoAuthService
       .getUser()
