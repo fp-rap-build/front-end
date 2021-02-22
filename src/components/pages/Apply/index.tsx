@@ -22,12 +22,14 @@ import emailjs, { init } from 'emailjs-com';
 import { clearErrorMessage } from '../../../redux/users/userActions';
 
 import faker from 'faker';
+import { setErrorMessage } from '../../../redux/global/globalActions';
 
 const INITIAL_VALUES_DEV = {
   firstName: faker.name.firstName(),
   lastName: faker.name.lastName(),
   email: faker.internet.email(),
   password: '',
+  confirmPassword: '',
   address: '3211 East Ave',
   cityName: 'Erie',
   zipCode: '16504',
@@ -49,6 +51,7 @@ const INITIAL_VALUES_PROD = {
   lastName: '',
   email: '',
   password: '',
+  confirmPassword: '',
   address: '',
   cityName: '',
   zipCode: '',
@@ -96,10 +99,17 @@ export default function Index() {
       ...formValues,
       [e.target.name]: e.target.value,
     });
-    console.log(formValues);
   };
 
   const handleSubmit = () => {
+    // Break out of the submit if there are errors
+    if (errorMessage) return;
+
+    // Check if passwords match
+    if (formValues.password !== formValues.confirmPassword) {
+      return dispatch(setErrorMessage('Passwords must match'));
+    }
+
     dispatch(registerAndApply(formValues, history));
 
     // let name,
