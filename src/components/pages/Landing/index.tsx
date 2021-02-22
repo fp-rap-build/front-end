@@ -2,6 +2,8 @@ import React from 'react';
 
 import { useHistory } from 'react-router-dom';
 
+import { Link } from 'react-router-dom';
+
 import styles from '../../../styles/pages/landing.module.css';
 
 import Button from '../../common/Button';
@@ -27,6 +29,12 @@ export default function Index() {
           <Button onClick={redirectToRentalAssistanceForm}>
             Apply for Rental Assistance
           </Button>
+          <h5>
+            Already have an account?{' '}
+            <Link style={{ color: 'lightblue' }} to="/login">
+              Login to view your status
+            </Link>
+          </h5>
         </div>
       </header>
     </div>
