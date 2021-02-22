@@ -22,6 +22,20 @@ export const fetchCurrentUser = () => async dispatch => {
   }
 };
 
+export const logOut = history => dispatch => {
+  // Remove token from localStorage
+
+  localStorage.removeItem('token');
+
+  // Logout
+
+  dispatch({ type: 'LOG_OUT' });
+
+  // Redirect to landing page
+
+  history.push('/landing');
+};
+
 export const logIn = (user, history) => async dispatch => {
   dispatch(setLoading(true));
 
