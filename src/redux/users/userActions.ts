@@ -1,11 +1,18 @@
+import { message } from 'antd';
 import { axiosWithAuth } from '../../api/axiosWithAuth';
 
 import { setLoading } from '../global/globalActions';
 
-import createOktaAccount from './utils/createOktaAccount';
-
 export const setCurrentUser = currentUser => {
   return { type: 'SET_CURRENT_USER', payload: currentUser };
+};
+
+export const setErrorMessage = message => {
+  return { type: 'SET_ERROR_MESSAGE', payload: message };
+};
+
+export const clearErrorMessage = () => {
+  return setErrorMessage('');
 };
 
 export const fetchCurrentUser = () => async dispatch => {
@@ -62,7 +69,9 @@ export const logIn = (user, history) => async dispatch => {
   } catch (error) {
     // Set error into global state
 
-    alert('error');
+    const message = error?.response?.data?.message || 'Internal server error';
+
+    dispatch(setErrorMessage(message));
   } finally {
     dispatch(setLoading(false));
   }
