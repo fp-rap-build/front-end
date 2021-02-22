@@ -1,17 +1,15 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useOktaAuth } from '@okta/okta-react';
-
+import LoadingComponent from '../../common/LoadingComponent';
 import RenderHomePage from './RenderHomePage';
 import { fetchCurrentUser } from '../../../redux/users/userActions';
 
-function HomeContainer({ LoadingComponent }) {
+function HomeContainer() {
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.global.isLoading);
-  const { authState, authService } = useOktaAuth();
-  const [userInfo, setUserInfo] = useState(null);
+
   // eslint-disable-next-line
-  const [memoAuthService] = useMemo(() => [authService], []);
 
   useEffect(() => {
     // Set the current user in state
@@ -19,32 +17,11 @@ function HomeContainer({ LoadingComponent }) {
     dispatch(fetchCurrentUser());
   }, []);
 
-  useEffect(() => {
-    let isSubscribed = true;
-
-    memoAuthService
-      .getUser()
-      .then(info => {
-        // if user is authenticated we can use the authService to snag some user info.
-        // isSubscribed is a boolean toggle that we're using to clean up our useEffect.
-        if (isSubscribed) {
-          setUserInfo(info);
-        }
-      })
-      .catch(err => {
-        isSubscribed = false;
-        return setUserInfo(null);
-      });
-    return () => (isSubscribed = false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [memoAuthService]);
-
   return (
     <>
       {isLoading && <LoadingComponent />}
-      {authState.isAuthenticated && !isLoading && (
-        <RenderHomePage userInfo={userInfo} authService={authService} />
-      )}
+
+      {!isLoading && <RenderHomePage />}
     </>
   );
 }

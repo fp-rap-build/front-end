@@ -5,7 +5,7 @@ import MaterialTable from 'material-table';
 import styles from '../../../../styles/pages/admin.module.css';
 
 import { tableIcons } from '../../../../utils/tableIcons';
-import { axiosWithAuth } from '../../../../api';
+import { axiosWithAuth } from '../../../../api/axiosWithAuth';
 
 import GavelIcon from '@material-ui/icons/Gavel';
 

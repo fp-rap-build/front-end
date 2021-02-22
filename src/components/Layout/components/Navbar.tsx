@@ -6,11 +6,7 @@ import logo from '../../../assets/logo.png';
 
 import styles from '../../../styles/Layout/navbar.module.css';
 
-import { useOktaAuth } from '@okta/okta-react';
-
 function Navbar() {
-  const { authState, authService } = useOktaAuth();
-
   const redirectToHome = () => {
     history.push('/');
   };
@@ -20,10 +16,6 @@ function Navbar() {
   };
 
   const history = useHistory();
-  const handleLogout = () => {
-    authService.logout();
-    localStorage.clear();
-  };
 
   return (
     <div className={styles.container}>
@@ -33,13 +25,7 @@ function Navbar() {
           onClick={redirectToHome}
           src={logo}
         />
-        <ul className={styles.navActions}>
-          {authState.isAuthenticated ? (
-            <li onClick={handleLogout}>Logout</li>
-          ) : (
-            <li onClick={redirectToLogin}>Login</li>
-          )}
-        </ul>
+        <ul className={styles.navActions}></ul>
       </nav>
     </div>
   );
