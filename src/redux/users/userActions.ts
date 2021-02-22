@@ -122,10 +122,11 @@ export const registerAndApply = (userValues, history) => async dispatch => {
 
     history.push('/');
   } catch (error) {
-    alert('error');
-    console.log(error.response);
+    const message = error?.response?.data?.message || 'Internal server error';
+
+    dispatch(setErrorMessage(message));
   } finally {
-    setLoading(false);
+    dispatch(setLoading(false));
   }
 };
 

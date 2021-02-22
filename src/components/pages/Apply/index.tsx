@@ -19,6 +19,8 @@ import { registerAndApply } from '../../../redux/users/userActions';
 
 import emailjs, { init } from 'emailjs-com';
 
+import { clearErrorMessage } from '../../../redux/users/userActions';
+
 import faker from 'faker';
 
 const INITIAL_VALUES_DEV = {
@@ -68,6 +70,9 @@ init(process.env.REACT_APP_EMAIL_USER_ID);
 
 export default function Index() {
   const loading = useSelector(state => state.global.isLoading);
+
+  const errorMessage = useSelector(state => state.user.errorMessage);
+
   const dispatch = useDispatch();
 
   const userName = useSelector(theState => theState.user.currentUser);
@@ -82,6 +87,11 @@ export default function Index() {
   const [formValues, setFormValues] = useState(INITIAL_VALUES_DEV);
 
   const handleChange = e => {
+    // Clean up any error message after the user types
+    if (errorMessage) {
+      dispatch(clearErrorMessage());
+    }
+
     setFormValues({
       ...formValues,
       [e.target.name]: e.target.value,

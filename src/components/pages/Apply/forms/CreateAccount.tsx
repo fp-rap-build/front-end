@@ -1,8 +1,11 @@
 import React from 'react';
 
+import { useSelector } from 'react-redux';
+
 import { Form, Input, Select, InputNumber } from 'antd';
 
 export default function CreateAccount({ formValues, setFormValues }) {
+  const errorMessage = useSelector(state => state.user.errorMessage);
   return (
     <div>
       <h1>Sign up</h1>
@@ -59,6 +62,7 @@ export default function CreateAccount({ formValues, setFormValues }) {
           value={formValues.confirmPassword}
         />
       </Form.Item>
+      {errorMessage && <p>{errorMessage}</p>}
     </div>
   );
 }
