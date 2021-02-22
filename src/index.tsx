@@ -68,7 +68,6 @@ function RAP() {
             component={() => <HomePage LoadingComponent={LoadingComponent} />}
           />
           {/* Any routes you need secured by role should be registered as PrivateRoutes */}
-
           <PrivateRoute path="/admin" roles={['admin']} component={Admin} />
           <Route path="/apply" component={Apply} />
 

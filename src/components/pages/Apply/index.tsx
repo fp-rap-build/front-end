@@ -10,31 +10,41 @@ import BasicInformation from './forms/BasicInformation';
 
 import SecondaryContact from './forms/SecondaryContact';
 
+import CreateAccount from './forms/CreateAccount';
+
 import Button from 'antd/lib/button';
 
 import styles from '../../../styles/pages/apply.module.css';
-import { applyForRentalAssistance } from '../../../redux/users/userActions';
+import { registerAndApply } from '../../../redux/users/userActions';
 
 import emailjs, { init } from 'emailjs-com';
 
-// const INITIAL_VALUES_DEV = {
-//   address: '3211 East Ave',
-//   cityName: 'Erie',
-//   zipCode: '16504',
-//   state: 'Pennsylvania',
-//   role: 'tenant',
-//   familySize: 2,
-//   beds: 4,
-//   monthlyIncome: 1000,
-//   tenantName: 'tenant',
-//   tenantEmail: 'tenant@gmail.com',
-//   tenantPhoneNumber: '111-222-3333',
-//   landlordName: 'landlord',
-//   landlordEmail: 'landlord@gmail.com',
-//   landlordPhoneNumber: '111-222-3333',
-// };
+const INITIAL_VALUES_DEV = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  address: '3211 East Ave',
+  cityName: 'Erie',
+  zipCode: '16504',
+  state: 'Pennsylvania',
+  role: 'tenant',
+  familySize: 2,
+  beds: 4,
+  monthlyIncome: 1000,
+  tenantName: 'tenant',
+  tenantEmail: 'tenant@gmail.com',
+  tenantPhoneNumber: '111-222-3333',
+  landlordName: 'landlord',
+  landlordEmail: 'landlord@gmail.com',
+  landlordPhoneNumber: '111-222-3333',
+};
 
 const INITIAL_VALUES_PROD = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
   address: '',
   cityName: '',
   zipCode: '',
@@ -47,6 +57,8 @@ const INITIAL_VALUES_PROD = {
   landlordName: '',
   landlordEmail: '',
 };
+
+const finalStep = 2;
 
 //initiating connection to email service
 
@@ -65,7 +77,7 @@ export default function Index() {
 
   const goBackwards = () => setStep(step - 1);
 
-  const [formValues, setFormValues] = useState(INITIAL_VALUES_PROD);
+  const [formValues, setFormValues] = useState(INITIAL_VALUES_DEV);
 
   const handleChange = e => {
     setFormValues({
@@ -77,6 +89,17 @@ export default function Index() {
 
   const handleSubmit = () => {
     const user = {
+      firstName: formValues.firstName,
+      lastName: formValues.lastName,
+      email: formValues.email,
+      password: formValues.password,
+    };
+
+    const userInfo = {
+      firstName: formValues.firstName,
+      lastName: formValues.lastName,
+      email: formValues.email,
+      password: formValues.password,
       role: formValues.role,
       monthlyIncome: Number(formValues.monthlyIncome),
       familySize: formValues.familySize,
@@ -91,28 +114,28 @@ export default function Index() {
       state: formValues.state,
     };
 
-    dispatch(applyForRentalAssistance(user, address, history));
+    dispatch(registerAndApply(userInfo, address, history));
 
-    let name,
-      email = null;
+    // let name,
+    //   email = null;
 
-    if (user.role === 'tenant') {
-      name = formValues.landlordName;
-      email = formValues.landlordEmail;
-    } else {
-      name = formValues.tenantName;
-      email = formValues.tenantEmail;
-    }
+    // if (userInfo.role === 'tenant') {
+    //   name = formValues.landlordName;
+    //   email = formValues.landlordEmail;
+    // } else {
+    //   name = formValues.tenantName;
+    //   email = formValues.tenantEmail;
+    // }
 
-    const emailPayload = {
-      to_name: name,
-      from_name: fullName,
-      user_email: email,
-      message:
-        'Enter whatever message J has for us to send plus an invite link',
-    };
+    // const emailPayload = {
+    //   to_name: name,
+    //   from_name: fullName,
+    //   user_email: email,
+    //   message:
+    //     'Enter whatever message J has for us to send plus an invite link',
+    // };
 
-    sendEmail(emailPayload);
+    // sendEmail(emailPayload);
   };
 
   const fullName = userName.firstName + ' ' + userName.lastName;
@@ -141,7 +164,7 @@ export default function Index() {
       <Form
         layout="vertical"
         onChange={handleChange}
-        onFinish={step === 1 ? handleSubmit : () => goForward()}
+        onFinish={step === finalStep ? handleSubmit : () => goForward()}
         className={styles.form}
       >
         <RenderForm {...props} />
@@ -152,7 +175,6 @@ export default function Index() {
 }
 
 const FormNavigation = ({ step, goBackwards, loading }) => {
-  let finalStep = 1;
   return (
     <div className={styles.formNavigation}>
       {step > 0 && <Button onClick={() => goBackwards()}>Previous</Button>}
@@ -181,5 +203,7 @@ const RenderForm = ({ step, formValues, setFormValues }) => {
       return <BasicInformation {...props} />;
     case 1:
       return <SecondaryContact {...props} />;
+    case 2:
+      return <CreateAccount {...props} />;
   }
 };

@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 export const axiosWithAuth = () => {
-  const token = JSON.parse(localStorage.getItem('okta-token-storage'))?.idToken
-    ?.value;
+  const token = localStorage.getItem('token');
 
   return axios.create({
     headers: {

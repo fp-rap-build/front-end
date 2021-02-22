@@ -2,6 +2,8 @@ import { axiosWithAuth } from '../../api/axiosWithAuth';
 
 import { setLoading } from '../global/globalActions';
 
+import createOktaAccount from './utils/createOktaAccount';
+
 export const setCurrentUser = () => async dispatch => {
   dispatch(setLoading(true));
   try {
@@ -16,14 +18,23 @@ export const setCurrentUser = () => async dispatch => {
   }
 };
 
-export const applyForRentalAssistance = (
+export const registerAndApply = (
   userInfo,
   addressInfo,
   history
 ) => async dispatch => {
+  const user = {
+    firstName: userInfo.firstName,
+    lastName: userInfo.lastName,
+    email: userInfo.email,
+    password: userInfo.password,
+    role: userInfo.role,
+  };
+
   dispatch(setLoading(true));
 
   try {
+    await createOktaAccount(user);
     await axiosWithAuth().put('/users/me', userInfo);
     await axiosWithAuth().put('/users/me/address', addressInfo);
 
