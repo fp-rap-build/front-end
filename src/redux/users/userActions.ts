@@ -68,25 +68,48 @@ export const logIn = (user, history) => async dispatch => {
   }
 };
 
-export const registerAndApply = (
-  userInfo,
-  addressInfo,
-  history
-) => async dispatch => {
+export const registerAndApply = (userValues, history) => async dispatch => {
+  // Values directly attached to their account
+
   const user = {
-    firstName: userInfo.firstName,
-    lastName: userInfo.lastName,
-    email: userInfo.email,
-    password: userInfo.password,
-    role: userInfo.role,
+    firstName: userValues.firstName,
+    lastName: userValues.lastName,
+    email: userValues.email,
+    password: userValues.password,
+    role: userValues.role,
+    familySize: userValues.familySize,
+    monthlyIncome: Number(userValues.monthlyIncome),
+    isRequestingAssistance: true,
+  };
+
+  // Address information
+
+  const userAddress = {
+    address: userValues.address,
+    cityName: userValues.cityName,
+    zipCode: userValues.zipCode,
+    state: userValues.state,
   };
 
   dispatch(setLoading(true));
 
   try {
-    await createOktaAccount(user);
-    await axiosWithAuth().put('/users/me', userInfo);
-    await axiosWithAuth().put('/users/me/address', addressInfo);
+    // Register an account
+
+    let res = await axiosWithAuth().post('/auth/register', user);
+
+    // Login
+
+    const token = res.data.token;
+    const currentUser = res.data.user;
+
+    localStorage.setItem('token', token);
+
+    dispatch(setCurrentUser(currentUser));
+
+    // Update address information
+
+    await axiosWithAuth().put('/users/me/address', userAddress);
 
     history.push('/');
   } catch (error) {

@@ -19,10 +19,12 @@ import { registerAndApply } from '../../../redux/users/userActions';
 
 import emailjs, { init } from 'emailjs-com';
 
+import faker from 'faker';
+
 const INITIAL_VALUES_DEV = {
-  firstName: '',
-  lastName: '',
-  email: '',
+  firstName: faker.name.firstName(),
+  lastName: faker.name.lastName(),
+  email: faker.internet.email(),
   password: '',
   address: '3211 East Ave',
   cityName: 'Erie',
@@ -88,33 +90,7 @@ export default function Index() {
   };
 
   const handleSubmit = () => {
-    const user = {
-      firstName: formValues.firstName,
-      lastName: formValues.lastName,
-      email: formValues.email,
-      password: formValues.password,
-    };
-
-    const userInfo = {
-      firstName: formValues.firstName,
-      lastName: formValues.lastName,
-      email: formValues.email,
-      password: formValues.password,
-      role: formValues.role,
-      monthlyIncome: Number(formValues.monthlyIncome),
-      familySize: formValues.familySize,
-      isRequestingAssistance: true,
-      requestStatus: 'received',
-    };
-
-    const address = {
-      address: formValues.address,
-      cityName: formValues.cityName,
-      zipCode: formValues.zipCode,
-      state: formValues.state,
-    };
-
-    dispatch(registerAndApply(userInfo, address, history));
+    dispatch(registerAndApply(formValues, history));
 
     // let name,
     //   email = null;
