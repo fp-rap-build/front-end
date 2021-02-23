@@ -11,7 +11,7 @@ const INITIAL_VALUES = {
   lastName: '',
   email: '',
   role: 'programManager',
-  organizationId: 1,
+  organizationId: null,
   // organization: 'Family Promise of Spokane',
   // role: 'account manager',
 };
@@ -64,7 +64,14 @@ const ProgramMgrForm = () => {
           initialValue={formValues.firstName}
           label="First Name"
           name="firstName"
-          rules={[{ required: true, message: 'required' }]}
+          hasFeedback
+          rules={[
+            { required: true, message: 'First Name is required' },
+            {
+              min: 2,
+              message: 'First Name must be a minimum of two characters.',
+            },
+          ]}
         >
           <Input
             name="firstName"
@@ -78,7 +85,14 @@ const ProgramMgrForm = () => {
           initialValue={formValues.lastName}
           label="Last Name"
           name="lastName"
-          rules={[{ required: true, message: 'required' }]}
+          hasFeedback
+          rules={[
+            { required: true, message: 'Last Name is required' },
+            {
+              min: 3,
+              message: 'Last Name must be a minimum of three characters.',
+            },
+          ]}
         >
           <Input
             name="lastName"
@@ -90,9 +104,16 @@ const ProgramMgrForm = () => {
 
         <Form.Item
           initialValue={formValues.email}
-          rules={[{ required: true, message: 'required' }]}
           label="E-mail"
           name="email"
+          hasFeedback
+          rules={[
+            { required: true, message: 'Email is required' },
+            {
+              type: 'email',
+              message: 'Input a valid Email!',
+            },
+          ]}
         >
           <Input
             name="email"
@@ -131,6 +152,17 @@ const ProgramMgrForm = () => {
           {loading ? 'Creating program manager..' : 'Submit'}
         </Button>
       </Form>
+
+      <Button
+        onClick={handleSumbit}
+        disabled={
+          !formValues.firstName || !formValues.lastName || !formValues.email
+            ? true
+            : false
+        }
+      >
+        Submit
+      </Button>
     </div>
   );
 };
