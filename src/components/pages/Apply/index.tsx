@@ -10,14 +10,25 @@ import BasicInformation from './forms/BasicInformation';
 
 import SecondaryContact from './forms/SecondaryContact';
 
+import CreateAccount from './forms/CreateAccount';
+
 import Button from 'antd/lib/button';
 
 import styles from '../../../styles/pages/apply.module.css';
-import { applyForRentalAssistance } from '../../../redux/users/userActions';
+import { registerAndApply } from '../../../redux/users/userActions';
 
 import emailjs, { init } from 'emailjs-com';
 
+import { clearErrorMessage } from '../../../redux/users/userActions';
+
+import { setErrorMessage } from '../../../redux/global/globalActions';
+
 // const INITIAL_VALUES_DEV = {
+//   firstName: faker.name.firstName(),
+//   lastName: faker.name.lastName(),
+//   email: faker.internet.email(),
+//   password: '',
+//   confirmPassword: '',
 //   address: '3211 East Ave',
 //   cityName: 'Erie',
 //   zipCode: '16504',
@@ -35,6 +46,11 @@ import emailjs, { init } from 'emailjs-com';
 // };
 
 const INITIAL_VALUES_PROD = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
   address: '',
   cityName: '',
   zipCode: '',
@@ -48,12 +64,17 @@ const INITIAL_VALUES_PROD = {
   landlordEmail: '',
 };
 
+const finalStep = 2;
+
 //initiating connection to email service
 
 init(process.env.REACT_APP_EMAIL_USER_ID);
 
 export default function Index() {
   const loading = useSelector(state => state.global.isLoading);
+
+  const errorMessage = useSelector(state => state.user.errorMessage);
+
   const dispatch = useDispatch();
 
   const userName = useSelector(theState => theState.user.currentUser);
@@ -68,35 +89,38 @@ export default function Index() {
   const [formValues, setFormValues] = useState(INITIAL_VALUES_PROD);
 
   const handleChange = e => {
+    // Clean up any error message after the user types
+    if (errorMessage) {
+      dispatch(clearErrorMessage());
+    }
+
     setFormValues({
       ...formValues,
       [e.target.name]: e.target.value,
     });
-    console.log(formValues);
   };
 
   const handleSubmit = () => {
-    const user = {
-      role: formValues.role,
-      monthlyIncome: Number(formValues.monthlyIncome),
-      familySize: formValues.familySize,
-      isRequestingAssistance: true,
-      requestStatus: 'received',
-    };
+    // Break out of the submit if there are errors
+    if (errorMessage) return;
 
-    const address = {
-      address: formValues.address,
-      cityName: formValues.cityName,
-      zipCode: formValues.zipCode,
-      state: formValues.state,
-    };
+    // Check if passwords match
+    if (formValues.password !== formValues.confirmPassword) {
+      return dispatch(setErrorMessage('Passwords must match'));
+    }
 
-    dispatch(applyForRentalAssistance(user, address, history));
+    if (formValues.password.length < 10) {
+      return dispatch(
+        setErrorMessage('Password must be at least 10 characters')
+      );
+    }
+
+    dispatch(registerAndApply(formValues, history));
 
     let name,
       email = null;
 
-    if (user.role === 'tenant') {
+    if (formValues.role === 'tenant') {
       name = formValues.landlordName;
       email = formValues.landlordEmail;
     } else {
@@ -141,7 +165,7 @@ export default function Index() {
       <Form
         layout="vertical"
         onChange={handleChange}
-        onFinish={step === 1 ? handleSubmit : () => goForward()}
+        onFinish={step === finalStep ? handleSubmit : () => goForward()}
         className={styles.form}
       >
         <RenderForm {...props} />
@@ -152,7 +176,6 @@ export default function Index() {
 }
 
 const FormNavigation = ({ step, goBackwards, loading }) => {
-  let finalStep = 1;
   return (
     <div className={styles.formNavigation}>
       {step > 0 && <Button onClick={() => goBackwards()}>Previous</Button>}
@@ -181,5 +204,7 @@ const RenderForm = ({ step, formValues, setFormValues }) => {
       return <BasicInformation {...props} />;
     case 1:
       return <SecondaryContact {...props} />;
+    case 2:
+      return <CreateAccount {...props} />;
   }
 };

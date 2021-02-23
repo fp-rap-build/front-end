@@ -1,44 +1,39 @@
 import React from 'react';
 
+import { useSelector, useDispatch } from 'react-redux';
+
 import { useHistory } from 'react-router-dom';
+
+import logo from '../../../assets/logo.png';
+
+import { logOut } from '../../../redux/users/userActions';
 
 import styles from '../../../styles/Layout/navbar.module.css';
 
-import { useOktaAuth } from '@okta/okta-react';
-
 function Navbar() {
-  const { authState, authService } = useOktaAuth();
+  const history = useHistory();
+
+  const dispatch = useDispatch();
+
+  const isLoggedIn = useSelector(state => state.user.isLoggedIn);
 
   const redirectToHome = () => {
-    if (authState.isAuthenticated) {
-      history.push('/');
-    }
-    return;
+    history.push('/');
   };
 
-  const redirectToLogin = () => {
-    history.push('/login');
-  };
-
-  const history = useHistory();
   const handleLogout = () => {
-    authService.logout();
-    localStorage.clear();
+    dispatch(logOut(history));
   };
 
   return (
-    <nav className={styles.nav}>
-      <div onClick={redirectToHome} className={styles.logo}>
-        <h2>RAP</h2>
-      </div>
-      <ul className={styles.navActions}>
-        {authState.isAuthenticated ? (
-          <li onClick={handleLogout}>Logout</li>
-        ) : (
-          <li onClick={redirectToLogin}>Login</li>
-        )}
-      </ul>
-    </nav>
+    <div className={styles.container}>
+      <nav className={styles.nav}>
+        <img alt="Family promise logo" onClick={redirectToHome} src={logo} />
+        <ul className={styles.navActions}>
+          {isLoggedIn && <li onClick={handleLogout}>Logout</li>}
+        </ul>
+      </nav>
+    </div>
   );
 }
 
