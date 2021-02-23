@@ -43,12 +43,7 @@ export default function CreateAccount({ formValues, setFormValues }) {
         label="Password"
         name="password"
       >
-        <Input
-          type="password"
-          name="password"
-          placeholder="example@mail.com"
-          value={formValues.password}
-        />
+        <Input type="password" name="password" value={formValues.password} />
       </Form.Item>
       <Form.Item
         initialValue={formValues.confirmPassword}
@@ -58,7 +53,6 @@ export default function CreateAccount({ formValues, setFormValues }) {
         <Input
           type="password"
           name="confirmPassword"
-          placeholder="example@mail.com"
           value={formValues.confirmPassword}
         />
       </Form.Item>

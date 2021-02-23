@@ -152,17 +152,6 @@ const ProgramMgrForm = () => {
           {loading ? 'Creating program manager..' : 'Submit'}
         </Button>
       </Form>
-
-      <Button
-        onClick={handleSumbit}
-        disabled={
-          !formValues.firstName || !formValues.lastName || !formValues.email
-            ? true
-            : false
-        }
-      >
-        Submit
-      </Button>
     </div>
   );
 };
