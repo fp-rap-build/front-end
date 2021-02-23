@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { Form, Input, Select, InputNumber } from 'antd';
+import { Form, Input } from 'antd';
 
 export default function CreateAccount({ formValues, setFormValues }) {
   const errorMessage = useSelector(state => state.user.errorMessage);

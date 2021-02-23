@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { axiosWithAuth } from '../../../../api/axiosWithAuth';
 
 const createProgramMgr = async user => {

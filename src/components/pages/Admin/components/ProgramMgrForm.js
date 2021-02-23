@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Form, Input, Select, Button, message } from 'antd';
 import styles from '../../../../styles/pages/create.module.css';
 
@@ -18,12 +17,9 @@ const INITIAL_VALUES = {
 };
 
 const ProgramMgrForm = () => {
-  const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [formValues, setFormValues] = useState(INITIAL_VALUES);
   const [orgs, setOrgs] = useState([]);
-
-  const history = useHistory();
 
   const fetchOrgs = async () => {
     try {

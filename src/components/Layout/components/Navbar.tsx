@@ -21,10 +21,6 @@ function Navbar() {
     history.push('/');
   };
 
-  const redirectToLogin = () => {
-    history.push('/login');
-  };
-
   const handleLogout = () => {
     dispatch(logOut(history));
   };
@@ -32,7 +28,7 @@ function Navbar() {
   return (
     <div className={styles.container}>
       <nav className={styles.nav}>
-        <img onClick={redirectToHome} src={logo} />
+        <img alt="Family promise logo" onClick={redirectToHome} src={logo} />
         <ul className={styles.navActions}>
           {isLoggedIn && <li onClick={handleLogout}>Logout</li>}
         </ul>

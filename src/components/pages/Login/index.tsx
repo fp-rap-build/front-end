@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Form, Input, Button, Checkbox, message } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { clearErrorMessage, logIn } from '../../../redux/users/userActions';
 import styles from '../../../styles/pages/login.module.css';
@@ -59,9 +59,9 @@ export default function Index() {
           />
         </Form.Item>
 
-        <a className="login-form-forgot" href="">
+        {/* <a className="login-form-forgot" href="">
           Forgot password?
-        </a>
+        </a> */}
 
         {/* Submit */}
         <Form.Item>

@@ -1,12 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-  BrowserRouter as Router,
-  Route,
-  useHistory,
-  Switch,
-} from 'react-router-dom';
-import { Security, LoginCallback, SecureRoute } from '@okta/okta-react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import 'antd/dist/antd.less';
 
@@ -23,10 +17,8 @@ import LandingPage from './components/pages/Landing';
 
 import Apply from './components/pages/Apply';
 
-import { config } from './utils/oktaConfig';
 import store from './redux/store';
 import { Provider } from 'react-redux';
-import LoadingComponent from './components/common/LoadingComponent';
 
 import PrivateRoute from './utils/auth/PrivateRoute';
 
@@ -46,7 +38,6 @@ ReactDOM.render(
 function RAP() {
   // The reason to declare App this way is so that we can use any helper functions we'd need for business logic, in our case auth.
   // React Router has a nifty useHistory hook we can use at this level to ensure we have security around our routes.
-  const history = useHistory();
 
   return (
     <Layout>

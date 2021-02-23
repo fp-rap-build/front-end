@@ -21,30 +21,29 @@ import emailjs, { init } from 'emailjs-com';
 
 import { clearErrorMessage } from '../../../redux/users/userActions';
 
-import faker from 'faker';
 import { setErrorMessage } from '../../../redux/global/globalActions';
 
-const INITIAL_VALUES_DEV = {
-  firstName: faker.name.firstName(),
-  lastName: faker.name.lastName(),
-  email: faker.internet.email(),
-  password: '',
-  confirmPassword: '',
-  address: '3211 East Ave',
-  cityName: 'Erie',
-  zipCode: '16504',
-  state: 'Pennsylvania',
-  role: 'tenant',
-  familySize: 2,
-  beds: 4,
-  monthlyIncome: 1000,
-  tenantName: 'tenant',
-  tenantEmail: 'tenant@gmail.com',
-  tenantPhoneNumber: '111-222-3333',
-  landlordName: 'landlord',
-  landlordEmail: 'landlord@gmail.com',
-  landlordPhoneNumber: '111-222-3333',
-};
+// const INITIAL_VALUES_DEV = {
+//   firstName: faker.name.firstName(),
+//   lastName: faker.name.lastName(),
+//   email: faker.internet.email(),
+//   password: '',
+//   confirmPassword: '',
+//   address: '3211 East Ave',
+//   cityName: 'Erie',
+//   zipCode: '16504',
+//   state: 'Pennsylvania',
+//   role: 'tenant',
+//   familySize: 2,
+//   beds: 4,
+//   monthlyIncome: 1000,
+//   tenantName: 'tenant',
+//   tenantEmail: 'tenant@gmail.com',
+//   tenantPhoneNumber: '111-222-3333',
+//   landlordName: 'landlord',
+//   landlordEmail: 'landlord@gmail.com',
+//   landlordPhoneNumber: '111-222-3333',
+// };
 
 const INITIAL_VALUES_PROD = {
   firstName: '',
@@ -87,7 +86,7 @@ export default function Index() {
 
   const goBackwards = () => setStep(step - 1);
 
-  const [formValues, setFormValues] = useState(INITIAL_VALUES_DEV);
+  const [formValues, setFormValues] = useState(INITIAL_VALUES_PROD);
 
   const handleChange = e => {
     // Clean up any error message after the user types
@@ -108,6 +107,12 @@ export default function Index() {
     // Check if passwords match
     if (formValues.password !== formValues.confirmPassword) {
       return dispatch(setErrorMessage('Passwords must match'));
+    }
+
+    if (formValues.password.length < 10) {
+      return dispatch(
+        setErrorMessage('Password must be at least 10 characters')
+      );
     }
 
     dispatch(registerAndApply(formValues, history));
