@@ -112,26 +112,26 @@ export default function Index() {
 
     dispatch(registerAndApply(formValues, history));
 
-    // let name,
-    //   email = null;
+    let name,
+      email = null;
 
-    // if (userInfo.role === 'tenant') {
-    //   name = formValues.landlordName;
-    //   email = formValues.landlordEmail;
-    // } else {
-    //   name = formValues.tenantName;
-    //   email = formValues.tenantEmail;
-    // }
+    if (formValues.role === 'tenant') {
+      name = formValues.landlordName;
+      email = formValues.landlordEmail;
+    } else {
+      name = formValues.tenantName;
+      email = formValues.tenantEmail;
+    }
 
-    // const emailPayload = {
-    //   to_name: name,
-    //   from_name: fullName,
-    //   user_email: email,
-    //   message:
-    //     'Enter whatever message J has for us to send plus an invite link',
-    // };
+    const emailPayload = {
+      to_name: name,
+      from_name: fullName,
+      user_email: email,
+      message:
+        'Enter whatever message J has for us to send plus an invite link',
+    };
 
-    // sendEmail(emailPayload);
+    sendEmail(emailPayload);
   };
 
   const fullName = userName.firstName + ' ' + userName.lastName;
