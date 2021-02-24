@@ -23,6 +23,8 @@ import { clearErrorMessage } from '../../../redux/users/userActions';
 
 import { setErrorMessage } from '../../../redux/global/globalActions';
 
+// import faker from 'faker'
+
 // const INITIAL_VALUES_DEV = {
 //   firstName: faker.name.firstName(),
 //   lastName: faker.name.lastName(),
@@ -31,7 +33,7 @@ import { setErrorMessage } from '../../../redux/global/globalActions';
 //   confirmPassword: '',
 //   address: '3211 East Ave',
 //   cityName: 'Erie',
-//   zipCode: '16504',
+//   zipCode: 16504,
 //   state: 'Pennsylvania',
 //   role: 'tenant',
 //   familySize: 2,
@@ -93,6 +95,8 @@ export default function Index() {
     if (errorMessage) {
       dispatch(clearErrorMessage());
     }
+
+    console.log(typeof formValues.zipCode);
 
     setFormValues({
       ...formValues,

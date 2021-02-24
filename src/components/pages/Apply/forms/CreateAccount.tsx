@@ -14,9 +14,17 @@ export default function CreateAccount({ formValues, setFormValues }) {
         login to check your status
       </h4>
       <Form.Item
+        hasFeedback
         initialValue={formValues.firstName}
         label="First Name"
         name="firstName"
+        rules={[
+          {
+            type: 'string',
+            required: true,
+            message: 'Please enter your first name',
+          },
+        ]}
       >
         <Input
           name="firstName"
@@ -28,10 +36,30 @@ export default function CreateAccount({ formValues, setFormValues }) {
         initialValue={formValues.lastName}
         label="Last Name"
         name="lastName"
+        hasFeedback
+        rules={[
+          {
+            type: 'string',
+            required: true,
+            message: 'Please enter your last name',
+          },
+        ]}
       >
         <Input name="lastName" placeholder="Doe" value={formValues.lastName} />
       </Form.Item>
-      <Form.Item initialValue={formValues.email} label="E-mail" name="email">
+      <Form.Item
+        hasFeedback
+        initialValue={formValues.email}
+        label="E-mail"
+        name="email"
+        rules={[
+          {
+            type: 'email',
+            required: true,
+            message: 'Please enter a valid email',
+          },
+        ]}
+      >
         <Input
           name="email"
           placeholder="example@mail.com"
@@ -39,9 +67,17 @@ export default function CreateAccount({ formValues, setFormValues }) {
         />
       </Form.Item>
       <Form.Item
+        hasFeedback
         initialValue={formValues.password}
         label="Password"
         name="password"
+        rules={[
+          {
+            required: true,
+            min: 10,
+            message: 'Password must be at least 10 characters',
+          },
+        ]}
       >
         <Input type="password" name="password" value={formValues.password} />
       </Form.Item>

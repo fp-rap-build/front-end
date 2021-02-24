@@ -19,6 +19,7 @@ export default function BasicInformation({ formValues, setFormValues }) {
     <div>
       <h2>Basic Information</h2>
       <Form.Item
+        hasFeedback
         initialValue={formValues.role}
         label="Are you a Landlord or Tenant?"
         name="role"
@@ -34,6 +35,7 @@ export default function BasicInformation({ formValues, setFormValues }) {
       </Form.Item>
 
       <Form.Item
+        hasFeedback
         initialValue={formValues.state}
         label="State"
         name="state"
@@ -54,6 +56,7 @@ export default function BasicInformation({ formValues, setFormValues }) {
         </Select>
       </Form.Item>
       <Form.Item
+        hasFeedback
         initialValue={formValues.cityName}
         label="City"
         name="cityName"
@@ -63,6 +66,7 @@ export default function BasicInformation({ formValues, setFormValues }) {
       </Form.Item>
 
       <Form.Item
+        hasFeedback
         initialValue={formValues.address}
         label="Address"
         name="address"
@@ -71,33 +75,70 @@ export default function BasicInformation({ formValues, setFormValues }) {
         <Input name="address" />
       </Form.Item>
       <Form.Item
+        hasFeedback
         initialValue={formValues.zipCode}
         label="Postal Code"
         name="zipCode"
-        rules={[{ required: true, message: 'Postal is required' }]}
+        rules={[
+          {
+            type: 'number',
+            required: true,
+            message: 'Postal code is required',
+          },
+          {
+            type: 'number',
+            required: true,
+            message: 'Invalid postal code',
+            min: 0,
+          },
+        ]}
       >
-        <Input name="zipCode" />
+        <InputNumber style={{ width: '100%' }} name="zipCode" />
       </Form.Item>
       <Form.Item
         name="familySize"
         initialValue={formValues.familySize}
         label="Family Size"
         required
-        rules={[{ required: true, message: 'required' }]}
+        hasFeedback
+        rules={[
+          {
+            type: 'number',
+            required: true,
+            message: 'Please enter a valid number',
+          },
+          {
+            type: 'number',
+            required: true,
+            min: 1,
+            max: 100,
+            message: 'Please enter a number that is in range',
+          },
+        ]}
       >
-        <Input
-          type="number"
+        <InputNumber
+          style={{ width: '100%' }}
           name="familySize"
           value={formValues.familySize}
-          min={1}
-          max={20}
         />
       </Form.Item>
       <Form.Item
+        hasFeedback
         name="monthlyIncome"
         initialValue={formValues.monthlyIncome}
         label="Monthly Income"
-        rules={[{ required: true, message: 'required' }]}
+        rules={[
+          {
+            type: 'number',
+            required: true,
+            message: 'Please enter your montly income',
+          },
+          {
+            type: 'number',
+            message: 'Please enter a valid number',
+            min: 0,
+          },
+        ]}
       >
         <InputNumber name="monthlyIncome" style={{ width: '100%' }} min={0} />
       </Form.Item>
