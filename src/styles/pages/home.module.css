@@ -8,12 +8,13 @@
   gap: 2rem;
 }
 
-.info {
-  width: 75%;
+.heading {
+  text-align: center;
+  margin-top: 2%;
 }
 
 @media (max-width: 500px) {
   .info {
-    width: 95%;
+    width: 100%;
   }
 }
