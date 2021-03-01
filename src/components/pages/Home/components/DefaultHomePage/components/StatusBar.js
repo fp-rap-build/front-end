@@ -1,6 +1,11 @@
 import React from 'react';
 
 import { Steps } from 'antd';
+import {
+  FileDoneOutlined,
+  AuditOutlined,
+  FolderOpenOutlined,
+} from '@ant-design/icons';
 
 import styles from './statusBar.module.css';
 
@@ -25,25 +30,29 @@ const StatusBar = props => {
     }
   };
 
-  console.log('Test Switch should be one');
+  const currentStatus = statusToNum(user.requestStatus);
 
   return (
     <>
       <h2>Status Bar</h2>
       <Steps
-        current={statusToNum(user.requestStatus)}
-        responsive
+        current={currentStatus}
+        labelPlacement="vertical"
         className={styles.steps}
       >
         <Step
+          icon={<FileDoneOutlined />}
+          className={styles.completed}
           title="Received"
-          description="Your application was succesfully created and received by our approval team."
-        />
+          description="Your application has been received by our Approval Team."
+        ></Step>
         <Step
+          icon={<FolderOpenOutlined />}
           title="In Review"
-          description="Your application is currently being reviewed by our Approval Team"
+          description="Your application is being reviewed by our Approval Team"
         />
         <Step
+          icon={<AuditOutlined />}
           title="Decision"
           description="Dyamic Decision responce here approved/denied with green/ red "
         />
