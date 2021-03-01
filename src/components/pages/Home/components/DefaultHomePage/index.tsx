@@ -2,22 +2,13 @@ import React from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { useHistory } from 'react-router-dom';
 import styles from '../../../../../styles/pages/home.module.css';
 
-import { Button } from 'antd';
-
 import RentalAssistanceProgramBlurb from './components/RentalAssistanceProgramBlurb';
+import StatusBar from './components/StatusBar';
 
 export default function Index() {
-  const history = useHistory();
-
   const currentUser = useSelector(state => state.user.currentUser);
-
-  //Evt Handler to send to form
-  const routeToForm = () => {
-    history.push('/apply');
-  };
 
   return (
     <div className={styles.container}>
@@ -52,13 +43,7 @@ export default function Index() {
         )}
       </div>
 
-      {!currentUser.isRequestingAssistance && (
-        <p>
-          <Button type="primary" size="large" onClick={routeToForm}>
-            Apply for Rental Assistance
-          </Button>
-        </p>
-      )}
+      <StatusBar />
     </div>
   );
 }
