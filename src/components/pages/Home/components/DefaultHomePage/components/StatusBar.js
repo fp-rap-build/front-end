@@ -30,13 +30,21 @@ const StatusBar = props => {
     }
   };
 
-  const currentStatus = statusToNum(user.requestStatus);
+  const decsionDescription = status => {
+    if (status !== 'approved' || status !== 'denied') {
+      return 'Pending Approval Teams Review';
+    } else if (status === 'approved') {
+      return 'Approved! Check your e-mail for more details';
+    } else {
+      return 'Denied! Check your e-mail for more details';
+    }
+  };
 
   return (
     <>
       <h2>Status Bar</h2>
       <Steps
-        current={currentStatus}
+        current={statusToNum(user.requestStatus)}
         labelPlacement="vertical"
         className={styles.steps}
       >
@@ -54,7 +62,7 @@ const StatusBar = props => {
         <Step
           icon={<AuditOutlined />}
           title="Decision"
-          description="Dyamic Decision responce here approved/denied with green/ red "
+          description={decsionDescription(user.requestStatus)}
         />
       </Steps>
     </>
