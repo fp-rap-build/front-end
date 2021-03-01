@@ -31,12 +31,12 @@ const StatusBar = props => {
   };
 
   const decsionDescription = status => {
-    if (status !== 'approved' || status !== 'denied') {
-      return 'Pending Approval Teams Review';
-    } else if (status === 'approved') {
-      return 'Approved! Check your e-mail for more details';
+    if (status === 'approved') {
+      return 'Approved - Check e-mail for next steps';
+    } else if (status === 'denied') {
+      return 'Denied - Check e-mail for next steps';
     } else {
-      return 'Denied! Check your e-mail for more details';
+      return 'Pending review from Approval Team';
     }
   };
 
