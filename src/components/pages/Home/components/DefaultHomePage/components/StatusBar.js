@@ -45,6 +45,7 @@ const StatusBar = props => {
       <Typography.Title level={4} className={styles.heading}>
         Request Status:
       </Typography.Title>
+      <br />
       <Steps
         current={statusToNum(user.requestStatus)}
         labelPlacement="vertical"

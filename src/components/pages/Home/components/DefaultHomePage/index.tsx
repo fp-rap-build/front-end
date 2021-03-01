@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { Space, Typography } from 'antd';
+import { Typography } from 'antd';
 
 import styles from '../../../../../styles/pages/home.module.css';
 
@@ -13,13 +13,12 @@ export default function Index() {
 
   return (
     <div className={styles.container}>
-      <div>
-        <Typography.Title level={2} className={styles.heading}>
-          {' '}
-          Hi {currentUser.firstName}, Welcome to the Family Promise Rental
-          Assistance Program
-        </Typography.Title>
-      </div>
+      <Typography.Title level={2} className={styles.heading}>
+        {' '}
+        Hi {currentUser.firstName}, Welcome to the Family Promise Rental
+        Assistance Program
+      </Typography.Title>
+
       <StatusBar user={currentUser} />
     </div>
   );
