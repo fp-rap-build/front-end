@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Steps } from 'antd';
+import { Steps, Typography } from 'antd';
 import {
   FileDoneOutlined,
   AuditOutlined,
@@ -41,8 +41,10 @@ const StatusBar = props => {
   };
 
   return (
-    <>
-      <h2>Status Bar</h2>
+    <div className={styles.container}>
+      <Typography.Title level={4} className={styles.heading}>
+        Request Status:
+      </Typography.Title>
       <Steps
         current={statusToNum(user.requestStatus)}
         labelPlacement="vertical"
@@ -65,7 +67,7 @@ const StatusBar = props => {
           description={decsionDescription(user.requestStatus)}
         />
       </Steps>
-    </>
+    </div>
   );
 };
 

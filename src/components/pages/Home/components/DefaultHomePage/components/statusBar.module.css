@@ -1,4 +1,9 @@
-.steps {
-  width: 90%; 
-  margin: 0 auto,
+.container {
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.heading {
+  margin-bottom: 3%;
 }
