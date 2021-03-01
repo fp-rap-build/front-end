@@ -43,7 +43,7 @@ export default function Index() {
         )}
       </div>
 
-      <StatusBar />
+      <StatusBar user={currentUser} />
     </div>
   );
 }
