@@ -59,7 +59,7 @@ const INITIAL_VALUES_PROD = {
   state: '',
   role: '',
   familySize: 1,
-  monthlyIncome: 1000,
+  monthlyIncome: 0,
   tenantName: '',
   tenantEmail: '',
   landlordName: '',

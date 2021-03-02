@@ -60,7 +60,13 @@ export default function BasicInformation({ formValues, setFormValues }) {
         initialValue={formValues.cityName}
         label="City"
         name="cityName"
-        rules={[{ required: true, message: 'City is required' }]}
+        rules={[
+          { required: true, message: 'City is required' },
+          {
+            pattern: RegExp(/^[a-zA-Z]+$/),
+            message: 'Enter a valid City Name',
+          },
+        ]}
       >
         <Input name="cityName" value={formValues.city} />
       </Form.Item>
@@ -70,7 +76,17 @@ export default function BasicInformation({ formValues, setFormValues }) {
         initialValue={formValues.address}
         label="Address"
         name="address"
-        rules={[{ required: true, message: 'Address is required' }]}
+        rules={[
+          {
+            required: true,
+            min: 3,
+            message: 'Address is required',
+          },
+          {
+            pattern: RegExp(/^[A-Za-z0-9 ]+$/),
+            message: 'Enter a valid Address',
+          },
+        ]}
       >
         <Input name="address" />
       </Form.Item>
@@ -86,10 +102,9 @@ export default function BasicInformation({ formValues, setFormValues }) {
             message: 'Postal code is required',
           },
           {
-            type: 'number',
             required: true,
+            pattern: RegExp(/^\d{5}$/),
             message: 'Invalid postal code',
-            min: 0,
           },
         ]}
       >
