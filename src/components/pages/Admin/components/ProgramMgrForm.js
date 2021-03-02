@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Form, Input, Select, Button } from 'antd';
-
+import { Form, Input, Select, Button, message } from 'antd';
 import styles from '../../../../styles/pages/create.module.css';
 
-import createAcctMgr from '../utils/createAcctManager';
+import createProgramMgr from '../utils/createProgramMgr';
 import { axiosWithAuth } from '../../../../api/axiosWithAuth';
 
 const INITIAL_VALUES = {
@@ -12,17 +10,16 @@ const INITIAL_VALUES = {
   firstName: '',
   lastName: '',
   email: '',
-  role: 'account manager',
-  organization_id: 1,
+  role: 'programManager',
+  organizationId: null,
   // organization: 'Family Promise of Spokane',
   // role: 'account manager',
 };
 
-const AcctMgrForm = () => {
+const ProgramMgrForm = () => {
+  const [loading, setLoading] = useState(false);
   const [formValues, setFormValues] = useState(INITIAL_VALUES);
   const [orgs, setOrgs] = useState([]);
-
-  const history = useHistory();
 
   const fetchOrgs = async () => {
     try {
@@ -43,24 +40,38 @@ const AcctMgrForm = () => {
   };
 
   const onOrgChange = value => {
-    setFormValues({ ...formValues, organization_id: value });
+    setFormValues({ ...formValues, organizationId: value });
   };
 
   const handleSumbit = async e => {
-    const msg = await createAcctMgr(formValues);
-    setFormValues(INITIAL_VALUES);
-    history.push('/admin');
-    alert(msg);
+    setLoading(true);
+    try {
+      await createProgramMgr(formValues);
+      setFormValues(INITIAL_VALUES);
+      message.success('Successfully created program manager');
+    } catch (error) {
+      message.error('Failed to create program manager');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className={styles.container}>
       <h2>Create a Program Manager:</h2>
-      <Form className={styles.form} layout="vertical">
+      <Form onFinish={handleSumbit} className={styles.form} layout="vertical">
         <Form.Item
           initialValue={formValues.firstName}
           label="First Name"
           name="firstName"
+          hasFeedback
+          rules={[
+            { required: true, message: 'First Name is required' },
+            {
+              min: 2,
+              message: 'First Name must be a minimum of two characters.',
+            },
+          ]}
         >
           <Input
             name="firstName"
@@ -74,6 +85,14 @@ const AcctMgrForm = () => {
           initialValue={formValues.lastName}
           label="Last Name"
           name="lastName"
+          hasFeedback
+          rules={[
+            { required: true, message: 'Last Name is required' },
+            {
+              min: 3,
+              message: 'Last Name must be a minimum of three characters.',
+            },
+          ]}
         >
           <Input
             name="lastName"
@@ -83,7 +102,19 @@ const AcctMgrForm = () => {
           />
         </Form.Item>
 
-        <Form.Item initialValue={formValues.email} label="E-mail" name="email">
+        <Form.Item
+          initialValue={formValues.email}
+          label="E-mail"
+          name="email"
+          hasFeedback
+          rules={[
+            { required: true, message: 'Email is required' },
+            {
+              type: 'email',
+              message: 'Input a valid Email!',
+            },
+          ]}
+        >
           <Input
             name="email"
             placeholder="example@mail.com"
@@ -93,7 +124,21 @@ const AcctMgrForm = () => {
         </Form.Item>
 
         <Form.Item
+          initialValue={formValues.password}
+          rules={[{ required: true, message: 'required' }]}
+          label="Password"
+          name="password"
+        >
+          <Input
+            name="password"
+            value={formValues.password}
+            onChange={onChange}
+          />
+        </Form.Item>
+
+        <Form.Item
           initialValue={formValues.organization}
+          rules={[{ required: true, message: 'required' }]}
           label="Organization"
           name="organization"
         >
@@ -103,11 +148,12 @@ const AcctMgrForm = () => {
             ))}
           </Select>
         </Form.Item>
+        <Button type="primary" htmlType="submit">
+          {loading ? 'Creating program manager..' : 'Submit'}
+        </Button>
       </Form>
-
-      <Button onClick={handleSumbit}>Submit</Button>
     </div>
   );
 };
 
-export default AcctMgrForm;
+export default ProgramMgrForm;

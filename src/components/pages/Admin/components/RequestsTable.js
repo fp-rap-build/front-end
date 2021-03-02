@@ -2,32 +2,35 @@ import React, { useState, useEffect } from 'react';
 
 import MaterialTable from 'material-table';
 
+import styles from '../../../../styles/pages/admin.module.css';
+
 import { tableIcons } from '../../../../utils/tableIcons';
-import { axiosWithAuth } from '../../../../api';
+import { axiosWithAuth } from '../../../../api/axiosWithAuth';
+
+import GavelIcon from '@material-ui/icons/Gavel';
+
+import Case from '../../../modals/Case';
 
 export default function RequestsTable() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [userBeingReviewed, setUserBeingReviewed] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
   const [state, setState] = useState({
     columns: [
       { title: 'First', field: 'firstName' },
       { title: 'Last ', field: 'lastName' },
       {
-        title: 'Request Status',
-        field: 'request_status',
-        lookup: {
-          received: 'Received',
-          in_review: 'In Review',
-          pending: 'Pending',
-          approved: 'Approved',
-          denied: 'Denied',
-        },
+        title: 'email',
+        field: 'email',
       },
       {
-        title: 'Requesting Assistance',
-        field: 'is_requesting_assistance',
+        title: 'Request Status',
+        field: 'requestStatus',
         lookup: {
-          true: 'true',
-          false: 'false',
+          received: 'Received',
+          inReview: 'In Review',
+          approved: 'Approved',
+          denied: 'Denied',
         },
       },
     ],
@@ -37,10 +40,10 @@ export default function RequestsTable() {
   const fetchUsers = async () => {
     setIsFetching(true);
     try {
-      let res = await axiosWithAuth().get('/users');
+      let res = await axiosWithAuth().get('/users/requests');
       setState({ ...state, data: res.data });
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
       alert('error');
     } finally {
       setIsFetching(false);
@@ -53,50 +56,47 @@ export default function RequestsTable() {
   }, []);
 
   return (
-    <MaterialTable
-      isLoading={isFetching}
-      options={{
-        // Allows users to export the data as a CSV file
-        exportButton: true,
-      }}
-      editable={{
-        // Disable deleting and editing if the user is an Admin
+    <div className={styles.container}>
+      {isOpen && (
+        <Case
+          setIsOpen={setIsOpen}
+          user={userBeingReviewed}
+          setUser={setUserBeingReviewed}
+          setState={setState}
+          state={state}
+        />
+      )}
+      <div className={styles.table}>
+        <MaterialTable
+          isLoading={isFetching}
+          options={{
+            // Allows users to export the data as a CSV file
+            exportButton: true,
+          }}
+          actions={[
+            {
+              icon: GavelIcon,
+              tooltip: 'Review',
+              onClick: async (event, rowData) => {
+                // Update the users request to be in review
 
-        isDeletable: rowData => rowData.role !== 'admin',
-        isEditable: rowData => rowData.role !== 'admin',
-        onRowUpdate: (newData, oldData) =>
-          new Promise((resolve, reject) => {
-            resolve();
-            // Set the state first to instantly update the table
-
-            setState({
-              ...state,
-              data: state.data.map(row => {
-                if (row.id === oldData.id) {
-                  return newData;
+                if (rowData.requestStatus === 'received') {
+                  await axiosWithAuth().put(`/users/${rowData.id}`, {
+                    requestStatus: 'inReview',
+                  });
                 }
-                return row;
-              }),
-            });
 
-            // Persist those changes
-
-            const updatedUser = {
-              firstName: newData.firstName,
-              lastName: newData.lastName,
-              request_status: newData.request_status,
-              is_requesting_assistance: newData.is_requesting_assistance,
-            };
-
-            axiosWithAuth()
-              .put(`/users/${oldData.id}`, updatedUser)
-              .catch(err => alert('Failed to update user'));
-          }),
-      }}
-      icons={tableIcons}
-      title="Request Status"
-      columns={state.columns}
-      data={state.data}
-    />
+                setUserBeingReviewed(rowData);
+                setIsOpen(true);
+              },
+            },
+          ]}
+          icons={tableIcons}
+          title="Requests for rental assistance"
+          columns={state.columns}
+          data={state.data}
+        />
+      </div>
+    </div>
   );
 }

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import MaterialTable from 'material-table';
 
 import { tableIcons } from '../../../../utils/tableIcons';
-import { axiosWithAuth } from '../../../../api';
+import { axiosWithAuth } from '../../../../api/axiosWithAuth';
 
 export default function UsersTable() {
   const [isFetching, setIsFetching] = useState(false);
@@ -17,7 +17,7 @@ export default function UsersTable() {
         field: 'role',
         lookup: {
           admin: 'admin',
-          'account manager': 'account manager',
+          programManager: 'program manager',
           tenant: 'tenant',
           landlord: 'landlord',
           pending: 'pending',

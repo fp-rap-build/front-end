@@ -1,59 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { useHistory, Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { useHistory } from 'react-router-dom';
+
+import logo from '../../../assets/logo.png';
+
+import { logOut } from '../../../redux/users/userActions';
 
 import styles from '../../../styles/Layout/navbar.module.css';
 
-import { useOktaAuth } from '@okta/okta-react';
-
-import { useSelector } from 'react-redux';
-
-import RequestsTable from '../../pages/Admin/components/RequestsTable';
-
 function Navbar() {
-  const { authState, authService } = useOktaAuth();
+  const history = useHistory();
 
-  const currentUser = useSelector(state => state.user.currentUser);
+  const dispatch = useDispatch();
+
+  const isLoggedIn = useSelector(state => state.user.isLoggedIn);
 
   const redirectToHome = () => {
-    if (authState.isAuthenticated) {
-      history.push('/');
-    }
-    return;
+    history.push('/');
   };
 
-  const redirectToLogin = () => {
-    history.push('/login');
-  };
-
-  const redirectToRequestsPage = () => {
-    return (
-      <Link to="/requests">
-        <h2>Requests</h2>
-      </Link>
-    );
-  };
-
-  const history = useHistory();
   const handleLogout = () => {
-    authService.logout();
-    localStorage.clear();
+    dispatch(logOut(history));
   };
 
   return (
-    <nav className={styles.nav}>
-      <div onClick={redirectToHome} className={styles.logo}>
-        <h2>RAP</h2>
-      </div>
-      <div>{currentUser.role === 'admin' ? redirectToRequestsPage() : ''}</div>
-      <ul className={styles.navActions}>
-        {authState.isAuthenticated ? (
-          <li onClick={handleLogout}>Logout</li>
-        ) : (
-          <li onClick={redirectToLogin}>Login</li>
-        )}
-      </ul>
-    </nav>
+    <div className={styles.container}>
+      <nav className={styles.nav}>
+        <img alt="Family promise logo" onClick={redirectToHome} src={logo} />
+        <ul className={styles.navActions}>
+          {isLoggedIn && <li onClick={handleLogout}>Logout</li>}
+        </ul>
+      </nav>
+    </div>
   );
 }
 
