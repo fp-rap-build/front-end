@@ -17,11 +17,27 @@ export default function RequestsTable() {
   const [isFetching, setIsFetching] = useState(false);
   const [state, setState] = useState({
     columns: [
-      { title: 'First', field: 'firstName' },
-      { title: 'Last ', field: 'lastName' },
+      { title: 'tenantId', field: 'tenantId' },
+      { title: 'landlordId', field: 'landlordId' },
       {
-        title: 'email',
-        field: 'email',
+        title: 'requestDate',
+        field: 'requestDate',
+      },
+      {
+        title: 'apm approval',
+        field: 'apmApproval',
+        lookup: {
+          false: 'no',
+          true: 'yes',
+        },
+      },
+      {
+        title: 'pm approval',
+        field: 'pmApproval',
+        lookup: {
+          false: 'no',
+          true: 'yes',
+        },
       },
       {
         title: 'Request Status',
@@ -40,8 +56,9 @@ export default function RequestsTable() {
   const fetchUsers = async () => {
     setIsFetching(true);
     try {
-      let res = await axiosWithAuth().get('/users/requests');
-      setState({ ...state, data: res.data });
+      let res = await axiosWithAuth().get('/requests');
+
+      setState({ ...state, data: res.data.requests });
     } catch (error) {
       console.log(error.response);
       alert('error');
@@ -49,7 +66,6 @@ export default function RequestsTable() {
       setIsFetching(false);
     }
   };
-
   useEffect(() => {
     fetchUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -81,11 +97,10 @@ export default function RequestsTable() {
                 // Update the users request to be in review
 
                 if (rowData.requestStatus === 'received') {
-                  await axiosWithAuth().put(`/users/${rowData.id}`, {
+                  await axiosWithAuth().put(`/requests`, {
                     requestStatus: 'inReview',
                   });
                 }
-
                 setUserBeingReviewed(rowData);
                 setIsOpen(true);
               },
