@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Menu, Dropdown, Space } from 'antd';
+import { Menu, Dropdown, Space, Checkbox } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 import ModalContainer from '../ModalContainer';
@@ -13,6 +13,7 @@ import sendEmail from '../../../utils/sendEmail';
 
 import { PageHeader, Statistic, Descriptions } from 'antd';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
+import { Card } from '@material-ui/core';
 
 init(process.env.REACT_APP_EMAIL_USER_ID);
 export default function Index({ setIsOpen, user, setUser, setState, state }) {
@@ -139,6 +140,33 @@ const JudgeDropdown = ({ handleReviewSubmit }) => {
     </Menu>
   );
 
+  const checkList = (
+    <Card title="Card" style={{ width: 500, height: 500 }}>
+      <Checkbox onChange={console.log('This worked')}>
+        Approved by Account Manager
+      </Checkbox>
+      <Checkbox onChange={console.log('This worked')}>
+        Approved by Program Manager
+      </Checkbox>
+      <Checkbox onChange={console.log('This worked')}>
+        Approved by Head Accountant
+      </Checkbox>
+      <Checkbox onChange={console.log('This worked')}>
+        Approved by Book keeper
+      </Checkbox>
+      <Checkbox onChange={console.log('This worked')}>
+        Approved by Account Manager
+      </Checkbox>
+    </Card>
+  );
+  const comment = (
+    <div className="na">
+      <p>Comments: </p>
+      <textarea rows={20} cols={40} />
+      <button type="submit">Submit</button>
+    </div>
+  );
+
   return (
     <Space wrap>
       <Dropdown.Button
@@ -147,6 +175,20 @@ const JudgeDropdown = ({ handleReviewSubmit }) => {
         overlay={menu}
       >
         {status === 'approved' ? 'approve' : 'deny'}
+      </Dropdown.Button>
+      <Dropdown.Button
+        type="primary"
+        onClick={() => handleReviewSubmit(status)}
+        overlay={checkList}
+      >
+        Approval Checklist
+      </Dropdown.Button>
+      <Dropdown.Button
+        type="primary"
+        onClick={() => handleReviewSubmit(status)}
+        overlay={comment}
+      >
+        Comments
       </Dropdown.Button>
     </Space>
   );
