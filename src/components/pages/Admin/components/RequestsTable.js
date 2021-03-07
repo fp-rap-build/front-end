@@ -40,7 +40,7 @@ export default function RequestsTable() {
   const fetchUsers = async () => {
     setIsFetching(true);
     try {
-      let res = await axiosWithAuth().get('/users/requests');
+      let res = await axiosWithAuth().get('/requests/table');
       setState({ ...state, data: res.data });
     } catch (error) {
       console.log(error.response);
@@ -81,7 +81,7 @@ export default function RequestsTable() {
                 // Update the users request to be in review
 
                 if (rowData.requestStatus === 'received') {
-                  await axiosWithAuth().put(`/users/${rowData.id}`, {
+                  await axiosWithAuth().put(`/requests/${rowData.id}`, {
                     requestStatus: 'inReview',
                   });
                 }
