@@ -13,7 +13,6 @@ import sendEmail from '../../../utils/sendEmail';
 
 import { PageHeader, Statistic, Descriptions } from 'antd';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
-import { Card } from '@material-ui/core';
 import Modal from 'antd/lib/modal/Modal';
 
 init(process.env.REACT_APP_EMAIL_USER_ID);
