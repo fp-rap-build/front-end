@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import AdminNav from './adminNav';
 import ProgramMgrForm from './ProgramMgrForm';
 import RequestsTable from './RequestsTable';
 import UsersTable from './UsersTable';
@@ -33,6 +34,7 @@ const Dash = () => {
   return (
     <div className={styles.container}>
       <h1>Hello {currentUser.firstName}, welcome to your dashboard!</h1>
+      <AdminNav></AdminNav>
       <div className={styles.dashContainer}>
         <div className={styles.dashNav}>
           <Button
