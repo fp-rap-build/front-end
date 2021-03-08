@@ -193,13 +193,6 @@ const JudgeDropdown = ({ handleReviewSubmit }) => {
       >
         {status === 'approved' ? 'approve' : 'deny'}
       </Dropdown.Button>
-      <Dropdown.Button
-        type="primary"
-        onClick={() => handleReviewSubmit(status)}
-        overlay={checkList}
-      >
-        Approval Checklist
-      </Dropdown.Button>
       <>
         <Button type="primary" onClick={showChecklistModal}>
           Approval Checklist
