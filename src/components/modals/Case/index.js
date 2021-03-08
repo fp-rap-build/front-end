@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Menu, Dropdown, Space, Checkbox } from 'antd';
+import { Input, Button, Menu, Dropdown, Space, Checkbox } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 import ModalContainer from '../ModalContainer';
@@ -14,8 +14,10 @@ import sendEmail from '../../../utils/sendEmail';
 import { PageHeader, Statistic, Descriptions } from 'antd';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 import { Card } from '@material-ui/core';
+import Modal from 'antd/lib/modal/Modal';
 
 init(process.env.REACT_APP_EMAIL_USER_ID);
+
 export default function Index({ setIsOpen, user, setUser, setState, state }) {
   const handleReviewSubmit = async status => {
     let confirm = window.confirm(
@@ -125,6 +127,21 @@ const extraContent = user => (
 const JudgeDropdown = ({ handleReviewSubmit }) => {
   const [status, setStatus] = useState('approved');
 
+  // state for checklist modal
+  const [isChecklistModalVisible, setisChecklistModalVisible] = useState(false);
+  const showChecklistModal = () => setisChecklistModalVisible(true);
+  const handle_Checklist_Modal_Ok = () => setisChecklistModalVisible(false);
+  const handle_Checklist_Modal_Cancel = () => setisChecklistModalVisible(false);
+
+  // state for comments modal
+  const [isCommentsModalVisible, setisCommentsModalVisible] = useState(false);
+  const showCommentsModal = () => setisCommentsModalVisible(true);
+  const handle_Comments_Modal_Ok = () => setisCommentsModalVisible(false);
+  const handle_Comments_Modal_Cancel = () => setisCommentsModalVisible(false);
+
+  // Destructuring the textarea component from Input for comments
+  const { TextArea } = Input;
+
   function handleMenuClick(e) {
     setStatus(e.key);
   }
@@ -141,7 +158,7 @@ const JudgeDropdown = ({ handleReviewSubmit }) => {
   );
 
   const checkList = (
-    <Card title="Card" style={{ width: 500, height: 500 }}>
+    <>
       <Checkbox onChange={console.log('This worked')}>
         Approved by Account Manager
       </Checkbox>
@@ -157,13 +174,13 @@ const JudgeDropdown = ({ handleReviewSubmit }) => {
       <Checkbox onChange={console.log('This worked')}>
         Approved by Account Manager
       </Checkbox>
-    </Card>
+    </>
   );
   const comment = (
-    <div className="na">
+    <div>
       <p>Comments: </p>
-      <textarea rows={20} cols={40} />
-      <button type="submit">Submit</button>
+      <TextArea rows={5} />
+      <Button type="primary">Submit</Button>
     </div>
   );
 
@@ -183,13 +200,32 @@ const JudgeDropdown = ({ handleReviewSubmit }) => {
       >
         Approval Checklist
       </Dropdown.Button>
-      <Dropdown.Button
-        type="primary"
-        onClick={() => handleReviewSubmit(status)}
-        overlay={comment}
-      >
-        Comments
-      </Dropdown.Button>
+      <>
+        <Button type="primary" onClick={showChecklistModal}>
+          Approval Checklist
+        </Button>
+        <Modal
+          title="Checklist Modal"
+          visible={isChecklistModalVisible}
+          onOk={handle_Checklist_Modal_Ok}
+          onCancel={handle_Checklist_Modal_Cancel}
+        >
+          {checkList}
+        </Modal>
+      </>
+      <>
+        <Button type="primary" onClick={showCommentsModal}>
+          Comments
+        </Button>
+        <Modal
+          title="Comments Modal"
+          visible={isCommentsModalVisible}
+          onOk={handle_Comments_Modal_Ok}
+          onCancel={handle_Comments_Modal_Cancel}
+        >
+          {comment}
+        </Modal>
+      </>
     </Space>
   );
 };
