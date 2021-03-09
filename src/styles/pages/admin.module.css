@@ -14,9 +14,22 @@
   padding: 1%;
 }
 
-@media (max-width: 690px) {
+.dashboard {
+  padding: 0 5%;
+}
+
+
+
+@media (max-width: 650px) {
   .headingNav {
     flex-flow: column nowrap;
     text-align: center;
+    height: 13vh;
+  }
+}
+
+@media (max-width: 500px) {
+  .headingNav {
+    height: 12vh;
   }
 }

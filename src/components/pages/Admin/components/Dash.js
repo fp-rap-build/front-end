@@ -7,8 +7,9 @@ import RequestsTable from './RequestsTable';
 import UsersTable from './UsersTable';
 import styles from '../../../../styles/pages/admin.module.css';
 
-import { Typography } from 'antd';
+import { Typography, Layout } from 'antd';
 const { Title } = Typography;
+const { Content, Header, Footer } = Layout;
 
 const Dash = () => {
   const currentUser = useSelector(state => state.user.currentUser);
@@ -21,19 +22,20 @@ const Dash = () => {
   };
 
   return (
-    <div className={styles.dashContainer}>
-      <div className={styles.headingNav}>
+    <Layout>
+      <Header className={styles.headingNav}>
         <Title level={3} style={{ color: '#FFFFFF' }}>
           Hello {currentUser.firstName}, welcome to your dashboard!
         </Title>
         <AdminNav activeComponent={activeComponent} handleClick={handleClick} />
-      </div>
-      <div className={styles.dashboard}>
+      </Header>
+      <Content className={styles.dashboard}>
         {activeComponent.current === 'user' && <UsersTable />}
         {activeComponent.current === 'requests' && <RequestsTable />}
         {activeComponent.current === 'prgMgr' && <ProgramMgrForm />}
-      </div>
-    </div>
+      </Content>
+      <Footer className={styles.footer} />
+    </Layout>
   );
 };
 
