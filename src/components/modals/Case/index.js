@@ -16,6 +16,7 @@ import { axiosWithAuth } from '../../../api/axiosWithAuth';
 import Modal from 'antd/lib/modal/Modal';
 import axios from 'axios';
 import Comments from '../Comments/Comments';
+import Checklist from '../Checklist/Checklist';
 
 init(process.env.REACT_APP_EMAIL_USER_ID);
 
@@ -128,15 +129,6 @@ const extraContent = user => (
 const JudgeDropdown = ({ handleReviewSubmit }) => {
   const [status, setStatus] = useState('approved');
 
-  // state for checklist modal
-  const [isChecklistModalVisible, setisChecklistModalVisible] = useState(false);
-  const showChecklistModal = () => setisChecklistModalVisible(true);
-  const handle_Checklist_Modal_Ok = () => setisChecklistModalVisible(false);
-  const handle_Checklist_Modal_Cancel = () => setisChecklistModalVisible(false);
-
-  // Destructuring the textarea component from Input for comments
-  const { TextArea } = Input;
-
   function handleMenuClick(e) {
     setStatus(e.key);
   }
@@ -152,26 +144,6 @@ const JudgeDropdown = ({ handleReviewSubmit }) => {
     </Menu>
   );
 
-  const checkList = (
-    <>
-      <Checkbox onChange={console.log('This worked')}>
-        Approved by Account Manager
-      </Checkbox>
-      <Checkbox onChange={console.log('This worked')}>
-        Approved by Program Manager
-      </Checkbox>
-      <Checkbox onChange={console.log('This worked')}>
-        Approved by Head Accountant
-      </Checkbox>
-      <Checkbox onChange={console.log('This worked')}>
-        Approved by Book keeper
-      </Checkbox>
-      <Checkbox onChange={console.log('This worked')}>
-        Approved by Account Manager
-      </Checkbox>
-    </>
-  );
-
   return (
     <Space wrap>
       <Dropdown.Button
@@ -181,20 +153,8 @@ const JudgeDropdown = ({ handleReviewSubmit }) => {
       >
         {status === 'approved' ? 'approve' : 'deny'}
       </Dropdown.Button>
-      <>
-        <Button type="primary" onClick={showChecklistModal}>
-          Approval Checklist
-        </Button>
-        <Modal
-          title="Checklist Modal"
-          visible={isChecklistModalVisible}
-          onOk={handle_Checklist_Modal_Ok}
-          onCancel={handle_Checklist_Modal_Cancel}
-        >
-          {checkList}
-        </Modal>
-      </>
       <Comments />
+      <Checklist />
     </Space>
   );
 };
