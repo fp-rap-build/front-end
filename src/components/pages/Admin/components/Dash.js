@@ -7,7 +7,8 @@ import RequestsTable from './RequestsTable';
 import UsersTable from './UsersTable';
 import styles from '../../../../styles/pages/admin.module.css';
 
-import { Button } from 'antd';
+import { Typography } from 'antd';
+const { Title } = Typography;
 
 const Dash = () => {
   const currentUser = useSelector(state => state.user.currentUser);
@@ -20,15 +21,17 @@ const Dash = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h1>Hello {currentUser.firstName}, welcome to your dashboard!</h1>
-      <div className={styles.dashContainer}>
+    <div className={styles.dashContainer}>
+      <div className={styles.headingNav}>
+        <Title level={3} style={{ color: '#FFFFFF' }}>
+          Hello {currentUser.firstName}, welcome to your dashboard!
+        </Title>
         <AdminNav activeComponent={activeComponent} handleClick={handleClick} />
-        <div className={styles.dashboard}>
-          {activeComponent.current === 'user' && <UsersTable />}
-          {activeComponent.current === 'requests' && <RequestsTable />}
-          {activeComponent.current === 'prgMgr' && <ProgramMgrForm />}
-        </div>
+      </div>
+      <div className={styles.dashboard}>
+        {activeComponent.current === 'user' && <UsersTable />}
+        {activeComponent.current === 'requests' && <RequestsTable />}
+        {activeComponent.current === 'prgMgr' && <ProgramMgrForm />}
       </div>
     </div>
   );
