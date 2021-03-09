@@ -14,6 +14,8 @@ import sendEmail from '../../../utils/sendEmail';
 import { PageHeader, Statistic, Descriptions } from 'antd';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 import Modal from 'antd/lib/modal/Modal';
+import axios from 'axios';
+import Comments from '../Comments/Comments';
 
 init(process.env.REACT_APP_EMAIL_USER_ID);
 
@@ -132,12 +134,6 @@ const JudgeDropdown = ({ handleReviewSubmit }) => {
   const handle_Checklist_Modal_Ok = () => setisChecklistModalVisible(false);
   const handle_Checklist_Modal_Cancel = () => setisChecklistModalVisible(false);
 
-  // state for comments modal
-  const [isCommentsModalVisible, setisCommentsModalVisible] = useState(false);
-  const showCommentsModal = () => setisCommentsModalVisible(true);
-  const handle_Comments_Modal_Ok = () => setisCommentsModalVisible(false);
-  const handle_Comments_Modal_Cancel = () => setisCommentsModalVisible(false);
-
   // Destructuring the textarea component from Input for comments
   const { TextArea } = Input;
 
@@ -175,13 +171,6 @@ const JudgeDropdown = ({ handleReviewSubmit }) => {
       </Checkbox>
     </>
   );
-  const comment = (
-    <div>
-      <p>Comments: </p>
-      <TextArea rows={5} />
-      <Button type="primary">Submit</Button>
-    </div>
-  );
 
   return (
     <Space wrap>
@@ -205,19 +194,7 @@ const JudgeDropdown = ({ handleReviewSubmit }) => {
           {checkList}
         </Modal>
       </>
-      <>
-        <Button type="primary" onClick={showCommentsModal}>
-          Comments
-        </Button>
-        <Modal
-          title="Comments Modal"
-          visible={isCommentsModalVisible}
-          onOk={handle_Comments_Modal_Ok}
-          onCancel={handle_Comments_Modal_Cancel}
-        >
-          {comment}
-        </Modal>
-      </>
+      <Comments />
     </Space>
   );
 };
