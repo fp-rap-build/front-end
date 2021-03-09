@@ -13,34 +13,8 @@
 
 .dashContainer {
   width: 80%;
-  border: 3px solid #617183;
-  border-radius: 5px;
-  box-shadow: 0 8px 6px -6px black;
 }
 
-.button {
-  box-shadow: 0 8px 6px -6px black;
-}
-
-.dashNav {
+.menu {
   display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
-  align-items: center;
-  padding: 2% 0;
-  background-color: #617183;
-}
-
-@media (max-width: 700px) {
-  .dashNav {
-    flex-flow: column nowrap;
-  }
-
-  .button {
-    margin: 1% 0;
-    width: 200px;
-  }
-}
-
-@media (max-width: 400px) {
 }

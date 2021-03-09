@@ -1,27 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { FormOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons';
+import { EditOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 
-const { SubMenu } = Menu;
+import styles from '../../../../styles/pages/admin.module.css';
 
-const AdminNav = () => {
-  const [state, setState] = useState({ current: 'user' });
-
-  const handleClick = e => {
-    console.log('click ', e);
-    setState({ current: e.key });
-  };
+const AdminNav = props => {
+  const { activeComponent, handleClick } = props;
 
   return (
-    <Menu onClick={handleClick} selectedKeys={state.current} mode="horizontal">
-      <Menu.Item key="user" icon={<UserOutlined />}>
+    <Menu
+      className={styles.menu}
+      onClick={handleClick}
+      selectedKeys={activeComponent.current}
+      mode="horizontal"
+    >
+      <Menu.Item className={styles.menuItem} key="user" icon={<UserOutlined />}>
         Manage Users
       </Menu.Item>
-      <Menu.Item key="requests" icon={<FormOutlined />}>
+      <Menu.Item
+        className={styles.menuItem}
+        key="requests"
+        icon={<EditOutlined />}
+      >
         Manage Requests
       </Menu.Item>
-      <Menu.Item key="prgMgr" icon={<UserAddOutlined />}>
+      <Menu.Item
+        className={styles.menuItem}
+        key="prgMgr"
+        icon={<UserAddOutlined />}
+      >
         Create Program Manager
       </Menu.Item>
     </Menu>
