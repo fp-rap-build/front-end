@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Menu, Dropdown, Space } from 'antd';
+import { Input, Button, Menu, Dropdown, Space, Checkbox } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 import ModalContainer from '../ModalContainer';
@@ -13,8 +13,13 @@ import sendEmail from '../../../utils/sendEmail';
 
 import { PageHeader, Statistic, Descriptions } from 'antd';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
+import Modal from 'antd/lib/modal/Modal';
+import axios from 'axios';
+import Comments from '../Comments/Comments';
+import Checklist from '../Checklist/Checklist';
 
 init(process.env.REACT_APP_EMAIL_USER_ID);
+
 export default function Index({ setIsOpen, user, setUser, setState, state }) {
   const handleReviewSubmit = async status => {
     let confirm = window.confirm(
@@ -148,6 +153,8 @@ const JudgeDropdown = ({ handleReviewSubmit }) => {
       >
         {status === 'approved' ? 'approve' : 'deny'}
       </Dropdown.Button>
+      <Comments />
+      <Checklist />
     </Space>
   );
 };

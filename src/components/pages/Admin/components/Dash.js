@@ -1,78 +1,41 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import AdminNav from './adminNav';
 import ProgramMgrForm from './ProgramMgrForm';
 import RequestsTable from './RequestsTable';
 import UsersTable from './UsersTable';
 import styles from '../../../../styles/pages/admin.module.css';
 
-import { Button } from 'antd';
+import { Typography, Layout } from 'antd';
+const { Title } = Typography;
+const { Content, Header, Footer } = Layout;
 
 const Dash = () => {
   const currentUser = useSelector(state => state.user.currentUser);
-  // console.log(currentUser)
-  const initialDisplay = {
-    usersTable: true,
-    requestsTable: false,
-    programMgrForm: false,
-  };
 
-  const resetDisplay = {
-    usersTable: false,
-    requestsTable: false,
-    programMgrForm: false,
-  };
-  const [display, setDisplay] = useState(initialDisplay);
+  const [activeComponent, setActiveComponent] = useState({ current: 'user' });
 
-  const onClick = e => {
-    e.persist();
-    //Ant-d buries the name in the event obj
-    setDisplay({ ...resetDisplay, [e.target.offsetParent.name]: true });
+  const handleClick = e => {
+    console.log('click ', e);
+    setActiveComponent({ current: e.key });
   };
 
   return (
-    <div className={styles.container}>
-      <h1>Hello {currentUser.firstName}, welcome to your dashboard!</h1>
-      <div className={styles.dashContainer}>
-        <div className={styles.dashNav}>
-          <Button
-            type="primary"
-            size="large"
-            disabled={display.usersTable}
-            name="usersTable"
-            onClick={onClick}
-            className={styles.button}
-          >
-            Manage Users
-          </Button>
-          <Button
-            type="primary"
-            size="large"
-            disabled={display.requestsTable}
-            name="requestsTable"
-            onClick={onClick}
-            className={styles.button}
-          >
-            Manage Requests
-          </Button>
-          <Button
-            type="primary"
-            size="large"
-            disabled={display.programMgrForm}
-            name="programMgrForm"
-            onClick={onClick}
-            className={styles.button}
-          >
-            Create Account Manager
-          </Button>
-        </div>
-        <div className={styles.dashboard}>
-          {display.usersTable && <UsersTable />}
-          {display.requestsTable && <RequestsTable />}
-          {display.programMgrForm && <ProgramMgrForm />}
-        </div>
-      </div>
-    </div>
+    <Layout>
+      <Header className={styles.headingNav}>
+        <Title level={3} style={{ color: '#FFFFFF' }}>
+          Hello {currentUser.firstName}, welcome to your dashboard!
+        </Title>
+        <AdminNav activeComponent={activeComponent} handleClick={handleClick} />
+      </Header>
+      <Content className={styles.dashboard}>
+        {activeComponent.current === 'user' && <UsersTable />}
+        {activeComponent.current === 'requests' && <RequestsTable />}
+        {activeComponent.current === 'prgMgr' && <ProgramMgrForm />}
+      </Content>
+      <Footer className={styles.footer} />
+    </Layout>
   );
 };
 
