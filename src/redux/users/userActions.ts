@@ -78,38 +78,36 @@ export const logIn = (user, history) => async dispatch => {
   }
 };
 
-export const registerAndApply = (userValues, history) => async dispatch => {
+export const registerAndApply = (requestValues, history) => async dispatch => {
   // Values directly attached to their account
 
   const user = {
-    firstName: userValues.firstName,
-    lastName: userValues.lastName,
-    email: userValues.email,
-    password: userValues.password,
-    role: userValues.role,
-    familySize: userValues.familySize,
-    monthlyIncome: Number(userValues.monthlyIncome),
-    isRequestingAssistance: true,
+    firstName: requestValues.firstName,
+    lastName: requestValues.lastName,
+    email: requestValues.email,
+    password: requestValues.password,
+    role: requestValues.role,
   };
 
   // Address information
-
-  const userAddress = {
-    address: userValues.address,
-    cityName: userValues.cityName,
-    zipCode: userValues.zipCode,
-    state: userValues.state,
+  const request = {
+    familySize: requestValues.familySize,
+    monthlyIncome: Number(requestValues.monthlyIncome),
+    address: {
+      address: requestValues.address,
+      cityName: requestValues.cityName,
+      zipCode: requestValues.zipCode,
+      state: requestValues.state,
+    },
   };
 
   dispatch(setLoading(true));
 
   try {
     // Register an account
-
     let res = await axiosWithAuth().post('/auth/register', user);
 
     // Login
-
     const token = res.data.token;
     const currentUser = res.data.user;
 
@@ -117,9 +115,8 @@ export const registerAndApply = (userValues, history) => async dispatch => {
 
     dispatch(setCurrentUser(currentUser));
 
-    // Update address information
-
-    await axiosWithAuth().put('/users/me/address', userAddress);
+    // Submit a request
+    await axiosWithAuth().post('/requests', request);
 
     history.push('/');
   } catch (error) {
