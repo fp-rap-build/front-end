@@ -11,10 +11,26 @@ import { init } from 'emailjs-com';
 
 import sendEmail from '../../../utils/sendEmail';
 
-import { PageHeader, Statistic, Descriptions } from 'antd';
+import { PageHeader, Statistic, Descriptions, Card } from 'antd';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 
 init(process.env.REACT_APP_EMAIL_USER_ID);
+
+const tabListNoTitle = [
+  {
+    key: 'basic',
+    tab: 'Basic',
+  },
+  {
+    key: 'documents',
+    tab: 'Documents',
+  },
+  {
+    key: 'checklist',
+    tab: 'Checklist',
+  },
+];
+
 export default function Index({
   setIsOpen,
   request,
@@ -22,6 +38,8 @@ export default function Index({
   setState,
   state,
 }) {
+  const [tab, setTab] = useState('basic');
+
   const handleReviewSubmit = async status => {
     let confirm = window.confirm(
       `Are you sure you want to ${
@@ -43,7 +61,7 @@ export default function Index({
     setIsOpen(false);
 
     try {
-      await axiosWithAuth().put(`/request/${request.id}`, {
+      await axiosWithAuth().put(`/requests/${request.id}`, {
         requestStatus: status,
       });
 
@@ -65,25 +83,45 @@ export default function Index({
     }
   };
 
+  const onTabChange = (key, type) => {
+    setTab(key);
+  };
+
+  const props = { tab, request };
+
   return (
     <ModalContainer>
       <div className={styles.container}>
-        <PageHeader
+        <Card
           className="site-page-header-responsive"
           onBack={() => setIsOpen(false)}
           title="Review"
+          tabList={tabListNoTitle}
+          onTabChange={onTabChange}
+          activeTabKey={tab}
           extra={[<JudgeDropdown handleReviewSubmit={handleReviewSubmit} />]}
         >
           <Content extra={extraContent(request)}>
-            {renderContent(request)}
+            {renderContent(props)}
           </Content>
-        </PageHeader>
+        </Card>
       </div>
     </ModalContainer>
   );
 }
 
-const renderContent = (request, column = 2) => (
+const renderContent = props => {
+  switch (props.tab) {
+    case 'basic':
+      return basicInfo(props.request);
+    case 'checklist':
+      return checkList();
+    case 'documents':
+      return documentInfo();
+  }
+};
+
+const basicInfo = (request, column = 2) => (
   <Descriptions size="large" column={column}>
     <Descriptions.Item label="Name">{`${request.firstName} ${request.lastName}`}</Descriptions.Item>
     <Descriptions.Item label="State">{request.state}</Descriptions.Item>
@@ -95,6 +133,10 @@ const renderContent = (request, column = 2) => (
     <Descriptions.Item label="Address">{request.address}</Descriptions.Item>
   </Descriptions>
 );
+
+const documentInfo = () => <h1>Documents</h1>;
+
+const checkList = () => <h1>Checklist</h1>;
 
 const Content = ({ children, extra }) => (
   <div className="content" styles={{ gap: '3rem' }}>
