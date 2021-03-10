@@ -15,7 +15,13 @@ import { PageHeader, Statistic, Descriptions } from 'antd';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 
 init(process.env.REACT_APP_EMAIL_USER_ID);
-export default function Index({ setIsOpen, user, setUser, setState, state }) {
+export default function Index({
+  setIsOpen,
+  request,
+  setRequest,
+  setState,
+  state,
+}) {
   const handleReviewSubmit = async status => {
     let confirm = window.confirm(
       `Are you sure you want to ${
@@ -27,7 +33,7 @@ export default function Index({ setIsOpen, user, setUser, setState, state }) {
     setState({
       ...state,
       data: state.data.map(row => {
-        if (row.id === user.id) {
+        if (row.id === request.id) {
           row['requestStatus'] = status;
         }
         return row;
@@ -37,7 +43,9 @@ export default function Index({ setIsOpen, user, setUser, setState, state }) {
     setIsOpen(false);
 
     try {
-      await axiosWithAuth().put(`/users/${user.id}`, { requestStatus: status });
+      await axiosWithAuth().put(`/request/${request.id}`, {
+        requestStatus: status,
+      });
 
       let message =
         status === 'approved'
@@ -45,9 +53,9 @@ export default function Index({ setIsOpen, user, setUser, setState, state }) {
           : 'You have been denied the rental assistance program';
 
       const emailPayload = {
-        to_name: user.firstName + ' ' + user.lastName,
+        to_name: request.firstName + ' ' + request.lastName,
         from_name: 'Family Promise Rental Assistance Program (RAP)',
-        user_email: user.email,
+        user_email: request.email,
         message,
       };
 
@@ -66,23 +74,25 @@ export default function Index({ setIsOpen, user, setUser, setState, state }) {
           title="Review"
           extra={[<JudgeDropdown handleReviewSubmit={handleReviewSubmit} />]}
         >
-          <Content extra={extraContent(user)}>{renderContent(user)}</Content>
+          <Content extra={extraContent(request)}>
+            {renderContent(request)}
+          </Content>
         </PageHeader>
       </div>
     </ModalContainer>
   );
 }
 
-const renderContent = (user, column = 2) => (
+const renderContent = (request, column = 2) => (
   <Descriptions size="large" column={column}>
-    <Descriptions.Item label="Name">{`${user.firstName} ${user.lastName}`}</Descriptions.Item>
-    <Descriptions.Item label="State">{user.state}</Descriptions.Item>
-    <Descriptions.Item label="Email">{user.email}</Descriptions.Item>
-    <Descriptions.Item label="City">{user.cityName}</Descriptions.Item>
-    <Descriptions.Item label="Role">{user.role}</Descriptions.Item>
-    <Descriptions.Item label="Zip">{user.zipCode}</Descriptions.Item>
+    <Descriptions.Item label="Name">{`${request.firstName} ${request.lastName}`}</Descriptions.Item>
+    <Descriptions.Item label="State">{request.state}</Descriptions.Item>
+    <Descriptions.Item label="Email">{request.email}</Descriptions.Item>
+    <Descriptions.Item label="City">{request.cityName}</Descriptions.Item>
+    <Descriptions.Item label="Role">{request.role}</Descriptions.Item>
+    <Descriptions.Item label="Zip">{request.zipCode}</Descriptions.Item>
     <Descriptions.Item label="Organization">none</Descriptions.Item>
-    <Descriptions.Item label="Address">{user.address}</Descriptions.Item>
+    <Descriptions.Item label="Address">{request.address}</Descriptions.Item>
   </Descriptions>
 );
 
@@ -93,7 +103,7 @@ const Content = ({ children, extra }) => (
   </div>
 );
 
-const extraContent = user => (
+const extraContent = request => (
   <div
     style={{
       display: 'flex',
@@ -104,7 +114,7 @@ const extraContent = user => (
   >
     <Statistic
       title="Status"
-      value={user.requestStatus}
+      value={request.requestStatus}
       style={{
         marginRight: 32,
       }}
@@ -112,12 +122,16 @@ const extraContent = user => (
 
     <Statistic
       title="Residents"
-      value={user.familySize}
+      value={request.familySize}
       style={{
         marginRight: 32,
       }}
     />
-    <Statistic title="Monthly Income" prefix="$" value={user.monthlyIncome} />
+    <Statistic
+      title="Monthly Income"
+      prefix="$"
+      value={request.monthlyIncome}
+    />
   </div>
 );
 

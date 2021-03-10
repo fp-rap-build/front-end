@@ -16,10 +16,12 @@ export const clearErrorMessage = () => {
 
 export const fetchCurrentUser = () => async dispatch => {
   dispatch(setLoading(true));
+
   try {
     let res = await axiosWithAuth().get('/users/me');
 
     let currentUser = res.data.user;
+
     dispatch({ type: 'SET_CURRENT_USER', payload: currentUser });
   } catch (error) {
     alert('error');
