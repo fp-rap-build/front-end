@@ -12,6 +12,8 @@ import SecondaryContact from './forms/SecondaryContact';
 
 import CreateAccount from './forms/CreateAccount';
 
+import ProgramSelection from './ProgramSelection';
+
 import Button from 'antd/lib/button';
 
 import styles from '../../../styles/pages/apply.module.css';
@@ -66,7 +68,7 @@ const INITIAL_VALUES_PROD = {
   landlordEmail: '',
 };
 
-const finalStep = 2;
+const finalStep = 3;
 
 //initiating connection to email service
 
@@ -207,8 +209,10 @@ const RenderForm = ({ step, formValues, setFormValues }) => {
     case 0:
       return <BasicInformation {...props} />;
     case 1:
-      return <SecondaryContact {...props} />;
+      return <ProgramSelection />;
     case 2:
+      return <SecondaryContact {...props} />;
+    case 3:
       return <CreateAccount {...props} />;
   }
 };
