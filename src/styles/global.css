@@ -6,3 +6,8 @@
   box-sizing: border-box;
   font-family: 'Noto Sans JP', sans-serif;
 }
+
+p {
+  margin: 0;
+  padding: 0;
+}

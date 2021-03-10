@@ -90,8 +90,8 @@ export default function Index({
   const props = { tab, request };
 
   return (
-    <ModalContainer>
-      <div className={styles.container}>
+    <ModalContainer onClick={() => setIsOpen(false)}>
+      <div onClick={e => e.stopPropagation()} className={styles.container}>
         <Card
           className="site-page-header-responsive"
           onBack={() => setIsOpen(false)}
@@ -99,9 +99,24 @@ export default function Index({
           tabList={tabListNoTitle}
           onTabChange={onTabChange}
           activeTabKey={tab}
-          extra={[<JudgeDropdown handleReviewSubmit={handleReviewSubmit} />]}
+          extra={[
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '15%',
+                alignItems: 'center',
+                gap: '10px',
+              }}
+            >
+              <JudgeDropdown handleReviewSubmit={handleReviewSubmit} />
+              <p style={{ cursor: 'pointer' }} onClick={() => setIsOpen(false)}>
+                Close
+              </p>
+            </div>,
+          ]}
         >
-          <Content extra={extraContent(request)}>
+          <Content extra={extraContent(props.request)}>
             {renderContent(props)}
           </Content>
         </Card>
