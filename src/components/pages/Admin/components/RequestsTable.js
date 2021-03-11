@@ -82,7 +82,7 @@ export default function RequestsTable() {
                 // Update the users request to be in review
 
                 if (rowData.requestStatus === 'received') {
-                  await axiosWithAuth().put(`/requests/${rowData.id}`, {
+                  await axiosWithAuth().put(`/requests/table/${rowData.id}`, {
                     requestStatus: 'inReview',
                   });
                 }
