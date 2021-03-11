@@ -164,7 +164,14 @@ export default function Index() {
       );
   };
 
-  let props = { formValues, step, setFormValues, goBackwards, loading };
+  let props = {
+    formValues,
+    step,
+    setFormValues,
+    goBackwards,
+    goForward,
+    loading,
+  };
 
   return (
     <div className={styles.container}>
@@ -194,7 +201,11 @@ const FormNavigation = ({ step, goBackwards, loading }) => {
           {loading ? 'Loading. . .' : 'Submit'}
         </Button>
       ) : (
-        <Button type="primary" htmlType="submit">
+        <Button
+          type="primary"
+          htmlType="submit"
+          style={step === 1 ? { display: 'none' } : {}}
+        >
           Next
         </Button>
       )}
