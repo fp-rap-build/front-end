@@ -27,7 +27,7 @@ export default function Index() {
             with past due rent owed to them
           </p>
           <Button onClick={redirectToRentalAssistanceForm}>
-            Apply for Rental Assistance
+            Check your Eligibility
           </Button>
           <h5>
             Already have an account?{' '}
