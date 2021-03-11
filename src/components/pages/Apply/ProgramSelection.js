@@ -28,7 +28,7 @@ const ProgramSelection = ({ formValues }) => {
 
   useEffect(() => {
     checkPrograms();
-  }, []);
+  });
 
   return (
     <div>
