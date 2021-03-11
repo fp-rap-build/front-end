@@ -32,11 +32,11 @@ const ProgramSelection = ({ formValues }) => {
 
   return (
     <div>
-      <Title level={2}>Programs You May Qualify For:</Title>
+      <h2>Programs You May Qualify For:</h2>
       <div style={{ height: '1rem' }}></div>
       <Row align="middle">
         <Col span={15}>
-          <Paragraph strong>
+          <Paragraph strong={avilablePrograms.SNAP}>
             {' '}
             Spokane Neighborhood Action Partners (SNAP){' '}
           </Paragraph>
@@ -55,7 +55,10 @@ const ProgramSelection = ({ formValues }) => {
       <Divider />
       <Row>
         <Col span={15}>
-          <Paragraph strong> Catholic Charites Rental Assistance </Paragraph>
+          <Paragraph strong={avilablePrograms.CC}>
+            {' '}
+            Catholic Charites Rental Assistance{' '}
+          </Paragraph>
         </Col>
         <Col span={1} />
         <Col span={8}>
@@ -67,7 +70,10 @@ const ProgramSelection = ({ formValues }) => {
       <Divider dashed />
       <Row>
         <Col span={15}>
-          <Paragraph strong> Family Promise of Spokane </Paragraph>
+          <Paragraph strong={avilablePrograms.FP}>
+            {' '}
+            Family Promise of Spokane{' '}
+          </Paragraph>
         </Col>
         <Col span={1} />
         <Col span={8}>
