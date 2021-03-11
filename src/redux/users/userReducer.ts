@@ -1,6 +1,11 @@
 const INITIAL_STATE = {
   isLoggedIn: false,
-  currentUser: {},
+  currentUser: {
+    firstName: '',
+    lastName: '',
+    email: '',
+    requests: [],
+  },
   errorMessage: '',
 };
 

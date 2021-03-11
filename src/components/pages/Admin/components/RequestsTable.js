@@ -13,7 +13,7 @@ import Case from '../../../modals/Case';
 
 export default function RequestsTable() {
   const [isOpen, setIsOpen] = useState(false);
-  const [userBeingReviewed, setUserBeingReviewed] = useState(null);
+  const [requestBeingReviewed, setRequestBeingReviewed] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
   const [state, setState] = useState({
     columns: [
@@ -33,6 +33,7 @@ export default function RequestsTable() {
           denied: 'Denied',
         },
       },
+      { title: 'date', field: 'requestDate', type: 'date' },
     ],
     data: [],
   });
@@ -60,8 +61,8 @@ export default function RequestsTable() {
       {isOpen && (
         <Case
           setIsOpen={setIsOpen}
-          user={userBeingReviewed}
-          setUser={setUserBeingReviewed}
+          request={requestBeingReviewed}
+          setRequest={setRequestBeingReviewed}
           setState={setState}
           state={state}
         />
@@ -86,7 +87,7 @@ export default function RequestsTable() {
                   });
                 }
 
-                setUserBeingReviewed(rowData);
+                setRequestBeingReviewed(rowData);
                 setIsOpen(true);
               },
             },

@@ -17,34 +17,32 @@ import Button from 'antd/lib/button';
 import styles from '../../../styles/pages/apply.module.css';
 import { registerAndApply } from '../../../redux/users/userActions';
 
-import emailjs, { init } from 'emailjs-com';
-
 import { clearErrorMessage } from '../../../redux/users/userActions';
 
 import { setErrorMessage } from '../../../redux/global/globalActions';
 
-// import faker from 'faker'
+// import faker from 'faker';
 
 // const INITIAL_VALUES_DEV = {
-//   firstName: faker.name.firstName(),
-//   lastName: faker.name.lastName(),
-//   email: faker.internet.email(),
-//   password: '',
-//   confirmPassword: '',
-//   address: '3211 East Ave',
-//   cityName: 'Erie',
-//   zipCode: 16504,
-//   state: 'Pennsylvania',
-//   role: 'tenant',
-//   familySize: 2,
-//   beds: 4,
-//   monthlyIncome: 1000,
-//   tenantName: 'tenant',
-//   tenantEmail: 'tenant@gmail.com',
-//   tenantPhoneNumber: '111-222-3333',
-//   landlordName: 'landlord',
-//   landlordEmail: 'landlord@gmail.com',
-//   landlordPhoneNumber: '111-222-3333',
+// 	firstName: faker.name.firstName(),
+// 	lastName: faker.name.lastName(),
+// 	email: faker.internet.email(),
+// 	password: '',
+// 	confirmPassword: '',
+// 	address: '3211 East Ave',
+// 	cityName: 'Erie',
+// 	zipCode: 16504,
+// 	state: 'Pennsylvania',
+// 	role: 'tenant',
+// 	familySize: 2,
+// 	beds: 4,
+// 	monthlyIncome: 1000,
+// 	tenantName: 'tenant',
+// 	tenantEmail: 'tenant@gmail.com',
+// 	tenantPhoneNumber: '111-222-3333',
+// 	landlordName: 'landlord',
+// 	landlordEmail: 'landlord@gmail.com',
+// 	landlordPhoneNumber: '111-222-3333'
 // };
 
 const INITIAL_VALUES_PROD = {
@@ -68,18 +66,12 @@ const INITIAL_VALUES_PROD = {
 
 const finalStep = 2;
 
-//initiating connection to email service
-
-init(process.env.REACT_APP_EMAIL_USER_ID);
-
 export default function Index() {
   const loading = useSelector(state => state.global.isLoading);
 
   const errorMessage = useSelector(state => state.user.errorMessage);
 
   const dispatch = useDispatch();
-
-  const userName = useSelector(theState => theState.user.currentUser);
 
   const history = useHistory();
   const [step, setStep] = useState(0);
@@ -95,8 +87,6 @@ export default function Index() {
     if (errorMessage) {
       dispatch(clearErrorMessage());
     }
-
-    console.log(typeof formValues.zipCode);
 
     setFormValues({
       ...formValues,
@@ -120,46 +110,6 @@ export default function Index() {
     }
 
     dispatch(registerAndApply(formValues, history));
-
-    let name,
-      email = null;
-
-    if (formValues.role === 'tenant') {
-      name = formValues.landlordName;
-      email = formValues.landlordEmail;
-    } else {
-      name = formValues.tenantName;
-      email = formValues.tenantEmail;
-    }
-
-    const emailPayload = {
-      to_name: name,
-      from_name: fullName,
-      user_email: email,
-      message:
-        'Enter whatever message J has for us to send plus an invite link',
-    };
-
-    sendEmail(emailPayload);
-  };
-
-  const fullName = userName.firstName + ' ' + userName.lastName;
-
-  const sendEmail = emailPayload => {
-    emailjs
-      .send(
-        process.env.REACT_APP_EMAIL_SERVICE_ID,
-        'contact_form',
-        emailPayload
-      )
-      .then(
-        result => {
-          console.log('success', result.status, result.text);
-        },
-        error => {
-          console.log(error.text);
-        }
-      );
   };
 
   let props = { formValues, step, setFormValues, goBackwards, loading };

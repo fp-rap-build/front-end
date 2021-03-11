@@ -7,9 +7,12 @@ import { Typography } from 'antd';
 import styles from '../../../../../styles/pages/home.module.css';
 
 import StatusBar from './components/StatusBar';
+import DocumentUploader from './components/DocumentUploader';
 
 export default function Index() {
   const currentUser = useSelector(state => state.user.currentUser);
+
+  const request = currentUser.requests[0];
 
   return (
     <div className={styles.container}>
@@ -19,7 +22,8 @@ export default function Index() {
         Assistance Program
       </Typography.Title>
 
-      <StatusBar user={currentUser} />
+      <StatusBar request={request} />
+      <DocumentUploader request={request} />
     </div>
   );
 }

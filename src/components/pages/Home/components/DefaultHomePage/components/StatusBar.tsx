@@ -11,9 +11,7 @@ import styles from './statusBar.module.css';
 
 const { Step } = Steps;
 
-const StatusBar = props => {
-  const { user } = props;
-
+const StatusBar = ({ request }) => {
   const statusToNum = status => {
     switch (status) {
       //Cases -- 'received' , 'inReview', 'approved', 'denied'
@@ -47,7 +45,7 @@ const StatusBar = props => {
       </Typography.Title>
       <br />
       <Steps
-        current={statusToNum(user.requestStatus)}
+        current={statusToNum(request?.requestStatus)}
         labelPlacement="vertical"
         className={styles.steps}
       >
@@ -56,7 +54,7 @@ const StatusBar = props => {
           className={styles.completed}
           title="Received"
           description="Your application has been received by our Approval Team."
-        ></Step>
+        />
         <Step
           icon={<FolderOpenOutlined />}
           title="In Review"
@@ -65,7 +63,7 @@ const StatusBar = props => {
         <Step
           icon={<AuditOutlined />}
           title="Decision"
-          description={decsionDescription(user.requestStatus)}
+          description={decsionDescription(request?.requestStatus)}
         />
       </Steps>
     </div>
