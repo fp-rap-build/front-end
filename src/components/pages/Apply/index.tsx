@@ -209,7 +209,7 @@ const RenderForm = ({ step, formValues, setFormValues }) => {
     case 0:
       return <BasicInformation {...props} />;
     case 1:
-      return <ProgramSelection />;
+      return <ProgramSelection {...props} />;
     case 2:
       return <SecondaryContact {...props} />;
     case 3:
