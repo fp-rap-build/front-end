@@ -33,6 +33,7 @@ export default function RequestsTable() {
           denied: 'Denied',
         },
       },
+      { title: 'date', field: 'requestDate', type: 'date' },
     ],
     data: [],
   });

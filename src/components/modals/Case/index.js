@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { Menu, Dropdown, Space } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { message } from 'antd';
 
 import ModalContainer from '../ModalContainer';
 
 import styles from '../../../styles/modals/case.module.css';
 
-import { init } from 'emailjs-com';
+import Basic from './components/Basic';
 
-import sendEmail from '../../../utils/sendEmail';
+import Documents from './components/Documents';
 
-import { PageHeader, Statistic, Descriptions, Card } from 'antd';
+import TopActions from './components/TopActions';
+
+import Footer from './components/Footer';
+
+import { Card } from 'antd';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
-
-init(process.env.REACT_APP_EMAIL_USER_ID);
 
 const tabListNoTitle = [
   {
@@ -40,14 +41,39 @@ export default function Index({
 }) {
   const [tab, setTab] = useState('basic');
 
+  const [documents, setDocuments] = useState([]);
+
+  // Fetch documents
+  const fetchDocuments = async () => {
+    try {
+      let allDocuments = await axiosWithAuth().get(
+        `/requests/${request.id}/documents`
+      );
+
+      setDocuments(allDocuments.data.documents);
+    } catch (error) {
+      message.error(
+        'unable to fetch documents, please try again and report this'
+      );
+    }
+  };
+
+  useEffect(() => {
+    fetchDocuments();
+    // eslint-disable-next-line
+  }, []);
+
   const handleReviewSubmit = async status => {
+    // Confirm approval/denial
     let confirm = window.confirm(
       `Are you sure you want to ${
         status === 'approved' ? 'approve' : 'deny'
       } this user?`
     );
+
     if (!confirm) return;
 
+    // Update state inside table
     setState({
       ...state,
       data: state.data.map(row => {
@@ -60,24 +86,11 @@ export default function Index({
 
     setIsOpen(false);
 
+    // Update request status
     try {
       await axiosWithAuth().put(`/requests/${request.id}`, {
         requestStatus: status,
       });
-
-      let message =
-        status === 'approved'
-          ? 'You have been approved for our Rental Assistance Program'
-          : 'You have been denied the rental assistance program';
-
-      const emailPayload = {
-        to_name: request.firstName + ' ' + request.lastName,
-        from_name: 'Family Promise Rental Assistance Program (RAP)',
-        user_email: request.email,
-        message,
-      };
-
-      sendEmail(emailPayload);
     } catch (error) {
       alert('Failed to review user');
     }
@@ -87,7 +100,7 @@ export default function Index({
     setTab(key);
   };
 
-  const props = { tab, request };
+  const props = { tab, request, documents };
 
   return (
     <ModalContainer onClick={() => setIsOpen(false)}>
@@ -99,24 +112,10 @@ export default function Index({
           tabList={tabListNoTitle}
           onTabChange={onTabChange}
           activeTabKey={tab}
-          extra={[
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                width: '15%',
-                alignItems: 'center',
-                gap: '10px',
-              }}
-            >
-              <JudgeDropdown handleReviewSubmit={handleReviewSubmit} />
-              <p style={{ cursor: 'pointer' }} onClick={() => setIsOpen(false)}>
-                Close
-              </p>
-            </div>,
-          ]}
+          style={{ minHeight: '400px', width: '100%' }}
+          extra={[<TopActions handleReviewSubmit={handleReviewSubmit} />]}
         >
-          <Content extra={extraContent(props.request)}>
+          <Content extra={<Footer request={props.request} />}>
             {renderContent(props)}
           </Content>
         </Card>
@@ -128,28 +127,15 @@ export default function Index({
 const renderContent = props => {
   switch (props.tab) {
     case 'basic':
-      return basicInfo(props.request);
+      return <Basic request={props.request} />;
     case 'checklist':
       return checkList();
     case 'documents':
-      return documentInfo();
+      return <Documents documents={props.documents} />;
+    default:
+      return <Basic request={props.request} />;
   }
 };
-
-const basicInfo = (request, column = 2) => (
-  <Descriptions size="large" column={column}>
-    <Descriptions.Item label="Name">{`${request.firstName} ${request.lastName}`}</Descriptions.Item>
-    <Descriptions.Item label="State">{request.state}</Descriptions.Item>
-    <Descriptions.Item label="Email">{request.email}</Descriptions.Item>
-    <Descriptions.Item label="City">{request.cityName}</Descriptions.Item>
-    <Descriptions.Item label="Role">{request.role}</Descriptions.Item>
-    <Descriptions.Item label="Zip">{request.zipCode}</Descriptions.Item>
-    <Descriptions.Item label="Organization">none</Descriptions.Item>
-    <Descriptions.Item label="Address">{request.address}</Descriptions.Item>
-  </Descriptions>
-);
-
-const documentInfo = () => <h1>Documents</h1>;
 
 const checkList = () => <h1>Checklist</h1>;
 
@@ -159,66 +145,3 @@ const Content = ({ children, extra }) => (
     <div className="extra">{extra}</div>
   </div>
 );
-
-const extraContent = request => (
-  <div
-    style={{
-      display: 'flex',
-      width: 'max-content',
-      justifyContent: 'flex-end',
-      gap: '1rem',
-    }}
-  >
-    <Statistic
-      title="Status"
-      value={request.requestStatus}
-      style={{
-        marginRight: 32,
-      }}
-    />
-
-    <Statistic
-      title="Residents"
-      value={request.familySize}
-      style={{
-        marginRight: 32,
-      }}
-    />
-    <Statistic
-      title="Monthly Income"
-      prefix="$"
-      value={request.monthlyIncome}
-    />
-  </div>
-);
-
-const JudgeDropdown = ({ handleReviewSubmit }) => {
-  const [status, setStatus] = useState('approved');
-
-  function handleMenuClick(e) {
-    setStatus(e.key);
-  }
-
-  const menu = (
-    <Menu onClick={handleMenuClick}>
-      <Menu.Item key="approved" icon={<UserOutlined />}>
-        Approve
-      </Menu.Item>
-      <Menu.Item key="denied" icon={<UserOutlined />}>
-        Deny
-      </Menu.Item>
-    </Menu>
-  );
-
-  return (
-    <Space wrap>
-      <Dropdown.Button
-        type="primary"
-        onClick={() => handleReviewSubmit(status)}
-        overlay={menu}
-      >
-        {status === 'approved' ? 'approve' : 'deny'}
-      </Dropdown.Button>
-    </Space>
-  );
-};
