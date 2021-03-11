@@ -33,6 +33,7 @@ const ProgramSelection = ({ formValues }) => {
   return (
     <div>
       <Title level={2}>Programs You May Qualify For:</Title>
+      <div style={{ height: '1rem' }}></div>
       <Row align="middle">
         <Col span={15}>
           <Paragraph strong>
