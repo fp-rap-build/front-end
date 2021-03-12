@@ -41,7 +41,7 @@ export default function Index({
   state,
 }) {
   const [tab, setTab] = useState('basic');
-
+  const [isChecked, setIsChecked] = useState([]);
   const [documents, setDocuments] = useState([]);
 
   // Fetch documents
@@ -101,7 +101,7 @@ export default function Index({
     setTab(key);
   };
 
-  const props = { tab, request, documents };
+  const props = { tab, request, documents, isChecked };
 
   return (
     <ModalContainer onClick={() => setIsOpen(false)}>
@@ -126,11 +126,21 @@ export default function Index({
 }
 
 const renderContent = props => {
+  const handleChecked = e => {
+    const isChecked = e.target.checked;
+
+    if (isChecked === true) {
+      console.log(true);
+    } else {
+      console.log(false);
+    }
+  };
+
   switch (props.tab) {
     case 'basic':
       return <Basic request={props.request} />;
     case 'checklist':
-      return <Checklist />;
+      return <Checklist onChange={e => handleChecked(e)} />;
     case 'documents':
       return <Documents documents={props.documents} />;
     default:

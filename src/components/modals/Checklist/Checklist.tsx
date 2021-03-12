@@ -6,12 +6,10 @@ const Checklist = props => {
   // state for checklist modal
   return (
     <>
-      <Checkbox checked={props.allChecked}>
+      <label htmlFor="AccountManager">
+        <input id="AccountManager" type="checkbox" onChange={props.onChange} />
         Approved by Account Manager
-      </Checkbox>
-      <Checkbox checked={props.allChecked}>
-        All documents recieved and reviewed
-      </Checkbox>
+      </label>
     </>
   );
 };
