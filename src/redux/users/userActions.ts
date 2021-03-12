@@ -79,8 +79,15 @@ export const logIn = (user, history) => async dispatch => {
 };
 
 export const registerAndApply = (requestValues, history) => async dispatch => {
-  // Values directly attached to their account
+  // Trim whitespace off strings
+  for (let key in requestValues) {
+    let value = requestValues[key];
+    if (typeof value === 'string') {
+      requestValues[key] = requestValues[key].trim();
+    }
+  }
 
+  // Values directly attached to their account
   const user = {
     firstName: requestValues.firstName,
     lastName: requestValues.lastName,
@@ -89,7 +96,7 @@ export const registerAndApply = (requestValues, history) => async dispatch => {
     role: requestValues.role,
   };
 
-  // Address information
+  // request and address information
   const request = {
     familySize: requestValues.familySize,
     monthlyIncome: Number(requestValues.monthlyIncome),
@@ -102,7 +109,6 @@ export const registerAndApply = (requestValues, history) => async dispatch => {
   };
 
   dispatch(setLoading(true));
-
   try {
     // Register an account
     let res = await axiosWithAuth().post('/auth/register', user);
@@ -118,8 +124,10 @@ export const registerAndApply = (requestValues, history) => async dispatch => {
     // Submit a request
     await axiosWithAuth().post('/requests', request);
 
+    // Redirect to the homepage
     history.push('/');
   } catch (error) {
+    // #TODO: Better error handling
     const message = error?.response?.data?.message || 'Internal server error';
 
     dispatch(setErrorMessage(message));
