@@ -39,7 +39,7 @@ const JudgeDropdown = ({ handleReviewSubmit }) => {
   );
 
   return (
-    <Space wrap>
+    <Space>
       <Dropdown.Button
         type="primary"
         onClick={() => handleReviewSubmit(status)}
