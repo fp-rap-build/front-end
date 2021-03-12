@@ -12,6 +12,8 @@ import SecondaryContact from './forms/SecondaryContact';
 
 import CreateAccount from './forms/CreateAccount';
 
+import ProgramSelection from './forms/ProgramSelection';
+
 import Button from 'antd/lib/button';
 
 import styles from '../../../styles/pages/apply.module.css';
@@ -64,7 +66,7 @@ const INITIAL_VALUES_PROD = {
   landlordEmail: '',
 };
 
-const finalStep = 2;
+const finalStep = 3;
 
 export default function Index() {
   const loading = useSelector(state => state.global.isLoading);
@@ -112,7 +114,14 @@ export default function Index() {
     dispatch(registerAndApply(formValues, history));
   };
 
-  let props = { formValues, step, setFormValues, goBackwards, loading };
+  let props = {
+    formValues,
+    step,
+    setFormValues,
+    goBackwards,
+    goForward,
+    loading,
+  };
 
   return (
     <div className={styles.container}>
@@ -142,7 +151,11 @@ const FormNavigation = ({ step, goBackwards, loading }) => {
           {loading ? 'Loading. . .' : 'Submit'}
         </Button>
       ) : (
-        <Button type="primary" htmlType="submit">
+        <Button
+          type="primary"
+          htmlType="submit"
+          style={step === 1 ? { display: 'none' } : {}}
+        >
           Next
         </Button>
       )}
@@ -157,8 +170,10 @@ const RenderForm = ({ step, formValues, setFormValues }) => {
     case 0:
       return <BasicInformation {...props} />;
     case 1:
-      return <SecondaryContact {...props} />;
+      return <ProgramSelection {...props} />;
     case 2:
+      return <SecondaryContact {...props} />;
+    case 3:
       return <CreateAccount {...props} />;
   }
 };
