@@ -41,6 +41,7 @@ const JudgeDropdown = ({ handleReviewSubmit }) => {
   return (
     <Space wrap>
       <Dropdown.Button
+        disabled={true}
         type="primary"
         onClick={() => handleReviewSubmit(status)}
         overlay={menu}

@@ -10,6 +10,8 @@ import Basic from './components/Basic';
 
 import Documents from './components/Documents';
 
+import Checklist from './components/Checklist';
+
 import TopActions from './components/TopActions';
 
 import Footer from './components/Footer';
@@ -42,6 +44,8 @@ export default function Index({
   const [tab, setTab] = useState('basic');
 
   const [documents, setDocuments] = useState([]);
+
+  const [checklistValues, setChecklistValues] = useState({});
 
   // Fetch documents
   const fetchDocuments = async () => {
@@ -100,7 +104,13 @@ export default function Index({
     setTab(key);
   };
 
-  const props = { tab, request, documents };
+  const props = {
+    tab,
+    request,
+    documents,
+    checklistValues,
+    setChecklistValues,
+  };
 
   return (
     <ModalContainer onClick={() => setIsOpen(false)}>
@@ -113,7 +123,12 @@ export default function Index({
           onTabChange={onTabChange}
           activeTabKey={tab}
           style={{ minHeight: '400px', width: '100%' }}
-          extra={[<TopActions handleReviewSubmit={handleReviewSubmit} />]}
+          extra={[
+            <TopActions
+              checklistValues={checklistValues}
+              handleReviewSubmit={handleReviewSubmit}
+            />,
+          ]}
         >
           <Content extra={<Footer request={props.request} />}>
             {renderContent(props)}
@@ -129,7 +144,7 @@ const renderContent = props => {
     case 'basic':
       return <Basic request={props.request} />;
     case 'checklist':
-      return checkList();
+      return <Checklist />;
     case 'documents':
       return <Documents documents={props.documents} />;
     default:
