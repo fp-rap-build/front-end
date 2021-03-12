@@ -16,6 +16,7 @@ import Footer from './components/Footer';
 
 import { Card } from 'antd';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
+import Checklist from '../Checklist/Checklist';
 
 const tabListNoTitle = [
   {
@@ -129,7 +130,7 @@ const renderContent = props => {
     case 'basic':
       return <Basic request={props.request} />;
     case 'checklist':
-      return checkList();
+      return <Checklist />;
     case 'documents':
       return <Documents documents={props.documents} />;
     default:
