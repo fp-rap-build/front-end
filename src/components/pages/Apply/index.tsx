@@ -12,7 +12,7 @@ import SecondaryContact from './forms/SecondaryContact';
 
 import CreateAccount from './forms/CreateAccount';
 
-import ProgramSelection from './ProgramSelection';
+import ProgramSelection from './forms/ProgramSelection';
 
 import Button from 'antd/lib/button';
 
