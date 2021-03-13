@@ -2,7 +2,7 @@ import React from 'react';
 
 import { states } from '../../../../utils/data/states';
 
-import { Form, Input, Select, InputNumber } from 'antd';
+import { Form, Input, Select, InputNumber, Checkbox } from 'antd';
 
 const { Option } = Select;
 
@@ -13,6 +13,12 @@ export default function BasicInformation({ formValues, setFormValues }) {
 
   const onRoleChange = value => {
     setFormValues({ ...formValues, role: value });
+  };
+
+  const handleCheckBoxChange = e => {
+    const { id, checked } = e.target;
+    setFormValues({ ...formValues, [id]: checked });
+    console.log(formValues[id]);
   };
 
   return (
@@ -143,6 +149,17 @@ export default function BasicInformation({ formValues, setFormValues }) {
         ]}
       >
         <Input name="monthlyIncome" style={{ width: '100%' }} />
+      </Form.Item>
+      <Form.Item name="unEmp90">
+        <Checkbox onChange={handleCheckBoxChange}>
+          Has anyone in your household been unemployed for 90 + days?
+        </Checkbox>
+      </Form.Item>
+      <Form.Item name="foodWrkr">
+        <Checkbox onChange={handleCheckBoxChange}>
+          Has anyone in the household worked in the food service industry at any
+          time since January 1, 2020?
+        </Checkbox>
       </Form.Item>
     </div>
   );
