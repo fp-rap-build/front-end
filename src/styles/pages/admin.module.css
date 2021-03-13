@@ -1,5 +1,5 @@
 .dashContainer {
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   border: 2px solid #472d5b;
   border-radius: 10px;
@@ -15,10 +15,13 @@
 }
 
 .dashboard {
-  padding: 0 5%;
+  padding: 1%;
 }
 
-
+.table {
+  border: 5px solid black;
+  width: 100%;
+}
 
 @media (max-width: 650px) {
   .headingNav {
