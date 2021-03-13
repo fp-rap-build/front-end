@@ -82,10 +82,6 @@ export default function BasicInformation({ formValues, setFormValues }) {
             min: 3,
             message: 'Address is required',
           },
-          {
-            pattern: RegExp(/^[A-Za-z0-9 ]+$/),
-            message: 'Enter a valid Address',
-          },
         ]}
       >
         <Input name="address" />
