@@ -44,6 +44,8 @@ export default function Index({
   const [isChecked, setIsChecked] = useState([]);
   const [documents, setDocuments] = useState([]);
 
+  const [checklistValues, setChecklistValues] = useState({});
+
   // Fetch documents
   const fetchDocuments = async () => {
     try {
@@ -114,7 +116,12 @@ export default function Index({
           onTabChange={onTabChange}
           activeTabKey={tab}
           style={{ minHeight: '400px', width: '100%' }}
-          extra={[<TopActions handleReviewSubmit={handleReviewSubmit} />]}
+          extra={[
+            <TopActions
+              checklistValues={checklistValues}
+              handleReviewSubmit={handleReviewSubmit}
+            />,
+          ]}
         >
           <Content extra={<Footer request={props.request} />}>
             {renderContent(props)}
