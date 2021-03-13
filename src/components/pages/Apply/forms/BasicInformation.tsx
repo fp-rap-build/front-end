@@ -63,7 +63,7 @@ export default function BasicInformation({ formValues, setFormValues }) {
         rules={[
           { required: true, message: 'City is required' },
           {
-            pattern: RegExp(/^[a-zA-Z.\s]*$/),
+            pattern: RegExp(/^[A-Za-z0-9'\.\-\s\,]*$/),
             message: 'Enter a valid City Name',
           },
         ]}
@@ -77,10 +77,10 @@ export default function BasicInformation({ formValues, setFormValues }) {
         label="Address"
         name="address"
         rules={[
+          { required: true, message: 'Address is required' },
           {
-            required: true,
-            min: 3,
-            message: 'Address is required',
+            pattern: RegExp(/^[0-9a-zA-Z.\s]*$/),
+            message: 'Enter a valid City Name',
           },
         ]}
       >
