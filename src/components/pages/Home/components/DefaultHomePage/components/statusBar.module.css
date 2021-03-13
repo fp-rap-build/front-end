@@ -1,7 +1,17 @@
+@import '../../../../../../styles/global.css';
+
 .container {
   width: 90%;
   margin: 0 auto;
   text-align: center;
+}
+
+.icon {
+  color: var(--color-primary);
+}
+
+.iconDisabled {
+  color: rgb(170, 170, 170);
 }
 
 .heading {

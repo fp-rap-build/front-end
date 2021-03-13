@@ -7,11 +7,15 @@ import {
   FolderOpenOutlined,
 } from '@ant-design/icons';
 
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 import styles from './statusBar.module.css';
 
 const { Step } = Steps;
 
 const StatusBar = ({ request }) => {
+  const isMobile = useMediaQuery('(min-width:700px)');
+
   const statusToNum = status => {
     switch (status) {
       //Cases -- 'received' , 'inReview', 'approved', 'denied'
@@ -46,8 +50,8 @@ const StatusBar = ({ request }) => {
       <br />
       <Steps
         current={statusToNum(request?.requestStatus)}
-        labelPlacement="vertical"
         className={styles.steps}
+        direction={isMobile ? 'horizontal' : 'vertical'}
       >
         <Step
           icon={<FileDoneOutlined />}
