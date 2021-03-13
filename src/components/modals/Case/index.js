@@ -5,19 +5,12 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 import ModalContainer from '../ModalContainer';
 
-import styles from '../../../styles/modals/case.module.css';
-
-import Basic from './components/Basic';
-
-import Documents from './components/Documents';
-
-import TopActions from './components/TopActions';
-
-import Footer from './components/Footer';
-
 import { Card } from 'antd';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
-import Checklist from '../Checklist/Checklist';
+
+import { Basic, Documents, Checklist, TopActions, Footer } from './components';
+
+import styles from '../../../styles/modals/case.module.css';
 
 const { confirm } = Modal;
 
