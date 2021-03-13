@@ -2,15 +2,25 @@ import { Button, Checkbox, Input } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
 import React, { useState } from 'react';
 
-const Checklist = props => {
+const Checklist = ({ handleCheckboxChange }) => {
   // state for checklist modal
   return (
-    <>
-      <label htmlFor="AccountManager">
-        <input id="AccountManager" type="checkbox" onChange={props.onChange} />
-        Approved by Account Manager
-      </label>
-    </>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        gap: '0.3rem',
+      }}
+    >
+      <Checkbox name="verifiedDocuments" onChange={handleCheckboxChange}>
+        All documents received and verified
+      </Checkbox>
+      <br />
+      <Checkbox name="pmApproval" onChange={handleCheckboxChange}>
+        Approved by program manager
+      </Checkbox>
+    </div>
   );
 };
 

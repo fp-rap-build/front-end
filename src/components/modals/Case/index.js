@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import { message } from 'antd';
+import { message, Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 import ModalContainer from '../ModalContainer';
 
@@ -18,6 +19,8 @@ import { Card } from 'antd';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 import Checklist from '../Checklist/Checklist';
 
+const { confirm } = Modal;
+
 const tabListNoTitle = [
   {
     key: 'basic',
@@ -33,6 +36,17 @@ const tabListNoTitle = [
   },
 ];
 
+const pleaseFinishChecklistModal = () => {
+  Modal.error({ title: 'Please finish everything on your checklist' });
+};
+
+const approveOrDenyModal = (message, onOk) => {
+  confirm({
+    title: message,
+    onOk,
+  });
+};
+
 export default function Index({
   setIsOpen,
   request,
@@ -41,10 +55,11 @@ export default function Index({
   state,
 }) {
   const [tab, setTab] = useState('basic');
-  const [isChecked, setIsChecked] = useState([]);
   const [documents, setDocuments] = useState([]);
-
-  const [checklistValues, setChecklistValues] = useState({});
+  const [checklistValues, setChecklistValues] = useState({
+    pmApproval: request.pmApproval,
+    verifiedDocuments: request.verifiedDocuments,
+  });
 
   // Fetch documents
   const fetchDocuments = async () => {
@@ -67,43 +82,54 @@ export default function Index({
   }, []);
 
   const handleReviewSubmit = async status => {
-    // Confirm approval/denial
-    let confirm = window.confirm(
-      `Are you sure you want to ${
-        status === 'approved' ? 'approve' : 'deny'
-      } this user?`
-    );
-
-    if (!confirm) return;
-
-    // Update state inside table
-    setState({
-      ...state,
-      data: state.data.map(row => {
-        if (row.id === request.id) {
-          row['requestStatus'] = status;
-        }
-        return row;
-      }),
-    });
-
-    setIsOpen(false);
-
-    // Update request status
-    try {
-      await axiosWithAuth().put(`/requests/${request.id}`, {
-        requestStatus: status,
-      });
-    } catch (error) {
-      alert('Failed to review user');
+    // Make sure all checkboxes are checked
+    for (let key in checklistValues) {
+      let unChecked = !checklistValues[key];
+      if (unChecked) {
+        return pleaseFinishChecklistModal();
+      }
     }
+
+    let message = `Are you sure you want to ${
+      status === 'approved' ? 'approve' : 'deny'
+    } this user?`;
+
+    const onOk = async () => {
+      setState({
+        ...state,
+        data: state.data.map(row => {
+          if (row.id === request.id) {
+            row['requestStatus'] = status;
+          }
+          return row;
+        }),
+      });
+      try {
+        await axiosWithAuth().put(`/requests/${request.id}`, {
+          requestStatus: status,
+        });
+      } catch (error) {
+        alert('Failed to review user');
+      } finally {
+        setIsOpen(false);
+      }
+    };
+
+    return approveOrDenyModal(message, onOk);
   };
 
   const onTabChange = (key, type) => {
     setTab(key);
   };
 
-  const props = { tab, request, documents, isChecked };
+  const handleCheckboxChange = e => {
+    setChecklistValues({
+      ...checklistValues,
+      [e.target.name]: e.target.checked,
+    });
+  };
+
+  const props = { tab, request, documents, handleCheckboxChange };
 
   return (
     <ModalContainer onClick={() => setIsOpen(false)}>
@@ -116,12 +142,7 @@ export default function Index({
           onTabChange={onTabChange}
           activeTabKey={tab}
           style={{ minHeight: '400px', width: '100%' }}
-          extra={[
-            <TopActions
-              checklistValues={checklistValues}
-              handleReviewSubmit={handleReviewSubmit}
-            />,
-          ]}
+          extra={[<TopActions handleReviewSubmit={handleReviewSubmit} />]}
         >
           <Content extra={<Footer request={props.request} />}>
             {renderContent(props)}
@@ -133,21 +154,11 @@ export default function Index({
 }
 
 const renderContent = props => {
-  const handleChecked = e => {
-    const isChecked = e.target.checked;
-
-    if (isChecked === true) {
-      console.log(true);
-    } else {
-      console.log(false);
-    }
-  };
-
   switch (props.tab) {
     case 'basic':
       return <Basic request={props.request} />;
     case 'checklist':
-      return <Checklist onChange={e => handleChecked(e)} />;
+      return <Checklist handleCheckboxChange={props.handleCheckboxChange} />;
     case 'documents':
       return <Documents documents={props.documents} />;
     default:
