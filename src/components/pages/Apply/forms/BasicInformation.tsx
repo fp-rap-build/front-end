@@ -109,25 +109,18 @@ export default function BasicInformation({ formValues, setFormValues }) {
       <Form.Item
         name="familySize"
         initialValue={formValues.familySize}
-        label="Family Size"
+        label=" Residents"
         required
         hasFeedback
         rules={[
           {
-            type: 'number',
             required: true,
-            message: 'Please enter a valid number',
-          },
-          {
-            type: 'number',
-            required: true,
-            min: 1,
-            max: 100,
-            message: 'Please enter a number that is in range',
+            pattern: RegExp(/^([1-9][0-9]?)\s*$/),
+            message: 'Invalid number of residents',
           },
         ]}
       >
-        <InputNumber
+        <Input
           style={{ width: '100%' }}
           name="familySize"
           value={formValues.familySize}
@@ -140,18 +133,15 @@ export default function BasicInformation({ formValues, setFormValues }) {
         label="Monthly Income"
         rules={[
           {
-            type: 'number',
             required: true,
-            message: 'Please enter your montly income',
-          },
-          {
-            type: 'number',
-            message: 'Please enter a valid number',
-            min: 0,
+            pattern: RegExp(
+              /^([1-9]|([0-9]$)[0-9]?[0-9]?[0-9]?[0-9]?[0-9]?)\s*$/
+            ),
+            message: 'Invalid income',
           },
         ]}
       >
-        <InputNumber name="monthlyIncome" style={{ width: '100%' }} min={0} />
+        <Input name="monthlyIncome" style={{ width: '100%' }} />
       </Form.Item>
     </div>
   );
