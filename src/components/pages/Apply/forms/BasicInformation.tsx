@@ -135,7 +135,8 @@ export default function BasicInformation({ formValues, setFormValues }) {
           {
             required: true,
             pattern: RegExp(
-              /^([1-9]|([0-9]$)[0-9]?[0-9]?[0-9]?[0-9]?[0-9]?)\s*$/
+              // forgive me god
+              /^(\b([0-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9][0-9][0-9])\b)\s*?$/
             ),
             message: 'Invalid income',
           },
