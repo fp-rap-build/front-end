@@ -2,7 +2,7 @@ import { Button, Checkbox, Input } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
 import React, { useState } from 'react';
 
-const Checklist = ({ handleCheckboxChange }) => {
+const Checklist = ({ handleCheckboxChange, request }) => {
   // state for checklist modal
   return (
     <div
@@ -13,11 +13,19 @@ const Checklist = ({ handleCheckboxChange }) => {
         gap: '0.3rem',
       }}
     >
-      <Checkbox name="verifiedDocuments" onChange={handleCheckboxChange}>
+      <Checkbox
+        checked={request.verifiedDocuments}
+        name="verifiedDocuments"
+        onChange={handleCheckboxChange}
+      >
         All documents received and verified
       </Checkbox>
       <br />
-      <Checkbox name="pmApproval" onChange={handleCheckboxChange}>
+      <Checkbox
+        checked={request.pmApproval}
+        name="pmApproval"
+        onChange={handleCheckboxChange}
+      >
         Approved by program manager
       </Checkbox>
     </div>
