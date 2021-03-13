@@ -61,9 +61,9 @@ export default function BasicInformation({ formValues, setFormValues }) {
         label="City"
         name="cityName"
         rules={[
-          { required: true, message: 'City is required' },
+          { required: true, min: 3, message: 'City is required' },
           {
-            pattern: RegExp(/^[a-zA-Z\s]*$/),
+            pattern: RegExp(/^[A-Za-z0-9'.-\s,#]*$/),
             message: 'Enter a valid City Name',
           },
         ]}
@@ -77,14 +77,10 @@ export default function BasicInformation({ formValues, setFormValues }) {
         label="Address"
         name="address"
         rules={[
+          { required: true, message: 'Address is required' },
           {
-            required: true,
-            min: 3,
-            message: 'Address is required',
-          },
-          {
-            pattern: RegExp(/^[A-Za-z0-9 ]+$/),
-            message: 'Enter a valid Address',
+            pattern: RegExp(/^[A-Za-z0-9'.-\s,#]*$/),
+            message: 'Enter a valid City Name',
           },
         ]}
       >
@@ -113,25 +109,18 @@ export default function BasicInformation({ formValues, setFormValues }) {
       <Form.Item
         name="familySize"
         initialValue={formValues.familySize}
-        label="Family Size"
+        label=" Residents"
         required
         hasFeedback
         rules={[
           {
-            type: 'number',
             required: true,
-            message: 'Please enter a valid number',
-          },
-          {
-            type: 'number',
-            required: true,
-            min: 1,
-            max: 100,
-            message: 'Please enter a number that is in range',
+            pattern: RegExp(/^([1-9][0-9]?)\s*$/),
+            message: 'Invalid number of residents',
           },
         ]}
       >
-        <InputNumber
+        <Input
           style={{ width: '100%' }}
           name="familySize"
           value={formValues.familySize}
@@ -144,18 +133,16 @@ export default function BasicInformation({ formValues, setFormValues }) {
         label="Monthly Income"
         rules={[
           {
-            type: 'number',
             required: true,
-            message: 'Please enter your montly income',
-          },
-          {
-            type: 'number',
-            message: 'Please enter a valid number',
-            min: 0,
+            pattern: RegExp(
+              // forgive me
+              /^(\b([0-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9][0-9][0-9])\b)\s*?$/
+            ),
+            message: 'Invalid income',
           },
         ]}
       >
-        <InputNumber name="monthlyIncome" style={{ width: '100%' }} min={0} />
+        <Input name="monthlyIncome" style={{ width: '100%' }} />
       </Form.Item>
     </div>
   );
