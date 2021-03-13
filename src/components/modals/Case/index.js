@@ -94,7 +94,7 @@ export default function Index({
 
     let message = `Are you sure you want to ${
       status === 'approved' ? 'approve' : 'deny'
-    } this user?`;
+    } this request?`;
 
     const onOk = async () => {
       setState({
