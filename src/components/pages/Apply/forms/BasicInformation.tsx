@@ -2,7 +2,7 @@ import React from 'react';
 
 import { states } from '../../../../utils/data/states';
 
-import { Form, Input, Select, InputNumber } from 'antd';
+import { Form, Input, Select, InputNumber, Checkbox } from 'antd';
 
 const { Option } = Select;
 
@@ -15,6 +15,15 @@ export default function BasicInformation({ formValues, setFormValues }) {
     setFormValues({ ...formValues, role: value });
   };
 
+  const handleCheckBoxChange = e => {
+    e.stopPropagation();
+
+    const { name, checked } = e.target;
+
+    setFormValues({ ...formValues, [name]: checked });
+    console.log(formValues);
+  };
+
   return (
     <div>
       <h2>Basic Information</h2>
@@ -24,6 +33,11 @@ export default function BasicInformation({ formValues, setFormValues }) {
         label="Are you a Landlord or Tenant?"
         name="role"
         rules={[{ required: true, message: 'required' }]}
+        extra={
+          formValues.role === 'landlord'
+            ? 'Please enter your own address information below'
+            : null
+        }
       >
         <Select
           onChange={onRoleChange}
@@ -130,7 +144,11 @@ export default function BasicInformation({ formValues, setFormValues }) {
         hasFeedback
         name="monthlyIncome"
         initialValue={formValues.monthlyIncome}
-        label="Monthly Income"
+        label={
+          formValues.role === 'landlord'
+            ? 'Tenants Monthly Income'
+            : 'Monthly Income'
+        }
         rules={[
           {
             required: true,
@@ -143,6 +161,17 @@ export default function BasicInformation({ formValues, setFormValues }) {
         ]}
       >
         <Input name="monthlyIncome" style={{ width: '100%' }} />
+      </Form.Item>
+      <Form.Item>
+        <Checkbox name="unEmp90" onChange={handleCheckBoxChange}>
+          Has anyone in your household been unemployed for 90 + days?
+        </Checkbox>
+      </Form.Item>
+      <Form.Item>
+        <Checkbox name="foodWrkr" onChange={handleCheckBoxChange}>
+          Has anyone in the household worked in the food service industry at any
+          time since January 1, 2020?
+        </Checkbox>
       </Form.Item>
     </div>
   );

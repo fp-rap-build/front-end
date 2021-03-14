@@ -64,6 +64,8 @@ const INITIAL_VALUES_PROD = {
   tenantEmail: '',
   landlordName: '',
   landlordEmail: '',
+  unEmp90: false,
+  foodWrkr: false,
 };
 
 const finalStep = 3;
