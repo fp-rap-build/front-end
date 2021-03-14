@@ -3,16 +3,8 @@ import Modal from 'antd/lib/modal/Modal';
 import React, { useState } from 'react';
 
 const Checklist = ({ handleCheckboxChange, request }) => {
-  // state for checklist modal
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-        gap: '0.3rem',
-      }}
-    >
+    <div>
       <Checkbox
         checked={request.verifiedDocuments}
         name="verifiedDocuments"
