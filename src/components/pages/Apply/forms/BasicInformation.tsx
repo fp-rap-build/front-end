@@ -33,6 +33,11 @@ export default function BasicInformation({ formValues, setFormValues }) {
         label="Are you a Landlord or Tenant?"
         name="role"
         rules={[{ required: true, message: 'required' }]}
+        extra={
+          formValues.role === 'landlord'
+            ? 'Please enter your own address information below'
+            : null
+        }
       >
         <Select
           onChange={onRoleChange}
