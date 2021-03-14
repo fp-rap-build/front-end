@@ -9,13 +9,13 @@ const { Paragraph } = Typography;
 const dsBaseUrl = process.env.REACT_APP_DS_API_URI;
 
 const ProgramSelection = ({ formValues }) => {
-  const { zipCode, familySize, monthlyIncome } = formValues;
+  const { zipCode, familySize, monthlyIncome, unEmp90, foodWrkr } = formValues;
 
   const [loadStatus, setLoadStatus] = useState(false);
   const [avilablePrograms, setAvailablePrograms] = useState({});
 
   const checkPrograms = async () => {
-    const queryString = `?zipcode=${zipCode}&family_size=${familySize}&income=${monthlyIncome}`;
+    const queryString = `?zipcode=${zipCode}&family_size=${familySize}&income=${monthlyIncome}&unEmp90=${unEmp90}&foodWrkr=${foodWrkr}`;
     const callURL = dsBaseUrl + queryString;
     setLoadStatus(true);
     try {
