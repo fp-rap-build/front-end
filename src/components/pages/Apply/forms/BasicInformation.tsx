@@ -136,7 +136,11 @@ export default function BasicInformation({ formValues, setFormValues }) {
         hasFeedback
         name="monthlyIncome"
         initialValue={formValues.monthlyIncome}
-        label="Monthly Income"
+        label={
+          formValues.role === 'landlord'
+            ? 'Tenants Monthly Income'
+            : 'Monthly Income'
+        }
         rules={[
           {
             required: true,
