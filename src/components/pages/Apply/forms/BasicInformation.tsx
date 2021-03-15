@@ -163,12 +163,20 @@ export default function BasicInformation({ formValues, setFormValues }) {
         <Input name="monthlyIncome" style={{ width: '100%' }} />
       </Form.Item>
       <Form.Item>
-        <Checkbox name="unEmp90" onChange={handleCheckBoxChange}>
+        <Checkbox
+          checked={formValues.unEmp90}
+          name="unEmp90"
+          onChange={handleCheckBoxChange}
+        >
           Has anyone in your household been unemployed for 90 + days?
         </Checkbox>
       </Form.Item>
       <Form.Item>
-        <Checkbox name="foodWrkr" onChange={handleCheckBoxChange}>
+        <Checkbox
+          checked={formValues.foodWrkr}
+          name="foodWrkr"
+          onChange={handleCheckBoxChange}
+        >
           Has anyone in the household worked in the food service industry at any
           time since January 1, 2020?
         </Checkbox>
