@@ -4,22 +4,42 @@ import axios from 'axios';
 
 import { Divider, Typography, Button, Row, Col, Spin } from 'antd';
 
+// urls
+
+import { SNAP, CC } from '../../../../utils/data/urls';
+
 const { Paragraph } = Typography;
 
 const dsBaseUrl = process.env.REACT_APP_DS_API_URI;
 
 const ProgramSelection = ({ formValues }) => {
-  const { zipCode, familySize, monthlyIncome, unEmp90, foodWrkr } = formValues;
+  let { zipCode, familySize, monthlyIncome, unEmp90, foodWrkr } = formValues;
 
   const [loadStatus, setLoadStatus] = useState(false);
   const [avilablePrograms, setAvailablePrograms] = useState({});
 
+  // Only eligible for family promise if no other options are available
+  const eligibleForFP =
+    !avilablePrograms.SNAP && !avilablePrograms.CC && avilablePrograms.FP;
+
   const checkPrograms = async () => {
+    // convert bools to 0 or 1
+    if (unEmp90) {
+      unEmp90 = 1;
+    }
+    if (foodWrkr) {
+      foodWrkr = 1;
+    } else {
+      unEmp90 = 0;
+      foodWrkr = 0;
+    }
+
     const queryString = `?zipcode=${zipCode}&family_size=${familySize}&income=${monthlyIncome}&unEmp90=${unEmp90}&foodWrkr=${foodWrkr}`;
     const callURL = dsBaseUrl + queryString;
     setLoadStatus(true);
     try {
       const res = await axios.post(callURL);
+
       setAvailablePrograms(res.data);
     } catch (err) {
       alert('error from DS API');
@@ -31,12 +51,11 @@ const ProgramSelection = ({ formValues }) => {
 
   useEffect(() => {
     checkPrograms();
-
     // eslint-disable-next-line
   }, []);
 
   return (
-    <Spin spinning={loadStatus} tip="Crunching the numbers...">
+    <Spin spinning={loadStatus} tip="Checking your eligibility...">
       <h2>Programs You May Qualify For:</h2>
       <div style={{ height: '1rem' }}></div>
       <Row align="middle">
@@ -49,6 +68,8 @@ const ProgramSelection = ({ formValues }) => {
         <Col span={1} />
         <Col span={8}>
           <Button
+            href={SNAP}
+            target="_blank"
             type="primary"
             size="medium"
             disabled={!avilablePrograms.SNAP}
@@ -67,7 +88,13 @@ const ProgramSelection = ({ formValues }) => {
         </Col>
         <Col span={1} />
         <Col span={8}>
-          <Button type="primary" size="medium" disabled={!avilablePrograms.CC}>
+          <Button
+            href={CC}
+            target="_blank"
+            type="primary"
+            size="medium"
+            disabled={!avilablePrograms.CC}
+          >
             {avilablePrograms.CC ? 'Apply Now!' : 'Not Available'}
           </Button>
         </Col>
@@ -86,9 +113,9 @@ const ProgramSelection = ({ formValues }) => {
             type="primary"
             size="medium"
             htmlType="submit"
-            disabled={!avilablePrograms.FP}
+            disabled={!eligibleForFP}
           >
-            {avilablePrograms.FP ? 'Apply Now!' : 'Not Available'}
+            {eligibleForFP ? 'Apply Now!' : 'Not Available'}
           </Button>
         </Col>
       </Row>
