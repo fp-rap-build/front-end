@@ -25,13 +25,13 @@ const ProgramSelection = ({ formValues }) => {
   const checkPrograms = async () => {
     // convert bools to 0 or 1
     if (unEmp90) {
-      unEmp90 = 1;
+      unEmp90 = '1';
     }
     if (foodWrkr) {
-      foodWrkr = 1;
+      foodWrkr = '1';
     } else {
-      unEmp90 = 0;
-      foodWrkr = 0;
+      unEmp90 = '0';
+      foodWrkr = '0';
     }
 
     const queryString = `?zipcode=${zipCode}&family_size=${familySize}&income=${monthlyIncome}&unEmp90=${unEmp90}&foodWrkr=${foodWrkr}`;
