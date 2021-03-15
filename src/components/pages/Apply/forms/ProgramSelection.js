@@ -37,15 +37,10 @@ const ProgramSelection = ({ formValues }) => {
     const queryString = `?zipcode=${zipCode}&family_size=${familySize}&income=${monthlyIncome}&unEmp90=${unEmp90}&foodWrkr=${foodWrkr}`;
     const callURL = dsBaseUrl + queryString;
     setLoadStatus(true);
-    console.log(callURL);
     try {
       const res = await axios.post(callURL);
 
-      console.log(res.data);
-
-      let mockResponse = { SNAP: 1, CC: 1, FP: 1 };
-
-      setAvailablePrograms(mockResponse);
+      setAvailablePrograms(res.data);
     } catch (err) {
       alert('error from DS API');
       console.log(err);
@@ -56,12 +51,11 @@ const ProgramSelection = ({ formValues }) => {
 
   useEffect(() => {
     checkPrograms();
-
     // eslint-disable-next-line
   }, []);
 
   return (
-    <Spin spinning={loadStatus} tip="Crunching the numbers...">
+    <Spin spinning={loadStatus} tip="Checking your eligibility...">
       <h2>Programs You May Qualify For:</h2>
       <div style={{ height: '1rem' }}></div>
       <Row align="middle">
