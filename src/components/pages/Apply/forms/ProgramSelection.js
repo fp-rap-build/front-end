@@ -18,6 +18,10 @@ const ProgramSelection = ({ formValues }) => {
   const [loadStatus, setLoadStatus] = useState(false);
   const [avilablePrograms, setAvailablePrograms] = useState({});
 
+  // Only eligible for family promise if no other options are available
+  const eligibleForFP =
+    !avilablePrograms.SNAP && !avilablePrograms.CC && avilablePrograms.FP;
+
   const checkPrograms = async () => {
     // convert bools to 0 or 1
     if (unEmp90) {
@@ -115,9 +119,9 @@ const ProgramSelection = ({ formValues }) => {
             type="primary"
             size="medium"
             htmlType="submit"
-            disabled={!avilablePrograms.FP}
+            disabled={!eligibleForFP}
           >
-            {avilablePrograms.FP ? 'Apply Now!' : 'Not Available'}
+            {eligibleForFP ? 'Apply Now!' : 'Not Available'}
           </Button>
         </Col>
       </Row>
