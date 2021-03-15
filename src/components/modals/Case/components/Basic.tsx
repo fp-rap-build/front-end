@@ -13,6 +13,12 @@ export default function Basic({ request, column = 2 }) {
       <Descriptions.Item label="Zip">{request.zipCode}</Descriptions.Item>
       <Descriptions.Item label="Organization">none</Descriptions.Item>
       <Descriptions.Item label="Address">{request.address}</Descriptions.Item>
+      <Descriptions.Item label="Food Worker">
+        {request.foodWrkr ? 'yes' : 'no'}
+      </Descriptions.Item>
+      <Descriptions.Item label="Unemployed for 90 days">
+        {request.unEmp90 ? 'yes' : 'no'}
+      </Descriptions.Item>
     </Descriptions>
   );
 }

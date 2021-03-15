@@ -110,10 +110,6 @@ export const registerAndApply = (requestValues, history) => async dispatch => {
     },
   };
 
-  console.log(request);
-
-  return;
-
   dispatch(setLoading(true));
   try {
     // Register an account
