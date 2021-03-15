@@ -7,6 +7,14 @@ import { Form, Input, Select, InputNumber, Checkbox } from 'antd';
 const { Option } = Select;
 
 export default function BasicInformation({ formValues, setFormValues }) {
+  const { role } = formValues;
+
+  const tenantCheckboxIntroMessage =
+    'Please place a checkmark next to all of the statements below that are true for you and/or somebody in your household';
+
+  const landlordCheckboxIntroMessage =
+    'Please place a checkmark next to all of the statements below that are true for your tenant';
+
   function onChange(value) {
     setFormValues({ ...formValues, state: value });
   }
@@ -162,15 +170,21 @@ export default function BasicInformation({ formValues, setFormValues }) {
       >
         <Input name="monthlyIncome" style={{ width: '100%' }} />
       </Form.Item>
+      <hr></hr>
+      <h4>
+        {role === 'landlord'
+          ? landlordCheckboxIntroMessage
+          : tenantCheckboxIntroMessage}
+      </h4>
       <Form.Item>
         <Checkbox name="unEmp90" onChange={handleCheckBoxChange}>
-          Has anyone in your household been unemployed for 90 + days?
+          Been unemployed for 90+ Days
         </Checkbox>
       </Form.Item>
       <Form.Item>
         <Checkbox name="foodWrkr" onChange={handleCheckBoxChange}>
-          Has anyone in the household worked in the food service industry at any
-          time since January 1, 2020?
+          Have worked in the Food Service Industry at any time after January 1st
+          2020
         </Checkbox>
       </Form.Item>
     </div>
