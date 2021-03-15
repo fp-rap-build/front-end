@@ -4,6 +4,10 @@ import axios from 'axios';
 
 import { Divider, Typography, Button, Row, Col, Spin } from 'antd';
 
+// urls
+
+import { SNAP, CC } from '../../../../utils/data/urls';
+
 const { Paragraph } = Typography;
 
 const dsBaseUrl = process.env.REACT_APP_DS_API_URI;
@@ -34,7 +38,10 @@ const ProgramSelection = ({ formValues }) => {
       const res = await axios.post(callURL);
 
       console.log(res.data);
-      setAvailablePrograms(res.data);
+
+      let mockResponse = { SNAP: 1, CC: 1, FP: 1 };
+
+      setAvailablePrograms(mockResponse);
     } catch (err) {
       alert('error from DS API');
       console.log(err);
@@ -63,6 +70,8 @@ const ProgramSelection = ({ formValues }) => {
         <Col span={1} />
         <Col span={8}>
           <Button
+            href={SNAP}
+            target="_blank"
             type="primary"
             size="medium"
             disabled={!avilablePrograms.SNAP}
@@ -81,7 +90,13 @@ const ProgramSelection = ({ formValues }) => {
         </Col>
         <Col span={1} />
         <Col span={8}>
-          <Button type="primary" size="medium" disabled={!avilablePrograms.CC}>
+          <Button
+            href={CC}
+            target="_blank"
+            type="primary"
+            size="medium"
+            disabled={!avilablePrograms.CC}
+          >
             {avilablePrograms.CC ? 'Apply Now!' : 'Not Available'}
           </Button>
         </Col>
