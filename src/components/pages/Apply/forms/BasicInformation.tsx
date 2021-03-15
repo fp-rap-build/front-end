@@ -185,6 +185,23 @@ export default function BasicInformation({ formValues, setFormValues }) {
         <Checkbox name="foodWrkr" onChange={handleCheckBoxChange}>
           Have worked in the Food Service Industry at any time after January 1st
           2020
+        <Checkbox
+          checked={formValues.unEmp90}
+          name="unEmp90"
+          onChange={handleCheckBoxChange}
+        >
+          Has anyone in your household been unemployed for 90 + days?
+        </Checkbox>
+      </Form.Item>
+      <Form.Item>
+        <Checkbox
+          checked={formValues.foodWrkr}
+          name="foodWrkr"
+          onChange={handleCheckBoxChange}
+        >
+          Has anyone in the household worked in the food service industry at any
+          time since January 1, 2020?
+
         </Checkbox>
       </Form.Item>
     </div>
