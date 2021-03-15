@@ -10,10 +10,10 @@ export default function BasicInformation({ formValues, setFormValues }) {
   const { role } = formValues;
 
   const tenantCheckboxIntroMessage =
-    'Please place a checkmark next to all of the statements below that are true for you and/or somebody in your household';
+    'Please place a checkmark next to all of the statements below that are true for you and/or somebody in your household:';
 
   const landlordCheckboxIntroMessage =
-    'Please place a checkmark next to all of the statements below that are true for your tenant';
+    'Please place a checkmark next to all of the statements below that are true for your tenant:';
 
   function onChange(value) {
     setFormValues({ ...formValues, state: value });
@@ -176,9 +176,21 @@ export default function BasicInformation({ formValues, setFormValues }) {
           ? landlordCheckboxIntroMessage
           : tenantCheckboxIntroMessage}
       </h4>
+
+      <Form.Item>
+        <Checkbox
+          checked={formValues.minorGuest}
+          name="minorGuest"
+          onChange={handleCheckBoxChange}
+        >
+          Household has at least one minor (17 or younger) or at least one
+          person is pregnant?
+        </Checkbox>
+      </Form.Item>
+
       <Form.Item>
         <Checkbox name="unEmp90" onChange={handleCheckBoxChange}>
-          Been unemployed for 90+ Days
+          Been unemployed for 90+ Days?
         </Checkbox>
       </Form.Item>
       <Form.Item>
@@ -187,8 +199,8 @@ export default function BasicInformation({ formValues, setFormValues }) {
           name="foodWrkr"
           onChange={handleCheckBoxChange}
         >
-          Has anyone in the household worked in the food service industry at any
-          time since January 1, 2020?
+          At least one person in the household worked in the food service
+          industry at any time since January 1, 2020?
         </Checkbox>
       </Form.Item>
     </div>

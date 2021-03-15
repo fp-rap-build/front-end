@@ -13,7 +13,14 @@ const { Paragraph } = Typography;
 const dsBaseUrl = process.env.REACT_APP_DS_API_URI;
 
 const ProgramSelection = ({ formValues }) => {
-  let { zipCode, familySize, monthlyIncome, unEmp90, foodWrkr } = formValues;
+  let {
+    zipCode,
+    familySize,
+    monthlyIncome,
+    unEmp90,
+    foodWrkr,
+    minorGuest,
+  } = formValues;
 
   const [loadStatus, setLoadStatus] = useState(false);
   const [avilablePrograms, setAvailablePrograms] = useState({});
@@ -23,18 +30,24 @@ const ProgramSelection = ({ formValues }) => {
     !avilablePrograms.SNAP && !avilablePrograms.CC && avilablePrograms.FP;
 
   const checkPrograms = async () => {
-    // convert bools to 0 or 1
+    // convert bools to '0' or '1'
     if (unEmp90) {
       unEmp90 = '1';
     }
+
+    if (minorGuest) {
+      minorGuest = '1';
+    }
+
     if (foodWrkr) {
       foodWrkr = '1';
     } else {
       unEmp90 = '0';
       foodWrkr = '0';
+      minorGuest = '0';
     }
 
-    const queryString = `?zipcode=${zipCode}&family_size=${familySize}&income=${monthlyIncome}&unEmp90=${unEmp90}&foodWrkr=${foodWrkr}`;
+    const queryString = `?zipcode=${zipCode}&family_size=${familySize}&income=${monthlyIncome}&unEmp90=${unEmp90}&foodWrkr=${foodWrkr}&minorGuest=${minorGuest}`;
     const callURL = dsBaseUrl + queryString;
     setLoadStatus(true);
     try {
