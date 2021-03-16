@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&display=swap');
 
+:root {
+  --color-primary: #8d4881;
+  --color-secondary-blue: #006ab3;
+  --color-secondary-yellow: #fdbe57;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -7,9 +13,19 @@
   font-family: 'Noto Sans JP', sans-serif;
 }
 
-html, body { height: 100%; width: 100%; margin: 0; }
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
 
 p {
   margin: 0;
   padding: 0;
+}
+
+hr {
+  color: #8c8c8c57;
+  margin-bottom: 1rem;
 }

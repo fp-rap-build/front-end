@@ -26,25 +26,25 @@ import { setErrorMessage } from '../../../redux/global/globalActions';
 // import faker from 'faker';
 
 // const INITIAL_VALUES_DEV = {
-// 	firstName: faker.name.firstName(),
-// 	lastName: faker.name.lastName(),
-// 	email: faker.internet.email(),
-// 	password: '',
-// 	confirmPassword: '',
-// 	address: '3211 East Ave',
-// 	cityName: 'Erie',
-// 	zipCode: 16504,
-// 	state: 'Pennsylvania',
-// 	role: 'tenant',
-// 	familySize: 2,
-// 	beds: 4,
-// 	monthlyIncome: 1000,
-// 	tenantName: 'tenant',
-// 	tenantEmail: 'tenant@gmail.com',
-// 	tenantPhoneNumber: '111-222-3333',
-// 	landlordName: 'landlord',
-// 	landlordEmail: 'landlord@gmail.com',
-// 	landlordPhoneNumber: '111-222-3333'
+//   firstName: faker.name.firstName(),
+//   lastName: faker.name.lastName(),
+//   email: faker.internet.email(),
+//   password: '',
+//   confirmPassword: '',
+//   address: '3211 East Ave',
+//   cityName: 'Erie',
+//   zipCode: 16504,
+//   state: 'Pennsylvania',
+//   role: 'tenant',
+//   familySize: 2,
+//   beds: 4,
+//   monthlyIncome: 1000,
+//   tenantName: 'tenant',
+//   tenantEmail: 'tenant@gmail.com',
+//   tenantPhoneNumber: '111-222-3333',
+//   landlordName: 'landlord',
+//   landlordEmail: 'landlord@gmail.com',
+//   landlordPhoneNumber: '111-222-3333',
 // };
 
 const INITIAL_VALUES_PROD = {
@@ -64,6 +64,8 @@ const INITIAL_VALUES_PROD = {
   tenantEmail: '',
   landlordName: '',
   landlordEmail: '',
+  unEmp90: false,
+  foodWrkr: false,
 };
 
 const finalStep = 3;

@@ -67,36 +67,35 @@ export default function RequestsTable() {
           state={state}
         />
       )}
-      <div className={styles.table}>
-        <MaterialTable
-          isLoading={isFetching}
-          options={{
-            // Allows users to export the data as a CSV file
-            exportButton: true,
-          }}
-          actions={[
-            {
-              icon: GavelIcon,
-              tooltip: 'Review',
-              onClick: async (event, rowData) => {
-                // Update the users request to be in review
-                setRequestBeingReviewed(rowData);
-                setIsOpen(true);
+      <MaterialTable
+        style={{ width: '100%' }}
+        isLoading={isFetching}
+        options={{
+          // Allows users to export the data as a CSV file
+          exportButton: true,
+        }}
+        actions={[
+          {
+            icon: GavelIcon,
+            tooltip: 'Review',
+            onClick: async (event, rowData) => {
+              // Update the users request to be in review
+              setRequestBeingReviewed(rowData);
+              setIsOpen(true);
 
-                if (rowData.requestStatus === 'received') {
-                  await axiosWithAuth().put(`/requests/${rowData.id}`, {
-                    requestStatus: 'inReview',
-                  });
-                }
-              },
+              if (rowData.requestStatus === 'received') {
+                await axiosWithAuth().put(`/requests/${rowData.id}`, {
+                  requestStatus: 'inReview',
+                });
+              }
             },
-          ]}
-          icons={tableIcons}
-          title="Requests for rental assistance"
-          columns={state.columns}
-          data={state.data}
-        />
-      </div>
+          },
+        ]}
+        icons={tableIcons}
+        title="Requests for rental assistance"
+        columns={state.columns}
+        data={state.data}
+      />
     </div>
   );
 }

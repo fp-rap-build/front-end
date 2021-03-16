@@ -130,6 +130,7 @@ const ProgramMgrForm = () => {
           name="password"
         >
           <Input
+            type="password"
             name="password"
             value={formValues.password}
             onChange={onChange}

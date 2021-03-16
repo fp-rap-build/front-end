@@ -2,17 +2,34 @@ import React from 'react';
 
 import { states } from '../../../../utils/data/states';
 
-import { Form, Input, Select, InputNumber } from 'antd';
+import { Form, Input, Select, InputNumber, Checkbox } from 'antd';
 
 const { Option } = Select;
 
 export default function BasicInformation({ formValues, setFormValues }) {
+  const { role } = formValues;
+
+  const tenantCheckboxIntroMessage =
+    'Please place a checkmark next to all of the statements below that are true for you and/or somebody in your household:';
+
+  const landlordCheckboxIntroMessage =
+    'Please place a checkmark next to all of the statements below that are true for your tenant:';
+
   function onChange(value) {
     setFormValues({ ...formValues, state: value });
   }
 
   const onRoleChange = value => {
     setFormValues({ ...formValues, role: value });
+  };
+
+  const handleCheckBoxChange = e => {
+    e.stopPropagation();
+
+    const { name, checked } = e.target;
+
+    setFormValues({ ...formValues, [name]: checked });
+    console.log(formValues);
   };
 
   return (
@@ -24,6 +41,11 @@ export default function BasicInformation({ formValues, setFormValues }) {
         label="Are you a Landlord or Tenant?"
         name="role"
         rules={[{ required: true, message: 'required' }]}
+        extra={
+          formValues.role === 'landlord'
+            ? 'Please enter your own address information below'
+            : null
+        }
       >
         <Select
           onChange={onRoleChange}
@@ -61,9 +83,9 @@ export default function BasicInformation({ formValues, setFormValues }) {
         label="City"
         name="cityName"
         rules={[
-          { required: true, message: 'City is required' },
+          { required: true, min: 3, message: 'City is required' },
           {
-            pattern: RegExp(/^[a-zA-Z]+$/),
+            pattern: RegExp(/^[A-Za-z0-9'.-\s,#]*$/),
             message: 'Enter a valid City Name',
           },
         ]}
@@ -77,14 +99,10 @@ export default function BasicInformation({ formValues, setFormValues }) {
         label="Address"
         name="address"
         rules={[
+          { required: true, message: 'Address is required' },
           {
-            required: true,
-            min: 3,
-            message: 'Address is required',
-          },
-          {
-            pattern: RegExp(/^[A-Za-z0-9 ]+$/),
-            message: 'Enter a valid Address',
+            pattern: RegExp(/^[A-Za-z0-9'.-\s,#]*$/),
+            message: 'Enter a valid City Name',
           },
         ]}
       >
@@ -113,25 +131,18 @@ export default function BasicInformation({ formValues, setFormValues }) {
       <Form.Item
         name="familySize"
         initialValue={formValues.familySize}
-        label="Family Size"
+        label=" Residents"
         required
         hasFeedback
         rules={[
           {
-            type: 'number',
             required: true,
-            message: 'Please enter a valid number',
-          },
-          {
-            type: 'number',
-            required: true,
-            min: 1,
-            max: 100,
-            message: 'Please enter a number that is in range',
+            pattern: RegExp(/^([1-9][0-9]?)\s*$/),
+            message: 'Invalid number of residents',
           },
         ]}
       >
-        <InputNumber
+        <Input
           style={{ width: '100%' }}
           name="familySize"
           value={formValues.familySize}
@@ -141,21 +152,56 @@ export default function BasicInformation({ formValues, setFormValues }) {
         hasFeedback
         name="monthlyIncome"
         initialValue={formValues.monthlyIncome}
-        label="Monthly Income"
+        label={
+          formValues.role === 'landlord'
+            ? 'Tenants Monthly Income'
+            : 'Monthly Income'
+        }
         rules={[
           {
-            type: 'number',
             required: true,
-            message: 'Please enter your montly income',
-          },
-          {
-            type: 'number',
-            message: 'Please enter a valid number',
-            min: 0,
+            pattern: RegExp(
+              // forgive me
+              /^(\b([0-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9][0-9][0-9])\b)\s*?$/
+            ),
+            message: 'Invalid income',
           },
         ]}
       >
-        <InputNumber name="monthlyIncome" style={{ width: '100%' }} min={0} />
+        <Input name="monthlyIncome" style={{ width: '100%' }} />
+      </Form.Item>
+      <hr></hr>
+      <h4>
+        {role === 'landlord'
+          ? landlordCheckboxIntroMessage
+          : tenantCheckboxIntroMessage}
+      </h4>
+
+      <Form.Item>
+        <Checkbox
+          checked={formValues.minorGuest}
+          name="minorGuest"
+          onChange={handleCheckBoxChange}
+        >
+          Household has at least one minor (17 or younger) or at least one
+          person is pregnant?
+        </Checkbox>
+      </Form.Item>
+
+      <Form.Item>
+        <Checkbox name="unEmp90" onChange={handleCheckBoxChange}>
+          Been unemployed for 90+ Days?
+        </Checkbox>
+      </Form.Item>
+      <Form.Item>
+        <Checkbox
+          checked={formValues.foodWrkr}
+          name="foodWrkr"
+          onChange={handleCheckBoxChange}
+        >
+          At least one person in the household worked in the food service
+          industry at any time since January 1, 2020?
+        </Checkbox>
       </Form.Item>
     </div>
   );

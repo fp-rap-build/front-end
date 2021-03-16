@@ -24,7 +24,11 @@ const Dash = () => {
   return (
     <Layout>
       <Header className={styles.headingNav}>
-        <Title level={3} style={{ color: '#FFFFFF' }}>
+        <Title
+          level={3}
+          className={styles.headingText}
+          style={{ color: '#FFFFFF' }}
+        >
           Hello {currentUser.firstName}, welcome to your dashboard!
         </Title>
         <AdminNav activeComponent={activeComponent} handleClick={handleClick} />
