@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
   EditOutlined,
   UserAddOutlined,
@@ -27,12 +25,10 @@ const AdminNav = props => {
     </Menu>
   );
   return (
-    <Dropdown overlay={menu} trigger={['click']}>
-      {/* <a className={styles.dropdownLink} onClick={e => e.preventDefault()}> */}
-      <Button className={styles.dropdown} type="primary">
+    <Dropdown overlay={menu} trigger={['click']} className={styles.dropdown}>
+      <Button type="primary">
         Navigate <DownOutlined />
       </Button>
-      {/* </a> */}
     </Dropdown>
   );
 };
