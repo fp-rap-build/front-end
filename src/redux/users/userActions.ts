@@ -1,5 +1,4 @@
 import { axiosWithAuth } from '../../api/axiosWithAuth';
-
 import { setLoading } from '../global/globalActions';
 
 export const setCurrentUser = currentUser => {

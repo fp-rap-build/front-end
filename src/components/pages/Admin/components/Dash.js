@@ -17,7 +17,6 @@ const Dash = () => {
   const [activeComponent, setActiveComponent] = useState({ current: 'user' });
 
   const handleClick = e => {
-    console.log('click ', e);
     setActiveComponent({ current: e.key });
   };
 

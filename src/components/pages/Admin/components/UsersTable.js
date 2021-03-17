@@ -33,7 +33,7 @@ export default function UsersTable() {
       let res = await axiosWithAuth().get('/users');
       setState({ ...state, data: res.data });
     } catch (error) {
-      console.log(error);
+      console.error(error);
       alert('error');
     } finally {
       setIsFetching(false);

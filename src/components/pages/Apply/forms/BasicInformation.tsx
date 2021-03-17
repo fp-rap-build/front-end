@@ -1,8 +1,6 @@
+import { Checkbox, Form, Input, InputNumber, Select } from 'antd';
 import React from 'react';
-
 import { states } from '../../../../utils/data/states';
-
-import { Form, Input, Select, InputNumber, Checkbox } from 'antd';
 
 const { Option } = Select;
 
@@ -29,7 +27,6 @@ export default function BasicInformation({ formValues, setFormValues }) {
     const { name, checked } = e.target;
 
     setFormValues({ ...formValues, [name]: checked });
-    console.log(formValues);
   };
 
   return (
