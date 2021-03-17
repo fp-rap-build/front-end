@@ -38,22 +38,26 @@ const ProgramSelection = ({ formValues }) => {
     // convert bools to '0' or '1'
     if (unEmp90) {
       unEmp90 = '1';
+    } else {
+      unEmp90 = '0';
     }
 
     if (covidFH) {
       covidFH = '1';
+    } else {
+      covidFH = '0';
     }
 
     if (minorGuest) {
       minorGuest = '1';
+    } else {
+      minorGuest = '0';
     }
 
     if (foodWrkr) {
       foodWrkr = '1';
     } else {
-      unEmp90 = '0';
       foodWrkr = '0';
-      minorGuest = '0';
     }
 
     const queryString = `?zipcode=${zipCode}&family_size=${familySize}&income=${monthlyIncome}&rent=${rent}&unEmp90=${unEmp90}&foodWrkr=${foodWrkr}&minorGuest=${minorGuest}&covidFH=${covidFH}`;
@@ -162,9 +166,9 @@ const ProgramSelection = ({ formValues }) => {
             type="primary"
             size="medium"
             htmlType="submit"
-            disabled={!eligibleForFP}
+            disabled={!availablePrograms.FP}
           >
-            {eligibleForFP ? 'Apply Now!' : 'Not Available'}
+            {availablePrograms.FP ? 'Apply Now!' : 'Not Available'}
           </Button>
         </Col>
       </Row>
