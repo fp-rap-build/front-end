@@ -6,7 +6,7 @@ import { Divider, Typography, Button, Row, Col, Spin } from 'antd';
 
 // urls
 
-import { SNAP, CC } from '../../../../utils/data/urls';
+import { SNAP_ERA, SNAP_ERAP, CC } from '../../../../utils/data/urls';
 
 const { Paragraph } = Typography;
 
@@ -20,34 +20,47 @@ const ProgramSelection = ({ formValues }) => {
     unEmp90,
     foodWrkr,
     minorGuest,
+    rent,
+    covidFH,
   } = formValues;
 
   const [loadStatus, setLoadStatus] = useState(false);
-  const [avilablePrograms, setAvailablePrograms] = useState({});
+  const [availablePrograms, setAvailablePrograms] = useState({});
 
   // Only eligible for family promise if no other options are available
   const eligibleForFP =
-    !avilablePrograms.SNAP && !avilablePrograms.CC && avilablePrograms.FP;
+    !availablePrograms.SNAP_ERA &&
+    !availablePrograms.SNAP_ERAP &&
+    !availablePrograms.CC &&
+    availablePrograms.FP;
 
   const checkPrograms = async () => {
     // convert bools to '0' or '1'
     if (unEmp90) {
       unEmp90 = '1';
+    } else {
+      unEmp90 = '0';
+    }
+
+    if (covidFH) {
+      covidFH = '1';
+    } else {
+      covidFH = '0';
     }
 
     if (minorGuest) {
       minorGuest = '1';
+    } else {
+      minorGuest = '0';
     }
 
     if (foodWrkr) {
       foodWrkr = '1';
     } else {
-      unEmp90 = '0';
       foodWrkr = '0';
-      minorGuest = '0';
     }
 
-    const queryString = `?zipcode=${zipCode}&family_size=${familySize}&income=${monthlyIncome}&unEmp90=${unEmp90}&foodWrkr=${foodWrkr}&minorGuest=${minorGuest}`;
+    const queryString = `?zipcode=${zipCode}&family_size=${familySize}&income=${monthlyIncome}&rent=${rent}&unEmp90=${unEmp90}&foodWrkr=${foodWrkr}&minorGuest=${minorGuest}&covidFH=${covidFH}`;
     const callURL = dsBaseUrl + queryString;
     setLoadStatus(true);
     try {
@@ -73,28 +86,55 @@ const ProgramSelection = ({ formValues }) => {
       <div style={{ height: '1rem' }}></div>
       <Row align="middle">
         <Col span={15}>
-          <Paragraph strong={avilablePrograms.SNAP}>
+          <Paragraph strong={availablePrograms.SNAP_ERA}>
             {' '}
-            Spokane Neighborhood Action Partners (SNAP){' '}
+            Spokane Neighborhood Action Partners (SNAP) ERA Program{' '}
           </Paragraph>
         </Col>
         <Col span={1} />
         <Col span={8}>
           <Button
-            href={SNAP}
+            href={SNAP_ERA}
             target="_blank"
             type="primary"
             size="medium"
-            disabled={!avilablePrograms.SNAP}
+            disabled={!availablePrograms.SNAP_ERA}
           >
-            {avilablePrograms.SNAP ? 'Apply Now!' : 'Not Available'}
+            {availablePrograms.SNAP_ERA
+              ? 'Eligible for SNAP ERA Program!  Apply Now!'
+              : 'Not Available'}
           </Button>
         </Col>
       </Row>
       <Divider />
+
       <Row>
         <Col span={15}>
-          <Paragraph strong={avilablePrograms.CC}>
+          <Paragraph strong={availablePrograms.SNAP_ERAP}>
+            {' '}
+            Spokane Neighborhood Action Partners (SNAP) ERAP Program{' '}
+          </Paragraph>
+        </Col>
+        <Col span={1} />
+        <Col span={8}>
+          <Button
+            href={SNAP_ERAP}
+            target="_blank"
+            type="primary"
+            size="medium"
+            disabled={!availablePrograms.SNAP_ERAP}
+          >
+            {availablePrograms.SNAP_ERAP
+              ? 'Eligible for SNAP ERAP Program!  Apply Now!'
+              : 'Not Available'}
+          </Button>
+        </Col>
+      </Row>
+      <Divider />
+
+      <Row>
+        <Col span={15}>
+          <Paragraph strong={availablePrograms.CC}>
             {' '}
             Catholic Charites Rental Assistance{' '}
           </Paragraph>
@@ -106,18 +146,18 @@ const ProgramSelection = ({ formValues }) => {
             target="_blank"
             type="primary"
             size="medium"
-            disabled={!avilablePrograms.CC}
+            disabled={!availablePrograms.CC}
           >
-            {avilablePrograms.CC ? 'Apply Now!' : 'Not Available'}
+            {availablePrograms.CC ? 'Apply Now!' : 'Not Available'}
           </Button>
         </Col>
       </Row>
       <Divider />
       <Row>
         <Col span={15}>
-          <Paragraph strong={avilablePrograms.FP}>
+          <Paragraph strong={availablePrograms.FP}>
             {' '}
-            Family Promise of Spokane{' '}
+            Family Promise of Spokane Rental Assistance{' '}
           </Paragraph>
         </Col>
         <Col span={1} />
@@ -126,9 +166,9 @@ const ProgramSelection = ({ formValues }) => {
             type="primary"
             size="medium"
             htmlType="submit"
-            disabled={!eligibleForFP}
+            disabled={!availablePrograms.FP}
           >
-            {eligibleForFP ? 'Apply Now!' : 'Not Available'}
+            {availablePrograms.FP ? 'Apply Now!' : 'Not Available'}
           </Button>
         </Col>
       </Row>
