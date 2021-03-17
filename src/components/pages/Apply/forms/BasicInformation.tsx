@@ -170,6 +170,30 @@ export default function BasicInformation({ formValues, setFormValues }) {
       >
         <Input name="monthlyIncome" style={{ width: '100%' }} />
       </Form.Item>
+
+      <Form.Item
+        hasFeedback
+        name="rent"
+        initialValue={formValues.rent}
+        label={
+          formValues.role === 'landlord'
+            ? 'Tenants Monthly Rent Amount'
+            : 'Monthly Rent'
+        }
+        rules={[
+          {
+            required: true,
+            pattern: RegExp(
+              // forgive me
+              /^(\b([0-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9][0-9][0-9])\b)\s*?$/
+            ),
+            message: 'Invalid rent',
+          },
+        ]}
+      >
+        <Input name="rent" style={{ width: '100%' }} />
+      </Form.Item>
+
       <hr></hr>
       <h4>
         {role === 'landlord'
@@ -201,6 +225,16 @@ export default function BasicInformation({ formValues, setFormValues }) {
         >
           At least one person in the household worked in the food service
           industry at any time since January 1, 2020?
+        </Checkbox>
+      </Form.Item>
+
+      <Form.Item>
+        <Checkbox
+          checked={formValues.covidFH}
+          name="covidFH"
+          onChange={handleCheckBoxChange}
+        >
+          Have been inpacted by Covid.
         </Checkbox>
       </Form.Item>
     </div>

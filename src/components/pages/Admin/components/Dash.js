@@ -34,8 +34,8 @@ const Dash = () => {
         <AdminNav activeComponent={activeComponent} handleClick={handleClick} />
       </Header>
       <Content className={styles.dashboard}>
-        {activeComponent.current === 'user' && <UsersTable />}
         {activeComponent.current === 'requests' && <RequestsTable />}
+        {activeComponent.current === 'user' && <UsersTable />}
         {activeComponent.current === 'prgMgr' && <ProgramMgrForm />}
       </Content>
       <Footer className={styles.footer} />
