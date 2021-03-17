@@ -29,7 +29,6 @@ const createOktaAccount = async user => {
     const activationToken = await axios
       .post(okta_register_url, { userProfile: oktaObj })
       .then(res => {
-        console.log(res.data);
         return res.data.activationToken;
       });
     //POST to activation url w/ activation token from registration
@@ -38,7 +37,6 @@ const createOktaAccount = async user => {
     const oktaID = await axios
       .post(okta_activate_url, { token: activationToken })
       .then(res => {
-        console.log(res.data);
         return res.data._embedded.user.id;
       });
 
@@ -48,7 +46,7 @@ const createOktaAccount = async user => {
     return `Succesfully created User ${firstName} ${lastName}`;
   } catch (error) {
     alert(error);
-    console.log(error);
+    console.error(error);
   }
 };
 

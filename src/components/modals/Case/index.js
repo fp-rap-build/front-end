@@ -141,10 +141,8 @@ export default function Index({
       let res = await axiosWithAuth().put(`/requests/${request.id}`, {
         [name]: checked,
       });
-
-      console.log(res.data);
     } catch (error) {
-      console.log(error.response);
+      console.error(error.response);
       message.error(
         'Unable to persist changes to checklist. Please report this'
       );

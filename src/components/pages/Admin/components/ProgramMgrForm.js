@@ -26,7 +26,7 @@ const ProgramMgrForm = () => {
       let res = await axiosWithAuth().get('/orgs');
       setOrgs(res.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       alert('error');
     }
   };

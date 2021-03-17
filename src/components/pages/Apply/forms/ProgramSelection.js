@@ -56,7 +56,7 @@ const ProgramSelection = ({ formValues }) => {
       setAvailablePrograms(res.data);
     } catch (err) {
       alert('error from DS API');
-      console.log(err);
+      console.error(err);
     } finally {
       setLoadStatus(false);
     }

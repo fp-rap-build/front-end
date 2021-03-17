@@ -44,7 +44,7 @@ export default function RequestsTable() {
       let res = await axiosWithAuth().get('/requests/table');
       setState({ ...state, data: res.data });
     } catch (error) {
-      console.log(error.response);
+      console.error(error.response);
       alert('error');
     } finally {
       setIsFetching(false);

@@ -1,6 +1,5 @@
-import { Button, Checkbox, Input } from 'antd';
-import Modal from 'antd/lib/modal/Modal';
-import React, { useState } from 'react';
+import { Checkbox } from 'antd';
+import React from 'react';
 
 const Checklist = ({ handleCheckboxChange, request }) => {
   return (

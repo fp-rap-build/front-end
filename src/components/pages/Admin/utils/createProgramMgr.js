@@ -16,7 +16,7 @@ const createProgramMgr = async user => {
     await axiosWithAuth().post('/user', newAcctMgr);
     return `Succesfully created Program Manager ${firstName} ${lastName}`;
   } catch (error) {
-    console.log(error.response);
+    console.error(error.response);
     throw new Error('Unable to create program manager');
   }
 };
