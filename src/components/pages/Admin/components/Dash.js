@@ -5,6 +5,7 @@ import AdminNav from './adminNav';
 import ProgramMgrForm from './ProgramMgrForm';
 import RequestsTable from './RequestsTable';
 import UsersTable from './UsersTable';
+import Analytics from './Analytics';
 import styles from '../../../../styles/pages/admin.module.css';
 
 import { Typography, Layout } from 'antd';
@@ -38,6 +39,7 @@ const Dash = () => {
         {activeComponent.current === 'requests' && <RequestsTable />}
         {activeComponent.current === 'user' && <UsersTable />}
         {activeComponent.current === 'prgMgr' && <ProgramMgrForm />}
+        {activeComponent.current === 'analytics' && <Analytics />}
       </Content>
       <Footer className={styles.footer} />
     </Layout>
