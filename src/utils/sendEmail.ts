@@ -8,7 +8,7 @@ const sendEmail = emailPayload => {
         console.log('success', result.status, result.text);
       },
       error => {
-        console.log(error.text);
+        console.error(error.text);
       }
     );
 };

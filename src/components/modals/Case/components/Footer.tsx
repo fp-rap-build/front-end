@@ -1,6 +1,5 @@
-import React from 'react';
-
 import { Statistic } from 'antd';
+import React from 'react';
 
 export default function Footer({ request }) {
   return (
