@@ -12,13 +12,13 @@ export default function BasicInformation({ formValues, setFormValues }) {
 
   const landlordCheckboxIntroMessage =
     'Please place a checkmark next to all of the statements below that are true for your tenant:';
-
+  // will be using this soon to mark off a section of the questions
   const tenantInformationIntroMessage =
     'Please answer the following questions about your household';
 
   const landlordInformationIntroMessage =
     "Please answer the following questions about your tenant's household to the best of your knowledge";
-
+  // end of unused area that I think I will need soon.
   function onChange(value) {
     setFormValues({ ...formValues, state: value });
   }
@@ -131,6 +131,13 @@ export default function BasicInformation({ formValues, setFormValues }) {
       >
         <InputNumber style={{ width: '100%' }} name="zipCode" />
       </Form.Item>
+
+      <h4>
+        {role === 'landlord'
+          ? landlordInformationIntroMessage
+          : tenantInformationIntroMessage}
+      </h4>
+      <hr></hr>
 
       <Form.Item
         name="familySize"
@@ -262,7 +269,11 @@ export default function BasicInformation({ formValues, setFormValues }) {
       </Form.Item>
 
       <Form.Item>
-        <Checkbox name="unEmp90" onChange={handleCheckBoxChange}>
+        <Checkbox
+          checked={formValues.unEmp90}
+          name="unEmp90"
+          onChange={handleCheckBoxChange}
+        >
           Been unemployed for 90+ Days?
         </Checkbox>
       </Form.Item>
