@@ -13,6 +13,12 @@ export default function UsersTable() {
       { title: 'Last ', field: 'lastName' },
       { title: 'email', field: 'email', type: 'string', editable: 'never' },
       {
+        title: 'Minors',
+        field: 'minorGuest',
+        type: 'string',
+        editable: 'never',
+      },
+      {
         title: 'role',
         field: 'role',
         lookup: {
