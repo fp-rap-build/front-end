@@ -13,6 +13,12 @@ export default function BasicInformation({ formValues, setFormValues }) {
   const landlordCheckboxIntroMessage =
     'Please place a checkmark next to all of the statements below that are true for your tenant:';
 
+  const tenantInformationIntroMessage =
+    'Please answer the following questions about your household';
+
+  const landlordInformationIntroMessage =
+    "Please answer the following questions about your tenant's household to the best of your knowledge";
+
   function onChange(value) {
     setFormValues({ ...formValues, state: value });
   }
@@ -125,6 +131,7 @@ export default function BasicInformation({ formValues, setFormValues }) {
       >
         <InputNumber style={{ width: '100%' }} name="zipCode" />
       </Form.Item>
+
       <Form.Item
         name="familySize"
         initialValue={formValues.familySize}
@@ -191,13 +198,58 @@ export default function BasicInformation({ formValues, setFormValues }) {
         <Input name="rent" style={{ width: '100%' }} />
       </Form.Item>
 
-      <hr></hr>
+      <Form.Item
+        hasFeedback
+        name="owed"
+        initialValue={formValues.rent}
+        label={
+          formValues.role === 'landlord'
+            ? 'Tenants Total Amount Owed'
+            : 'Total owed'
+        }
+        rules={[
+          {
+            required: true,
+            pattern: RegExp(
+              // forgive me
+              /^(\b([0-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9][0-9][0-9])\b)\s*?$/
+            ),
+            message: 'Invalid total',
+          },
+        ]}
+      >
+        <Input name="owed" style={{ width: '100%' }} />
+      </Form.Item>
+
+      <Form.Item
+        hasFeedback
+        name="requested"
+        initialValue={formValues.rent}
+        label={
+          formValues.role === 'landlord'
+            ? 'Tenants Total Amount Requested'
+            : 'Total requested'
+        }
+        rules={[
+          {
+            required: true,
+            pattern: RegExp(
+              // forgive me
+              /^(\b([0-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9][0-9][0-9])\b)\s*?$/
+            ),
+            message: 'Invalid total',
+          },
+        ]}
+      >
+        <Input name="requested" style={{ width: '100%' }} />
+      </Form.Item>
+
       <h4>
         {role === 'landlord'
           ? landlordCheckboxIntroMessage
           : tenantCheckboxIntroMessage}
       </h4>
-
+      <hr></hr>
       <Form.Item>
         <Checkbox
           checked={formValues.minorGuest}
@@ -231,9 +283,10 @@ export default function BasicInformation({ formValues, setFormValues }) {
           name="covidFH"
           onChange={handleCheckBoxChange}
         >
-          Have been inpacted by Covid.
+          Have been impacted by Covid.
         </Checkbox>
       </Form.Item>
+      <hr></hr>
     </div>
   );
 }

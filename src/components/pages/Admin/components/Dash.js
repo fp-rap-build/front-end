@@ -14,7 +14,9 @@ const { Content, Header, Footer } = Layout;
 const Dash = () => {
   const currentUser = useSelector(state => state.user.currentUser);
 
-  const [activeComponent, setActiveComponent] = useState({ current: 'user' });
+  const [activeComponent, setActiveComponent] = useState({
+    current: 'requests',
+  });
 
   const handleClick = e => {
     setActiveComponent({ current: e.key });

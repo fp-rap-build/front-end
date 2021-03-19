@@ -21,6 +21,7 @@ const ProgramSelection = ({ formValues }) => {
     foodWrkr,
     minorGuest,
     rent,
+    owed,
     covidFH,
   } = formValues;
 
@@ -60,7 +61,7 @@ const ProgramSelection = ({ formValues }) => {
       foodWrkr = '0';
     }
 
-    const queryString = `?zipcode=${zipCode}&family_size=${familySize}&income=${monthlyIncome}&rent=${rent}&unEmp90=${unEmp90}&foodWrkr=${foodWrkr}&minorGuest=${minorGuest}&covidFH=${covidFH}`;
+    const queryString = `?zipcode=${zipCode}&family_size=${familySize}&income=${monthlyIncome}&rent=${rent}&owed=${owed}&unEmp90=${unEmp90}&foodWrkr=${foodWrkr}&minorGuest=${minorGuest}&covidFH=${covidFH}`;
     const callURL = dsBaseUrl + queryString;
     setLoadStatus(true);
     try {

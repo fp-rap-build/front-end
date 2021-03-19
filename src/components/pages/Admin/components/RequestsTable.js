@@ -92,7 +92,7 @@ export default function RequestsTable() {
           },
         ]}
         icons={tableIcons}
-        title="Requests for rental assistance"
+        title="Requests for Rental Assistance"
         columns={state.columns}
         data={state.data}
       />
