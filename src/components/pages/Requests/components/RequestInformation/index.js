@@ -13,7 +13,7 @@ import {
   Comments,
 } from './components';
 
-import { Card, message, Modal, Input } from 'antd';
+import { Card, message, Modal } from 'antd';
 import { axiosWithAuth } from '../../../../../api/axiosWithAuth';
 
 const tabListNoTitle = [
@@ -138,7 +138,7 @@ const renderContent = props => {
     case 'documents':
       return <Documents documents={props.documents} />;
     case 'comments':
-      return <Comments />;
+      return <Comments request={props.request} />;
     default:
       return <Basic request={props.request} />;
   }

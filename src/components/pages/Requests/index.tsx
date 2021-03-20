@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 import styles from '../../../styles/pages/request.module.css';
 
@@ -13,7 +13,7 @@ import RequestInformation from './components/RequestInformation';
 import { message, Button } from 'antd';
 
 export default function Index() {
-  const { organizationId } = useSelector(state => state.user.currentUser);
+  // const { organizationId } = useSelector(state => state.user.currentUser);
 
   const [loading, setLoading] = useState(false);
   const [request, setRequest] = useState({});
@@ -50,6 +50,7 @@ export default function Index() {
 
   useEffect(() => {
     fetchRequest();
+    // eslint-disable-next-line
   }, []);
 
   if (loading) {
