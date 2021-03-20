@@ -26,7 +26,25 @@ const Comments = ({ request }) => {
   }, []);
 
   const RenderComment = comm => {
-    return <Comment content={<p>{comm.comment}</p>} />;
+    const author = comm.firstName + ' ' + comm.lastName;
+
+    const formatDate = dtg => {
+      const dtgSplit = dtg.split('T');
+      const date = dtgSplit[0].split('-');
+      const time = dtgSplit[1].split(':');
+
+      console.log(dtgSplit, date, time);
+
+      return `${date[1]}/${date[2]} @ ${time[0]}:${time[1]}`;
+    };
+
+    return (
+      <Comment
+        author={author}
+        datetime={formatDate(comm.createdAt)}
+        content={<p>{comm.comment}</p>}
+      />
+    );
   };
 
   return (
