@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import { Basic, Checklist, Documents, Footer, TopActions } from './components';
 
-import { Card } from 'antd';
+import { Card, message } from 'antd';
+import { axiosWithAuth } from '../../../../../api/axiosWithAuth';
 
 const tabListNoTitle = [
   {
@@ -19,15 +20,43 @@ const tabListNoTitle = [
   },
 ];
 
-export default function Index({ request, documents }) {
+export default function Index({ request, setRequest, documents }) {
   const [tab, setTab] = useState('basic');
+  const [checklistValues, setChecklistValues] = useState({
+    pmApproval: request.pmApproval,
+    verifiedDocuments: request.verifiedDocuments,
+  });
+
   const handleReviewSubmit = () => alert('submitted');
+
+  const handleCheckboxChange = async e => {
+    const { name, checked } = e.target;
+
+    setRequest({ ...request, [name]: checked });
+
+    // persist changes
+    try {
+      let res = await axiosWithAuth().put(`/requests/${request.id}`, {
+        [name]: checked,
+      });
+    } catch (error) {
+      message.error(
+        'Unable to persist changes to checklist. Please report this'
+      );
+    }
+  };
 
   const onTabChange = (key, type) => {
     setTab(key);
   };
 
-  const props = { tab, handleReviewSubmit, request, documents };
+  const props = {
+    tab,
+    handleReviewSubmit,
+    handleCheckboxChange,
+    request,
+    documents,
+  };
 
   return (
     <Card

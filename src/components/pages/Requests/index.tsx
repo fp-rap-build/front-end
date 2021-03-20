@@ -46,7 +46,11 @@ export default function Index() {
 
   return (
     <div className={styles.container}>
-      <RequestInformation request={request} documents={documents} />
+      <RequestInformation
+        request={request}
+        setRequest={setRequest}
+        documents={documents}
+      />
       <DocumentUploader request={request} />
     </div>
   );
