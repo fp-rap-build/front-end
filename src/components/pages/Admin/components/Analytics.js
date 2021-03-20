@@ -1,12 +1,24 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import styles from '../../../../styles/pages/admin.module.css';
+import { axiosWithAuth } from '../../../../api/axiosWithAuth';
 
 const Analytics = () => {
+  const [peopleServed, setPeopleServed] = useState();
+
+  function getPeopleServed() {
+    axiosWithAuth()
+      .get('/analytics')
+      .then(res => {
+        const data = res.data.sumRequests;
+        return setPeopleServed(data[0].count);
+      })
+      .catch(err => console.error(err));
+  }
   return (
     <div>
       <div className={styles.cardsContainer}>
-        <Card value="18" title="Families served" color="#006ab3" />
+        {getPeopleServed()}
+        <Card value={peopleServed} title="Families served" color="#006ab3" />
         <Card value="62" title="People served" color="#006ab3" />
         <Card value="$ 1000" title="Budget" color="#006ab3" />
       </div>
