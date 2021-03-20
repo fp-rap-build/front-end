@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import { axiosWithAuth } from '../../../../../../api/axiosWithAuth';
 
 import RenderComment from './Comments/RenderComment';
+import CreateComment from './Comments/CreateComment';
 
-import { Comment } from 'antd';
+import { Button } from 'antd';
 
 const Comments = ({ request }) => {
   const { id } = request;
   const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState('');
+  const [newComment, setNewComment] = useState({ text: '' });
 
   const fetchComments = async id => {
     try {
@@ -16,10 +17,20 @@ const Comments = ({ request }) => {
         params: { requestId: id },
       });
       setComments(res.data);
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const checkCommentLength = comm => {
+    if (comm.text.length < 10) {
+      return true;
+    }
+    return false;
+  };
+
+  const addComment = async e => {
+    e.stopPropagation();
   };
 
   useEffect(() => {
@@ -32,6 +43,14 @@ const Comments = ({ request }) => {
       {comments.map(comm => (
         <RenderComment comm={comm} />
       ))}
+      <CreateComment newComment={newComment} setNewComment={setNewComment} />
+      <Button
+        type="primary"
+        style={{ marginTop: '1%' }}
+        disabled={checkCommentLength(newComment)}
+      >
+        Add Comment!
+      </Button>
     </div>
   );
 };
