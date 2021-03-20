@@ -1,41 +1,42 @@
 import React, { useState, useEffect } from 'react';
-
-import { useSelector } from 'react-redux';
-
-import { Form, Input, message, Button } from 'antd';
-
+import LoadingComponent from '../../../common/LoadingComponent';
 import { EditOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { Form, Input, message, Button } from 'antd';
+import { useSelector } from 'react-redux';
 
 import styles from '../../../../styles/pages/admin.module.css';
 import { axiosWithAuth } from '../../../../api/axiosWithAuth';
-import LoadingComponent from '../../../common/LoadingComponent';
 
 const Analytics = () => {
-  const [peopleServed, setPeopleServed] = useState();
-  const [familiesServed, setFamiliesServed] = useState();
-
-  function getPeopleServed() {
-    axiosWithAuth()
-      .get('/analytics')
-      .then(res => {
-        const peopleServed = res.data.sumPeopleServed;
-        const familiesServed = res.data.sumFamiliesServed;
-
-        const numPeopleServed = setPeopleServed(peopleServed[0].count);
-        const numFamiliesServed = setFamiliesServed(familiesServed[0].count);
-
-        return [numPeopleServed, numFamiliesServed];
-      })
-      .catch(err => console.error(err));
-  }
-
   const currentUser = useSelector(state => state.user.currentUser);
   const orgId = currentUser.organization.id;
 
+  const [peopleServed, setPeopleServed] = useState();
+  const [familiesServed, setFamiliesServed] = useState();
   const [budget, setBudget] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const fetchAnalytics = async () => {
+  function getPeopleServed() {
+    axiosWithAuth()
+      .get('/analytics/people_served')
+      .then(res => {
+        // const familiesServed = res.data.sumFamiliesServed;
+        setPeopleServed(res.data.sumPeopleServed[0].count);
+        // const numFamiliesServed = setFamiliesServed(familiesServed[0].count);
+      })
+      .catch(err => console.error(err));
+  }
+  function getFamiliesServed() {
+    axiosWithAuth()
+      .get('/analytics/families_served')
+      .then(res => {
+        // const familiesServed = res.data.sumFamiliesServed;
+        setFamiliesServed(res.data.sumFamiliesServed[0].count);
+        // const numFamiliesServed = setFamiliesServed(familiesServed[0].count);
+      })
+      .catch(err => console.error(err));
+  }
+  const getBudget = async () => {
     setLoading(true);
     try {
       let organization = await axiosWithAuth().get(`/orgs/${orgId}`);
@@ -64,7 +65,9 @@ const Analytics = () => {
   };
 
   useEffect(() => {
-    fetchAnalytics();
+    getFamiliesServed();
+    getPeopleServed();
+    getBudget();
   }, []);
 
   if (loading) {
@@ -72,10 +75,10 @@ const Analytics = () => {
   }
 
   return (
-    <div>
-      <div className={styles.cardsContainer}>
-        <Card value="18" title="Families served" color="#006ab3" />
-        <Card value="62" title="People served" color="#006ab3" />
+    <div className={styles.cardsContainer}>
+      <div>
+        <Card value={familiesServed} title="Families served" color="#006ab3" />
+        <Card value={peopleServed} title="People served" color="#006ab3" />
         <Card
           value={budget}
           title="Budget"
@@ -85,6 +88,7 @@ const Analytics = () => {
           onSubmit={handleNewBudgetSubmit}
           onChange={handleBudgetChange}
         />
+        <Card value="$ 1000" title="Budget" color="#006ab3" />
       </div>
     </div>
   );
