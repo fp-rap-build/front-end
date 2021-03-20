@@ -1,20 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 
 import { Form, Input, message, Button } from 'antd';
 
+import { EditOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
+
 import styles from '../../../../styles/pages/admin.module.css';
 import { axiosWithAuth } from '../../../../api/axiosWithAuth';
+import LoadingComponent from '../../../common/LoadingComponent';
 
 const Analytics = () => {
   const currentUser = useSelector(state => state.user.currentUser);
+  const orgId = currentUser.organization.id;
 
-  const [budget, setBudget] = useState(currentUser.organization.budget);
+  const [budget, setBudget] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  const fetchAnalytics = async () => {
+    setLoading(true);
+    try {
+      let organization = await axiosWithAuth().get(`/orgs/${orgId}`);
+
+      setBudget(organization.data.budget);
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleNewBudgetSubmit = async () => {
-    let orgId = currentUser.organization.id;
-
     try {
       await axiosWithAuth().put(`/orgs/${orgId}`, { budget });
     } catch (error) {
@@ -29,6 +44,14 @@ const Analytics = () => {
 
     setBudget(value);
   };
+
+  useEffect(() => {
+    fetchAnalytics();
+  }, []);
+
+  if (loading) {
+    return <LoadingComponent />;
+  }
 
   return (
     <div>
@@ -64,26 +87,45 @@ const Card = props => {
     setIsEditing(false);
   };
   return (
-    <div style={{ backgroundColor: props.color }} className={styles.card}>
-      {isEditing ? (
-        <Form onFinish={onSubmit}>
-          <Input
-            onChange={props.onChange}
-            size="large"
-            style={{ width: '30%' }}
-            autoFocus={true}
-            value={props.value}
-            defaultValue={props.value}
-          />
-          <Button htmlType="submit" />
-        </Form>
-      ) : (
-        <h3 onDoubleClick={onDoubleClick} className={styles.value}>
-          {props.value}
-        </h3>
-      )}
-
-      <h4 className={styles.title}>{props.title}</h4>
+    <div>
+      <div style={{ backgroundColor: props.color }} className={styles.card}>
+        {props.editable && (
+          <div className={styles.icons}>
+            {isEditing ? (
+              <>
+                <CloseOutlined
+                  onClick={() => setIsEditing(false)}
+                  className={styles.icon}
+                />
+                <CheckOutlined onClick={onSubmit} className={styles.icon} />
+              </>
+            ) : (
+              <EditOutlined
+                onClick={() => setIsEditing(true)}
+                className={styles.icon}
+              />
+            )}
+          </div>
+        )}
+        {isEditing ? (
+          <Form onFinish={onSubmit}>
+            <Input
+              onChange={props.onChange}
+              size="large"
+              style={{ width: '30%' }}
+              autoFocus={true}
+              value={props.value}
+              defaultValue={props.value}
+            />
+            <Button htmlType="submit" />
+          </Form>
+        ) : (
+          <h3 onDoubleClick={onDoubleClick} className={styles.value}>
+            {props.value}
+          </h3>
+        )}
+        <h4 className={styles.title}>{props.title}</h4>
+      </div>
     </div>
   );
 };

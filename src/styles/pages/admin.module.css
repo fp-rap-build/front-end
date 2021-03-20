@@ -15,7 +15,7 @@
 }
 
 .dashboard {
-  padding: 1%;
+  padding-top: 1%;
   background-color: white;
 }
 
@@ -43,7 +43,24 @@
   min-height: 200px;
 }
 
-.title,.value {
+.icons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2rem;
+  align-items: center;
+}
+
+.icon {
+  z-index: 2;
+  color: white;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 5px;
+}
+
+.title,
+.value {
   color: white;
 }
 
