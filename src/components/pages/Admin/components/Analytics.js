@@ -23,7 +23,11 @@ const Analytics = () => {
   };
 
   const handleBudgetChange = e => {
-    setBudget(e.target.value);
+    const { value } = e.target;
+
+    if (isNaN(value)) return; // Only process numbers
+
+    setBudget(value);
   };
 
   return (
@@ -68,6 +72,7 @@ const Card = props => {
             size="large"
             style={{ width: '30%' }}
             autoFocus={true}
+            value={props.value}
             defaultValue={props.value}
           />
           <Button htmlType="submit" />
