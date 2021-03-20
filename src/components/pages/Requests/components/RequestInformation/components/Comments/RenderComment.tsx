@@ -8,8 +8,6 @@ const RenderComment = ({ comm }) => {
     const date = dtgSplit[0].split('-');
     const time = dtgSplit[1].split(':');
 
-    console.log(dtgSplit, date, time);
-
     return `${date[1]}/${date[2]} @ ${time[0]}:${time[1]}`;
   };
 

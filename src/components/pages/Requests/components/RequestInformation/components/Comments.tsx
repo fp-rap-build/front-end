@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
 import { axiosWithAuth } from '../../../../../../api/axiosWithAuth';
 
 import RenderComment from './Comments/RenderComment';
@@ -7,9 +9,11 @@ import CreateComment from './Comments/CreateComment';
 import { Button } from 'antd';
 
 const Comments = ({ request }) => {
-  const { id } = request;
+  const requestId = request.id;
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState({ text: '' });
+
+  const currentUser = useSelector(state => state.user.currentUser);
 
   const fetchComments = async id => {
     try {
@@ -29,12 +33,33 @@ const Comments = ({ request }) => {
     return false;
   };
 
+  const getFormattedDate = () => {
+    const now = new Date();
+    const currentDate =
+      now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+    const currentTime =
+      now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+    return currentDate + ' ' + currentTime;
+  };
+
   const addComment = async e => {
     e.stopPropagation();
+    const commentToPOST = {
+      requestId: requestId,
+      authorId: currentUser.id,
+      comment: newComment.text,
+      createdAt: getFormattedDate(),
+    };
+
+    try {
+      await axiosWithAuth().post('/comments', commentToPOST);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
-    fetchComments(id);
+    fetchComments(requestId);
     //eslint-disable-next-line
   }, []);
 
@@ -48,6 +73,7 @@ const Comments = ({ request }) => {
         type="primary"
         style={{ marginTop: '1%' }}
         disabled={checkCommentLength(newComment)}
+        onClick={addComment}
       >
         Add Comment!
       </Button>
