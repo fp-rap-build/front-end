@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { axiosWithAuth } from '../../../../../../api/axiosWithAuth';
+import { axiosWithAuth } from '../../../../../../../api/axiosWithAuth';
 
-import RenderComment from './Comments/RenderComment';
-import CreateComment from './Comments/CreateComment';
+import RenderComment from './RenderComment';
+import CreateComment from './CreateComment';
 
 import { Button } from 'antd';
 
@@ -14,6 +14,7 @@ const Comments = ({ request }) => {
   const [newComment, setNewComment] = useState({ text: '' });
 
   const currentUser = useSelector(state => state.user.currentUser);
+  console.log(currentUser.id);
 
   const fetchComments = async id => {
     try {
@@ -25,6 +26,11 @@ const Comments = ({ request }) => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    fetchComments(requestId);
+    //eslint-disable-next-line
+  }, []);
 
   const checkCommentLength = comm => {
     if (comm.text.length < 10) {
@@ -53,15 +59,12 @@ const Comments = ({ request }) => {
 
     try {
       await axiosWithAuth().post('/comments', commentToPOST);
+      fetchComments(requestId);
+      setNewComment({ text: '' });
     } catch (error) {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    fetchComments(requestId);
-    //eslint-disable-next-line
-  }, []);
 
   return (
     <div>
