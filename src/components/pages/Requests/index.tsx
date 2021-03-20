@@ -7,7 +7,7 @@ import styles from '../../../styles/pages/request.module.css';
 import { useParams } from 'react-router-dom';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 
-import DocumentUploader from '../../../components/pages/Home/components/DefaultHomePage/components/DocumentUploader';
+import DocumentUploader from './components/RequestInformation/components/DocumentUploader';
 import LoadingComponent from '../../common/LoadingComponent';
 import RequestInformation from './components/RequestInformation';
 import { message } from 'antd';
@@ -55,7 +55,7 @@ export default function Index() {
         setRequest={setRequest}
         documents={documents}
       />
-      <DocumentUploader request={request} />
+      <DocumentUploader setDocuments={setDocuments} request={request} />
     </div>
   );
 }
