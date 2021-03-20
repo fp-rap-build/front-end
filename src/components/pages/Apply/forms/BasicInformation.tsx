@@ -159,6 +159,28 @@ export default function BasicInformation({ formValues, setFormValues }) {
           value={formValues.familySize}
         />
       </Form.Item>
+
+      <Form.Item
+        name="children"
+        initialValue={formValues.familySize}
+        label="Children in Household"
+        required
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            pattern: RegExp(/^([1-9][0-9]?)\s*$/),
+            message: 'Invalid number of children',
+          },
+        ]}
+      >
+        <Input
+          style={{ width: '100%' }}
+          name="children"
+          value={formValues.familySize}
+        />
+      </Form.Item>
+
       <Form.Item
         hasFeedback
         name="monthlyIncome"
