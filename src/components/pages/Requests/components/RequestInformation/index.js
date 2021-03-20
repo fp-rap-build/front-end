@@ -116,7 +116,9 @@ export default function Index({ request, setRequest, documents }) {
         style={{ minHeight: '400px', width: '100%' }}
         extra={[<TopActions handleReviewSubmit={props.handleReviewSubmit} />]}
       >
-        <Content extra={<Footer request={props.request} />}>
+        <Content
+          extra={tab !== 'comments' ? <Footer request={props.request} /> : null}
+        >
           {renderContent(props)}
         </Content>
       </Card>
