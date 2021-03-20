@@ -9,7 +9,7 @@ import {
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import styles from './statusBar.module.css';
+import styles from '../../../../../../styles/pages/statusBar.module.css';
 
 const { Step } = Steps;
 

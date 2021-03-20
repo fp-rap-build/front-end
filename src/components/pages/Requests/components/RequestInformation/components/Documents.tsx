@@ -1,5 +1,6 @@
 import React from 'react';
-import styles from '../../../../styles/modals/case.module.css';
+
+import styles from '../../../../../../styles/pages/request.module.css';
 
 export default function Documents({ documents }) {
   return (
