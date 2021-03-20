@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { axiosWithAuth } from '../../../../../../../api/axiosWithAuth';
+import { axiosWithAuth } from '../../../api/axiosWithAuth';
 
 import RenderComment from './RenderComment';
 import CreateComment from './CreateComment';
