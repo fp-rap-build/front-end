@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { useSelector } from 'react-redux';
+
 import styles from '../../../styles/pages/request.module.css';
 
 import { useParams } from 'react-router-dom';
@@ -11,6 +13,8 @@ import RequestInformation from './components/RequestInformation';
 import { message } from 'antd';
 
 export default function Index() {
+  const { organizationId } = useSelector(state => state.user.currentUser);
+
   const [loading, setLoading] = useState(false);
   const [request, setRequest] = useState({});
   const [documents, setDocuments] = useState([]);

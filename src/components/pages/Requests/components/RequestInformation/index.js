@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
+import { useSelector } from 'react-redux';
+
+import { handleApproval, handleDenial, isChecklistCompleted } from './utils';
+
 import { Basic, Checklist, Documents, Footer, TopActions } from './components';
 
-import { Card, message } from 'antd';
+import { Card, message, Modal, Input } from 'antd';
 import { axiosWithAuth } from '../../../../../api/axiosWithAuth';
 
 const tabListNoTitle = [
@@ -20,6 +24,17 @@ const tabListNoTitle = [
   },
 ];
 
+const pleaseFinishChecklistModal = () => {
+  Modal.error({ title: 'Please finish everything on your checklist' });
+};
+
+const approveOrDenyModal = (onOk, message) => {
+  Modal.confirm({
+    title: message,
+    onOk,
+  });
+};
+
 export default function Index({ request, setRequest, documents }) {
   const [tab, setTab] = useState('basic');
   const [checklistValues, setChecklistValues] = useState({
@@ -27,10 +42,34 @@ export default function Index({ request, setRequest, documents }) {
     verifiedDocuments: request.verifiedDocuments,
   });
 
-  const handleReviewSubmit = () => alert('submitted');
+  const handleReviewSubmit = status => {
+    let completedChecklist = isChecklistCompleted(checklistValues);
+
+    if (!completedChecklist) return pleaseFinishChecklistModal();
+
+    const handleApproveOrDenial = async () => {
+      try {
+        await axiosWithAuth().put(`/requests/${request.id}`, {
+          requestStatus: status,
+        });
+
+        setRequest({ ...request, requestStatus: status });
+      } catch (error) {
+        alert('Failed to review user');
+      }
+    };
+
+    let message = `Are you sure you want to ${
+      status == 'approved' ? 'approve' : 'deny'
+    } this user?`;
+
+    return approveOrDenyModal(handleApproveOrDenial, message);
+  };
 
   const handleCheckboxChange = async e => {
     const { name, checked } = e.target;
+
+    setChecklistValues({ ...checklistValues, [name]: checked });
 
     setRequest({ ...request, [name]: checked });
 
@@ -59,19 +98,21 @@ export default function Index({ request, setRequest, documents }) {
   };
 
   return (
-    <Card
-      className="site-page-header-responsive"
-      title="Review"
-      tabList={tabListNoTitle}
-      onTabChange={onTabChange}
-      activeTabKey={tab}
-      style={{ minHeight: '400px', width: '100%' }}
-      extra={[<TopActions handleReviewSubmit={props.handleReviewSubmit} />]}
-    >
-      <Content extra={<Footer request={props.request} />}>
-        {renderContent(props)}
-      </Content>
-    </Card>
+    <div>
+      <Card
+        className="site-page-header-responsive"
+        title="Review"
+        tabList={tabListNoTitle}
+        onTabChange={onTabChange}
+        activeTabKey={tab}
+        style={{ minHeight: '400px', width: '100%' }}
+        extra={[<TopActions handleReviewSubmit={props.handleReviewSubmit} />]}
+      >
+        <Content extra={<Footer request={props.request} />}>
+          {renderContent(props)}
+        </Content>
+      </Card>
+    </div>
   );
 }
 
