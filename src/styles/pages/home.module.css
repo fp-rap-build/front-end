@@ -2,15 +2,20 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   padding: 1rem;
   gap: 2rem;
 }
 
 .heading {
   text-align: center;
-  margin-top: 2%;
+  padding: 2%;
+  width: 100%;
+  background-color: #472d5b;
+}
+
+.commentsWrapper {
+  background-color: rgb(241, 241, 241);
+  padding: 2%;
 }
 
 @media (max-width: 500px) {

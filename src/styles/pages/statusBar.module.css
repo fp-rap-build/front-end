@@ -1,9 +1,7 @@
 @import '../global.css';
 
 .container {
-  width: 90%;
-  margin: 0 auto;
-  text-align: center;
+  padding: 2%;
 }
 
 .icon {
