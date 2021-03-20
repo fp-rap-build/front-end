@@ -1,14 +1,19 @@
 import React from 'react';
 
+import { useSelector } from 'react-redux';
+
 import styles from '../../../../styles/pages/admin.module.css';
 
 const Analytics = () => {
+  const currentUser = useSelector(state => state.user.currentUser);
+
+  const budget = currentUser.organization.budget;
   return (
     <div>
       <div className={styles.cardsContainer}>
         <Card value="18" title="Families served" color="#006ab3" />
         <Card value="62" title="People served" color="#006ab3" />
-        <Card value="$ 1000" title="Budget" color="#006ab3" />
+        <Card value={`$ ${budget}`} title="Budget" color="#006ab3" />
       </div>
     </div>
   );
