@@ -4,4 +4,4 @@ import Documents from './Documents';
 import Footer from './Footer';
 import TopActions from './TopActions';
 
-export { Basic, Documents, Checklist, Footer, TopActions };
+export { Basic, Checklist, Documents, Footer, TopActions };

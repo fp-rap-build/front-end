@@ -17,6 +17,8 @@ import LandingPage from './components/pages/Landing';
 
 import Apply from './components/pages/Apply';
 
+import Requests from './components/pages/Requests';
+
 import store from './redux/store';
 import { Provider } from 'react-redux';
 
@@ -45,9 +47,9 @@ function RAP() {
         <Route path="/landing" component={LandingPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/apply" exact component={Apply} />
-        {/* any of the routes you need secured should be registered as SecureRoutes */}
-        <PrivateRoute exact path="/" component={HomePage} />
         {/* Any routes you need secured by role should be registered as PrivateRoutes */}
+        <PrivateRoute exact path="/" component={HomePage} />
+        <PrivateRoute path="/requests/:id" component={Requests} />
         <PrivateRoute path="/admin" roles={['admin']} component={Admin} />
         <Route component={NotFoundPage} />
       </Switch>

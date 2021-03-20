@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { useHistory } from 'react-router-dom';
+
 import MaterialTable from 'material-table';
 
 import styles from '../../../../styles/pages/admin.module.css';
@@ -9,12 +11,12 @@ import { axiosWithAuth } from '../../../../api/axiosWithAuth';
 
 import GavelIcon from '@material-ui/icons/Gavel';
 
-import Case from '../../../modals/Case';
-
 export default function RequestsTable() {
+  const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
   const [requestBeingReviewed, setRequestBeingReviewed] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
+
   const [state, setState] = useState({
     columns: [
       { title: 'First', field: 'firstName' },
@@ -58,15 +60,6 @@ export default function RequestsTable() {
 
   return (
     <div className={styles.container}>
-      {isOpen && (
-        <Case
-          setIsOpen={setIsOpen}
-          request={requestBeingReviewed}
-          setRequest={setRequestBeingReviewed}
-          setState={setState}
-          state={state}
-        />
-      )}
       <MaterialTable
         style={{ width: '100%' }}
         isLoading={isFetching}
@@ -80,14 +73,8 @@ export default function RequestsTable() {
             tooltip: 'Review',
             onClick: async (event, rowData) => {
               // Update the users request to be in review
-              setRequestBeingReviewed(rowData);
-              setIsOpen(true);
 
-              if (rowData.requestStatus === 'received') {
-                await axiosWithAuth().put(`/requests/${rowData.id}`, {
-                  requestStatus: 'inReview',
-                });
-              }
+              history.push(`/requests/${rowData.id}`);
             },
           },
         ]}

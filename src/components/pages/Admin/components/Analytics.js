@@ -112,7 +112,7 @@ const Card = props => {
             <Input
               onChange={props.onChange}
               size="large"
-              style={{ width: '30%' }}
+              style={{ width: '50%', fontSize: '2rem' }}
               autoFocus={true}
               value={props.value}
               defaultValue={props.value}
