@@ -68,6 +68,7 @@ const Analytics = () => {
     getFamiliesServed();
     getPeopleServed();
     getBudget();
+    //eslint-disable-next-line
   }, []);
 
   if (loading) {
