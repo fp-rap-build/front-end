@@ -27,7 +27,7 @@ export default function Index() {
 
       <div className={styles.container}>
         <StatusBar request={request} />
-        <CommentsContainer request={request} />
+        {request && <CommentsContainer request={request} />}
         <DocumentUploader request={request} />
       </div>
     </>
