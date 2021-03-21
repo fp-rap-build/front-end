@@ -4,6 +4,10 @@ const RenderComment = ({ comm }) => {
   const author = comm.firstName + ' ' + comm.lastName;
 
   const formatDate = dtg => {
+    if (!dtg) {
+      return null;
+    }
+
     const stringCheck = String(dtg);
 
     const dtgSplit = stringCheck.split('T');
