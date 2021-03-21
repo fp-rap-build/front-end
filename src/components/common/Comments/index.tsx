@@ -19,9 +19,7 @@ const Comments = ({ request }) => {
 
   const fetchComments = async id => {
     try {
-      const res = await axiosWithAuth().get('/comments/find', {
-        params: { requestId: id },
-      });
+      const res = await axiosWithAuth().get(`/comments/find/request/${id}`);
       setComments(res.data);
     } catch (error) {
       console.log(error);
