@@ -18,7 +18,6 @@ const StatusBar = ({ request }) => {
 
   const statusToNum = status => {
     switch (status) {
-      //Cases -- 'received' , 'inReview', 'approved', 'denied'
       case 'received':
         return 0;
       case 'inReview':

@@ -1,25 +1,33 @@
 import React, { useState, useEffect } from 'react';
 
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 import styles from '../../../styles/pages/request.module.css';
 
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 
 import DocumentUploader from './components/RequestInformation/components/DocumentUploader';
 import LoadingComponent from '../../common/LoadingComponent';
 import RequestInformation from './components/RequestInformation';
-import { message } from 'antd';
+import { message, Button } from 'antd';
 
 export default function Index() {
-  const { organizationId } = useSelector(state => state.user.currentUser);
+  // const { organizationId } = useSelector(state => state.user.currentUser);
 
   const [loading, setLoading] = useState(false);
   const [request, setRequest] = useState({});
   const [documents, setDocuments] = useState([]);
 
   const { id } = useParams();
+
+  const history = useHistory();
+
+  const returnToDash = e => {
+    e.preventDefault();
+
+    history.push('/admin');
+  };
 
   const fetchRequest = async () => {
     setLoading(true);
@@ -42,6 +50,7 @@ export default function Index() {
 
   useEffect(() => {
     fetchRequest();
+    // eslint-disable-next-line
   }, []);
 
   if (loading) {
@@ -56,6 +65,7 @@ export default function Index() {
         documents={documents}
       />
       <DocumentUploader setDocuments={setDocuments} request={request} />
+      <Button onClick={returnToDash}>Return to Dash</Button>
     </div>
   );
 }

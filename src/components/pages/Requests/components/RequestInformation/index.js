@@ -4,9 +4,16 @@ import { useSelector } from 'react-redux';
 
 import { handleApproval, handleDenial, isChecklistCompleted } from './utils';
 
-import { Basic, Checklist, Documents, Footer, TopActions } from './components';
+import {
+  Basic,
+  Checklist,
+  Documents,
+  Footer,
+  TopActions,
+  Comments,
+} from './components';
 
-import { Card, message, Modal, Input } from 'antd';
+import { Card, message, Modal } from 'antd';
 import { axiosWithAuth } from '../../../../../api/axiosWithAuth';
 
 const tabListNoTitle = [
@@ -22,6 +29,7 @@ const tabListNoTitle = [
     key: 'checklist',
     tab: 'Checklist',
   },
+  { key: 'comments', tab: 'Comments' },
 ];
 
 const pleaseFinishChecklistModal = () => {
@@ -60,7 +68,7 @@ export default function Index({ request, setRequest, documents }) {
     };
 
     let message = `Are you sure you want to ${
-      status == 'approved' ? 'approve' : 'deny'
+      status === 'approved' ? 'approve' : 'deny'
     } this user?`;
 
     return approveOrDenyModal(handleApproveOrDenial, message);
@@ -108,7 +116,9 @@ export default function Index({ request, setRequest, documents }) {
         style={{ minHeight: '400px', width: '100%' }}
         extra={[<TopActions handleReviewSubmit={props.handleReviewSubmit} />]}
       >
-        <Content extra={<Footer request={props.request} />}>
+        <Content
+          extra={tab !== 'comments' ? <Footer request={props.request} /> : null}
+        >
           {renderContent(props)}
         </Content>
       </Card>
@@ -129,6 +139,8 @@ const renderContent = props => {
       );
     case 'documents':
       return <Documents documents={props.documents} />;
+    case 'comments':
+      return <Comments request={props.request} />;
     default:
       return <Basic request={props.request} />;
   }
