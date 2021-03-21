@@ -3,7 +3,7 @@ import { Comment } from 'antd';
 const RenderComment = ({ comm }) => {
   const author = comm.firstName + ' ' + comm.lastName;
 
-  const formatDate = dtg => {
+  const formatDate = (dtg: string) => {
     const dtgSplit = dtg.split('T');
     const date = dtgSplit[0].split('-');
     const time = dtgSplit[1].split(':');
