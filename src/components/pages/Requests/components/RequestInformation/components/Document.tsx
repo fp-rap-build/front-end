@@ -14,8 +14,11 @@ const Document = ({ document }) => {
   const [docState, setDocState] = useState(document);
 
   const handleChange = value => {
-    setDocState({ ...docState, name: value });
+    if (docState.name === value) {
+      return;
+    }
     const updateDocument = { ...document, name: value };
+    setDocState(updateDocument);
     postNameChange(updateDocument);
   };
 
