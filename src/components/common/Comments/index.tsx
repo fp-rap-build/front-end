@@ -5,6 +5,7 @@ import { axiosWithAuth } from '../../../api/axiosWithAuth';
 
 import RenderComment from './RenderComment';
 import CreateComment from './CreateComment';
+import NoComment from './NoComment';
 
 import { Button } from 'antd';
 
@@ -68,9 +69,11 @@ const Comments = ({ request }) => {
 
   return (
     <div>
-      {comments.map(comm => (
-        <RenderComment comm={comm} />
-      ))}
+      {comments ? (
+        comments.map(comm => <RenderComment comm={comm} />)
+      ) : (
+        <NoComment />
+      )}
       <CreateComment newComment={newComment} setNewComment={setNewComment} />
       <Button
         type="primary"
