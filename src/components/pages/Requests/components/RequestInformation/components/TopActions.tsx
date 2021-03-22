@@ -2,9 +2,17 @@ import React, { useState } from 'react';
 
 import { Menu, Dropdown, Space, Button } from 'antd';
 
+import { useHistory } from 'react-router-dom';
+
 import { UserOutlined } from '@ant-design/icons';
 
-export default function TopActions({ handleReviewSubmit, returnToDash }) {
+export default function TopActions({ handleReviewSubmit }) {
+  const history = useHistory();
+
+  const returnToDash = e => {
+    e.stopPropagation();
+    history.push('/admin');
+  };
   return (
     <div
       style={{
