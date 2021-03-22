@@ -77,20 +77,17 @@ const Analytics = () => {
 
   return (
     <div className={styles.cardsContainer}>
-      <div>
-        <Card value={familiesServed} title="Families served" color="#006ab3" />
-        <Card value={peopleServed} title="People served" color="#006ab3" />
-        <Card
-          value={budget}
-          title="Budget"
-          color="#006ab3"
-          icon="$"
-          editable={true}
-          onSubmit={handleNewBudgetSubmit}
-          onChange={handleBudgetChange}
-        />
-        <Card value="$ 1000" title="Budget" color="#006ab3" />
-      </div>
+      <Card value={familiesServed} title="Families served" color="#006ab3" />
+      <Card value={peopleServed} title="People served" color="#006ab3" />
+      <Card
+        value={budget}
+        title="Budget"
+        color="#006ab3"
+        icon="$"
+        editable={true}
+        onSubmit={handleNewBudgetSubmit}
+        onChange={handleBudgetChange}
+      />
     </div>
   );
 };
