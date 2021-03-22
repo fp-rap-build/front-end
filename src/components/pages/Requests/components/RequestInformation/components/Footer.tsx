@@ -33,6 +33,11 @@ export default function Footer({ request }) {
         prefix="$"
         value={request.monthlyIncome}
       />
+      <Statistic
+        title="Amount Requested"
+        prefix="$"
+        value={request.amountRequested}
+      />
     </div>
   );
 }

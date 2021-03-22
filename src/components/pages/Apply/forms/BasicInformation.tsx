@@ -252,8 +252,8 @@ export default function BasicInformation({ formValues, setFormValues }) {
 
       <Form.Item
         hasFeedback
-        name="requested"
-        initialValue={formValues.requested}
+        name="amountRequested"
+        initialValue={formValues.amountRequested}
         label={
           formValues.role === 'landlord'
             ? 'Tenants Total Amount Requested'
@@ -270,7 +270,7 @@ export default function BasicInformation({ formValues, setFormValues }) {
           },
         ]}
       >
-        <Input name="requested" style={{ width: '100%' }} />
+        <Input name="amountRequested" style={{ width: '100%' }} />
       </Form.Item>
 
       <h4>
