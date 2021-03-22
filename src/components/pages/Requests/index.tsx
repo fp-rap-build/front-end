@@ -24,8 +24,6 @@ export default function Index() {
   const history = useHistory();
 
   const returnToDash = e => {
-    e.preventDefault();
-
     history.push('/admin');
   };
 
@@ -63,9 +61,9 @@ export default function Index() {
         request={request}
         setRequest={setRequest}
         documents={documents}
+        returnToDash={returnToDash}
       />
       <DocumentUploader setDocuments={setDocuments} request={request} />
-      <Button onClick={returnToDash}>Return to Dash</Button>
     </div>
   );
 }
