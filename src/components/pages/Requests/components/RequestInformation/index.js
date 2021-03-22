@@ -37,9 +37,11 @@ export default function Index({
   setRequest,
   documents,
   budget,
+  organizationId,
   setBudget,
   returnToDash,
 }) {
+  const [loading, setLoading] = useState(false);
   const [originalBudget, setOriginalBudget] = useState(budget);
   const [tab, setTab] = useState('basic');
   const [checklistValues, setChecklistValues] = useState({
@@ -71,8 +73,30 @@ export default function Index({
     setIsApprovedModalVisible(true);
   };
 
-  const handleOk = () => {
-    setIsApprovedModalVisible(false);
+  const handleApprovalSubmit = async () => {
+    setLoading(true);
+    try {
+      // approve request
+      await axiosWithAuth().put(`/requests/${request.id}`, {
+        requestStatus: 'approved',
+      });
+
+      setRequest({ ...request, requestStatus: 'approved' });
+
+      // update the budget
+      const newBudget = originalBudget - amountToGive;
+
+      let res = await axiosWithAuth().put(`/orgs/${organizationId}`, {
+        budget: newBudget,
+      });
+
+      message.success('Successfully approved request!');
+    } catch (error) {
+      message.error('Unable to approve request!');
+    } finally {
+      setIsApprovedModalVisible(false);
+      setLoading(false);
+    }
   };
 
   const handleCancel = () => {
@@ -158,7 +182,8 @@ export default function Index({
       <Modal
         title={`Budget: $${budget}`}
         visible={isApprovedModalVisible}
-        onOk={handleOk}
+        onOk={handleApprovalSubmit}
+        confirmLoading={loading}
         onCancel={handleCancel}
       >
         <h3>Amount to give:</h3>

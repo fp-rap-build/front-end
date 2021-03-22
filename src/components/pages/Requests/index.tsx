@@ -74,6 +74,7 @@ export default function Index() {
         setRequest={setRequest}
         documents={documents}
         budget={budget}
+        organizationId={organizationId}
         setBudget={setBudget}
         returnToDash={returnToDash}
       />
