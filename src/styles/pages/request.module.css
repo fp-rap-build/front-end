@@ -12,3 +12,10 @@
   flex-direction: column;
   gap: 3px;
 }
+
+.document {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
