@@ -40,7 +40,6 @@ export default function Index({
   budget,
   organizationId,
   setBudget,
-  returnToDash,
 }) {
   const [loading, setLoading] = useState(false);
   const [originalBudget, setOriginalBudget] = useState(budget);
@@ -203,12 +202,7 @@ export default function Index({
         onTabChange={onTabChange}
         activeTabKey={tab}
         style={{ minHeight: '400px', width: '100%' }}
-        extra={[
-          <TopActions
-            handleReviewSubmit={props.handleReviewSubmit}
-            returnToDash={returnToDash}
-          />,
-        ]}
+        extra={[<TopActions handleReviewSubmit={props.handleReviewSubmit} />]}
       >
         <Content
           extra={tab !== 'comments' ? <Footer request={props.request} /> : null}

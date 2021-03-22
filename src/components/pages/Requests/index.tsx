@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 
 import styles from '../../../styles/pages/request.module.css';
 
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 
 import DocumentUploader from './components/RequestInformation/components/DocumentUploader';
 import LoadingComponent from '../../common/LoadingComponent';
 import RequestInformation from './components/RequestInformation';
-import { message, Button } from 'antd';
+import { message } from 'antd';
 
 export default function Index() {
   const { organizationId } = useSelector(state => state.user.currentUser);
@@ -21,12 +21,6 @@ export default function Index() {
   const [budget, setBudget] = useState([]);
 
   const { id } = useParams();
-
-  const history = useHistory();
-
-  const returnToDash = e => {
-    history.push('/admin');
-  };
 
   const fetchRequest = async () => {
     setLoading(true);
@@ -77,7 +71,6 @@ export default function Index() {
         budget={budget}
         organizationId={organizationId}
         setBudget={setBudget}
-        returnToDash={returnToDash}
       />
       <DocumentUploader setDocuments={setDocuments} request={request} />
     </div>

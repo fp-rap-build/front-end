@@ -1,9 +1,10 @@
 import React from 'react';
 import {
-  EditOutlined,
+  FolderOpenOutlined,
   UserAddOutlined,
   UserOutlined,
   DownOutlined,
+  LineChartOutlined,
 } from '@ant-design/icons';
 import { Menu, Dropdown, Button } from 'antd';
 
@@ -14,10 +15,7 @@ const AdminNav = props => {
 
   const menu = (
     <Menu onClick={handleClick} selectedKeys={activeComponent.current}>
-      <Menu.Item key="analytics" icon={<UserOutlined />}>
-        Analytics
-      </Menu.Item>
-      <Menu.Item key="requests" icon={<EditOutlined />}>
+      <Menu.Item key="requests" icon={<FolderOpenOutlined />}>
         Manage Requests
       </Menu.Item>
       <Menu.Item key="user" icon={<UserOutlined />}>
@@ -25,6 +23,9 @@ const AdminNav = props => {
       </Menu.Item>
       <Menu.Item key="prgMgr" icon={<UserAddOutlined />}>
         Create Program Manager
+      </Menu.Item>
+      <Menu.Item key="analytics" icon={<LineChartOutlined />}>
+        Analytics
       </Menu.Item>
     </Menu>
   );
