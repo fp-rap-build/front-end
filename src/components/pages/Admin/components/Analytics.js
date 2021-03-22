@@ -13,6 +13,8 @@ const Analytics = () => {
 
   const [peopleServed, setPeopleServed] = useState();
   const [familiesServed, setFamiliesServed] = useState();
+  const [childrenServed, setChildrenServed] = useState();
+
   const [budget, setBudget] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -36,6 +38,18 @@ const Analytics = () => {
       })
       .catch(err => console.error(err));
   }
+
+  function getChildrenServed() {
+    axiosWithAuth()
+      .get('/analytics/children_served')
+      .then(res => {
+        // const familiesServed = res.data.sumFamiliesServed;
+        setChildrenServed(res.data.sumChildrenServed[0].sum);
+        // const numFamiliesServed = setFamiliesServed(familiesServed[0].count);
+      })
+      .catch(err => console.error(err));
+  }
+
   const getBudget = async () => {
     setLoading(true);
     try {
@@ -67,6 +81,7 @@ const Analytics = () => {
   useEffect(() => {
     getFamiliesServed();
     getPeopleServed();
+    getChildrenServed();
     getBudget();
     //eslint-disable-next-line
   }, []);
@@ -78,7 +93,8 @@ const Analytics = () => {
   return (
     <div className={styles.cardsContainer}>
       <Card value={familiesServed} title="Families served" color="#006ab3" />
-      <Card value={peopleServed} title="People served" color="#006ab3" />
+      <Card value={peopleServed} title="Total served" color="#006ab3" />
+      <Card value={childrenServed} title="Children served" color="#006ab3" />
       <Card
         value={budget}
         title="Budget"
