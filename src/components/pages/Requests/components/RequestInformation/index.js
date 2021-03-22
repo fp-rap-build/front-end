@@ -13,7 +13,7 @@ import {
   Comments,
 } from './components';
 
-import { Card, message, Modal } from 'antd';
+import { Card, Input, message, Modal } from 'antd';
 import { axiosWithAuth } from '../../../../../api/axiosWithAuth';
 
 const tabListNoTitle = [
@@ -32,43 +32,81 @@ const tabListNoTitle = [
   { key: 'comments', tab: 'Comments' },
 ];
 
-const pleaseFinishChecklistModal = () => {
-  Modal.error({ title: 'Please finish everything on your checklist' });
-};
-
-const approveOrDenyModal = (onOk, message) => {
-  Modal.confirm({
-    title: message,
-    onOk,
-  });
-};
-
 export default function Index({
   request,
   setRequest,
   documents,
+  budget,
+  setBudget,
   returnToDash,
 }) {
+  const [originalBudget, setOriginalBudget] = useState(budget);
   const [tab, setTab] = useState('basic');
   const [checklistValues, setChecklistValues] = useState({
     pmApproval: request.pmApproval,
     verifiedDocuments: request.verifiedDocuments,
   });
 
+  const [amountToGive, setAmountToGive] = useState();
+
+  const handleAmountToGive = e => {
+    const { value } = e.target;
+
+    const newBudget = originalBudget - value;
+
+    if (newBudget < 0) return;
+
+    if (isNaN(value)) return;
+
+    if (value.split('')[0] === '0') return; // Can't give a request 0 dollars lol
+
+    setBudget(newBudget);
+
+    setAmountToGive(value);
+  };
+
+  const [isApprovedModalVisible, setIsApprovedModalVisible] = useState(false);
+
+  const showApprovedModal = () => {
+    setIsApprovedModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsApprovedModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsApprovedModalVisible(false);
+  };
+
+  const pleaseFinishChecklistModal = () => {
+    Modal.error({ title: 'Please finish everything on your checklist' });
+  };
+
+  const approvedModal = () => {};
+
+  const deniedModal = (onOk, message) => {
+    Modal.confirm({
+      title:
+        "Are you sure you want to deny this user? This change can't be undone",
+      onOk,
+    });
+  };
+
   const handleReviewSubmit = status => {
     const alreadyReviewed =
       request.requestStatus === 'approved' ||
       request.requestStatus === 'denied';
 
-    if (alreadyReviewed) {
-      return message.error('This request has already been reviewed');
-    }
+    // if (alreadyReviewed) {
+    //   return message.error('This request has already been reviewed');
+    // }
 
     let completedChecklist = isChecklistCompleted(checklistValues);
 
     if (!completedChecklist) return pleaseFinishChecklistModal();
 
-    const handleApproveOrDenial = async () => {
+    const handleDenial = async () => {
       try {
         await axiosWithAuth().put(`/requests/${request.id}`, {
           requestStatus: status,
@@ -80,15 +118,8 @@ export default function Index({
       }
     };
 
-    let approveOrDenyMessage = `Are you sure you want to ${
-      status === 'approved' ? 'approve' : 'deny'
-    } this user?`;
-
-    if (status === 'approved') {
-      return alert('approved');
-    }
-
-    return approveOrDenyModal(handleApproveOrDenial, approveOrDenyMessage);
+    if (status === 'approved') return showApprovedModal();
+    if (status === 'denied') return deniedModal(handleDenial);
   };
 
   const handleCheckboxChange = async e => {
@@ -124,6 +155,20 @@ export default function Index({
 
   return (
     <div>
+      <Modal
+        title={`Budget: $${budget}`}
+        visible={isApprovedModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <h3>Amount to give:</h3>
+        <Input
+          placeholder="amount"
+          value={amountToGive}
+          onChange={handleAmountToGive}
+        />
+      </Modal>
+
       <Card
         className="site-page-header-responsive"
         title="Review"
