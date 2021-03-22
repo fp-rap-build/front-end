@@ -92,8 +92,8 @@ const Analytics = () => {
 
   return (
     <div className={styles.cardsContainer}>
-      <Card value={familiesServed} title="Families served" color="#006ab3" />
       <Card value={peopleServed} title="Total served" color="#006ab3" />
+      <Card value={familiesServed} title="Families served" color="#006ab3" />
       <Card value={childrenServed} title="Children served" color="#006ab3" />
       <Card
         value={budget}
