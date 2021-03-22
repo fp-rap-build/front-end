@@ -8,9 +8,10 @@
 }
 
 .documents {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  width: 100%;
+  gap: 7px;
 }
 
 .document {

@@ -73,6 +73,7 @@ export default function Index() {
         request={request}
         setRequest={setRequest}
         documents={documents}
+        setDocuments={setDocuments}
         budget={budget}
         organizationId={organizationId}
         setBudget={setBudget}

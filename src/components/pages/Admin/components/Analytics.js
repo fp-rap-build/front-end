@@ -11,9 +11,9 @@ const Analytics = () => {
   const currentUser = useSelector(state => state.user.currentUser);
   const orgId = currentUser.organization.id;
 
-  const [peopleServed, setPeopleServed] = useState();
-  const [familiesServed, setFamiliesServed] = useState();
-  const [childrenServed, setChildrenServed] = useState();
+  const [peopleServed, setPeopleServed] = useState(0);
+  const [familiesServed, setFamiliesServed] = useState(0);
+  const [childrenServed, setChildrenServed] = useState(0);
 
   const [budget, setBudget] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ const Analytics = () => {
       .get('/analytics/people_served')
       .then(res => {
         // const familiesServed = res.data.sumFamiliesServed;
-        setPeopleServed(res.data.sumPeopleServed[0].sum);
+        setPeopleServed(res.data.sumPeopleServed[0].sum || 0);
         // const numFamiliesServed = setFamiliesServed(familiesServed[0].count);
       })
       .catch(err => console.error(err));
@@ -44,7 +44,7 @@ const Analytics = () => {
       .get('/analytics/children_served')
       .then(res => {
         // const familiesServed = res.data.sumFamiliesServed;
-        setChildrenServed(res.data.sumChildrenServed[0].sum);
+        setChildrenServed(res.data.sumChildrenServed[0].sum || 0);
         // const numFamiliesServed = setFamiliesServed(familiesServed[0].count);
       })
       .catch(err => console.error(err));

@@ -36,6 +36,7 @@ export default function Index({
   request,
   setRequest,
   documents,
+  setDocuments,
   budget,
   organizationId,
   setBudget,
@@ -122,9 +123,9 @@ export default function Index({
       request.requestStatus === 'approved' ||
       request.requestStatus === 'denied';
 
-    // if (alreadyReviewed) {
-    //   return message.error('This request has already been reviewed');
-    // }
+    if (alreadyReviewed) {
+      return message.error('This request has already been reviewed');
+    }
 
     let completedChecklist = isChecklistCompleted(checklistValues);
 
@@ -175,6 +176,7 @@ export default function Index({
     handleCheckboxChange,
     request,
     documents,
+    setDocuments,
   };
 
   return (
@@ -230,7 +232,12 @@ const renderContent = props => {
         />
       );
     case 'documents':
-      return <Documents documents={props.documents} />;
+      return (
+        <Documents
+          documents={props.documents}
+          setDocuments={props.setDocuments}
+        />
+      );
     case 'comments':
       return <Comments request={props.request} />;
     default:
