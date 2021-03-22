@@ -21,7 +21,7 @@ const Analytics = () => {
       .get('/analytics/people_served')
       .then(res => {
         // const familiesServed = res.data.sumFamiliesServed;
-        setPeopleServed(res.data.sumPeopleServed[0].count);
+        setPeopleServed(res.data.sumPeopleServed[0].sum);
         // const numFamiliesServed = setFamiliesServed(familiesServed[0].count);
       })
       .catch(err => console.error(err));
