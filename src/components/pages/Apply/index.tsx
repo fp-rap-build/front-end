@@ -34,7 +34,7 @@ const INITIAL_VALUES_DEV = {
   address: '1211 test St',
   cityName: 'test',
   zipCode: 99205,
-  state: 'Pennsylvania',
+  state: 'Washington',
   role: 'tenant',
   familySize: 4,
   beds: 4,
@@ -88,7 +88,7 @@ export default function Index() {
 
   const goBackwards = () => setStep(step - 1);
 
-  const [formValues, setFormValues] = useState(INITIAL_VALUES_DEV);
+  const [formValues, setFormValues] = useState(INITIAL_VALUES_PROD);
 
   const handleChange = e => {
     // Clean up any error message after the user types
