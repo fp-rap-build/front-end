@@ -162,7 +162,7 @@ export default function BasicInformation({ formValues, setFormValues }) {
 
       <Form.Item
         name="children"
-        initialValue={formValues.familySize}
+        initialValue={formValues.totalChildren}
         label="Children in Household"
         required
         hasFeedback
@@ -176,8 +176,8 @@ export default function BasicInformation({ formValues, setFormValues }) {
       >
         <Input
           style={{ width: '100%' }}
-          name="children"
-          value={formValues.familySize}
+          name="totalChildren"
+          value={formValues.totalChildren}
         />
       </Form.Item>
 

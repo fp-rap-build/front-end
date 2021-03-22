@@ -68,7 +68,7 @@ const INITIAL_VALUES_PROD = {
   foodWrkr: false,
 };
 
-const finalStep = 3;
+const finalStep = 2;
 
 export default function Index() {
   const loading = useSelector(state => state.global.isLoading);
@@ -91,6 +91,8 @@ export default function Index() {
     if (errorMessage) {
       dispatch(clearErrorMessage());
     }
+
+    console.log(formValues);
 
     setFormValues({
       ...formValues,
@@ -153,11 +155,7 @@ const FormNavigation = ({ step, goBackwards, loading }) => {
           {loading ? 'Loading. . .' : 'Submit'}
         </Button>
       ) : (
-        <Button
-          type="primary"
-          htmlType="submit"
-          style={step === 1 ? { display: 'none' } : {}}
-        >
+        <Button type="primary" htmlType="submit">
           Next
         </Button>
       )}
@@ -171,11 +169,14 @@ const RenderForm = ({ step, formValues, setFormValues }) => {
   switch (step) {
     case 0:
       return <BasicInformation {...props} />;
+
+    // until ds api is working
+
+    // case 1:
+    //   return <ProgramSelection {...props} />;
     case 1:
-      return <ProgramSelection {...props} />;
-    case 2:
       return <SecondaryContact {...props} />;
-    case 3:
+    case 2:
       return <CreateAccount {...props} />;
   }
 };
