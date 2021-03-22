@@ -96,8 +96,6 @@ export default function Index() {
       dispatch(clearErrorMessage());
     }
 
-    console.log(formValues);
-
     setFormValues({
       ...formValues,
       [e.target.name]: e.target.value,
@@ -159,7 +157,11 @@ const FormNavigation = ({ step, goBackwards, loading }) => {
           {loading ? 'Loading. . .' : 'Submit'}
         </Button>
       ) : (
-        <Button type="primary" htmlType="submit">
+        <Button
+          style={step == 1 ? { display: 'none' } : {}}
+          type="primary"
+          htmlType="submit"
+        >
           Next
         </Button>
       )}
