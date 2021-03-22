@@ -23,56 +23,56 @@ import { clearErrorMessage } from '../../../redux/users/userActions';
 
 import { setErrorMessage } from '../../../redux/global/globalActions';
 
-// import faker from 'faker';
+import faker from 'faker';
 
-// const INITIAL_VALUES_DEV = {
-//   firstName: faker.name.firstName(),
-//   lastName: faker.name.lastName(),
-//   email: faker.internet.email(),
-//   password: 'testpassword',
-//   confirmPassword: 'testpassword',
-//   address: '1211 test St',
-//   cityName: 'test',
-//   zipCode: 16504,
-//   state: 'Pennsylvania',
-//   role: 'tenant',
-//   familySize: 4,
-//   beds: 4,
-//   monthlyIncome: 1000,
-//   tenantName: 'tenant',
-//   tenantEmail: 'tenant@gmail.com',
-//   tenantPhoneNumber: '111-222-3333',
-//   landlordName: 'landlord',
-//   landlordEmail: 'landlord@gmail.com',
-//   landlordPhoneNumber: '111-222-3333',
-//   owed: 600,
-//   requested: 450,
-//   rent: 500,
-//   totalChildren: 2,
-// };
-
-const INITIAL_VALUES_PROD = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-  address: '',
-  cityName: '',
-  zipCode: '',
-  state: '',
-  role: '',
-  familySize: 1,
-  monthlyIncome: 0,
-  tenantName: '',
-  tenantEmail: '',
-  landlordName: '',
-  landlordEmail: '',
-  unEmp90: false,
-  foodWrkr: false,
+const INITIAL_VALUES_DEV = {
+  firstName: faker.name.firstName(),
+  lastName: faker.name.lastName(),
+  email: faker.internet.email(),
+  password: 'testpassword',
+  confirmPassword: 'testpassword',
+  address: '1211 test St',
+  cityName: 'test',
+  zipCode: 16504,
+  state: 'Pennsylvania',
+  role: 'tenant',
+  familySize: 4,
+  beds: 4,
+  monthlyIncome: 1000,
+  tenantName: 'tenant',
+  tenantEmail: 'tenant@gmail.com',
+  tenantPhoneNumber: '111-222-3333',
+  landlordName: 'landlord',
+  landlordEmail: 'landlord@gmail.com',
+  landlordPhoneNumber: '111-222-3333',
+  owed: 600,
+  requested: 450,
+  rent: 500,
+  totalChildren: 2,
 };
 
-const finalStep = 2;
+// const INITIAL_VALUES_PROD = {
+//   firstName: '',
+//   lastName: '',
+//   email: '',
+//   password: '',
+//   confirmPassword: '',
+//   address: '',
+//   cityName: '',
+//   zipCode: '',
+//   state: '',
+//   role: '',
+//   familySize: 1,
+//   monthlyIncome: 0,
+//   tenantName: '',
+//   tenantEmail: '',
+//   landlordName: '',
+//   landlordEmail: '',
+//   unEmp90: false,
+//   foodWrkr: false,
+// };
+
+const finalStep = 3;
 
 export default function Index() {
   const loading = useSelector(state => state.global.isLoading);
@@ -88,7 +88,7 @@ export default function Index() {
 
   const goBackwards = () => setStep(step - 1);
 
-  const [formValues, setFormValues] = useState(INITIAL_VALUES_PROD);
+  const [formValues, setFormValues] = useState(INITIAL_VALUES_DEV);
 
   const handleChange = e => {
     // Clean up any error message after the user types
@@ -176,11 +176,11 @@ const RenderForm = ({ step, formValues, setFormValues }) => {
 
     // until ds api is working
 
-    // case 1:
-    //   return <ProgramSelection {...props} />;
     case 1:
-      return <SecondaryContact {...props} />;
+      return <ProgramSelection {...props} />;
     case 2:
+      return <SecondaryContact {...props} />;
+    case 3:
       return <CreateAccount {...props} />;
   }
 };
