@@ -68,8 +68,6 @@ const INITIAL_VALUES_PROD = {
   tenantEmail: '',
   landlordName: '',
   landlordEmail: '',
-  unEmp90: false,
-  foodWrkr: false,
 };
 
 const finalStep = 3;
@@ -159,7 +157,11 @@ const FormNavigation = ({ step, goBackwards, loading }) => {
           {loading ? 'Loading. . .' : 'Submit'}
         </Button>
       ) : (
-        <Button type="primary" htmlType="submit">
+        <Button
+          type="primary"
+          htmlType="submit"
+          style={step === 1 ? { display: 'none' } : null}
+        >
           Next
         </Button>
       )}
