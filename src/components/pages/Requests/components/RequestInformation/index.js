@@ -56,6 +56,14 @@ export default function Index({
   });
 
   const handleReviewSubmit = status => {
+    const alreadyReviewed =
+      request.requestStatus === 'approved' ||
+      request.requestStatus === 'denied';
+
+    if (alreadyReviewed) {
+      return message.error('This request has already been reviewed');
+    }
+
     let completedChecklist = isChecklistCompleted(checklistValues);
 
     if (!completedChecklist) return pleaseFinishChecklistModal();
@@ -72,11 +80,15 @@ export default function Index({
       }
     };
 
-    let message = `Are you sure you want to ${
+    let approveOrDenyMessage = `Are you sure you want to ${
       status === 'approved' ? 'approve' : 'deny'
     } this user?`;
 
-    return approveOrDenyModal(handleApproveOrDenial, message);
+    if (status === 'approved') {
+      return alert('approved');
+    }
+
+    return approveOrDenyModal(handleApproveOrDenial, approveOrDenyMessage);
   };
 
   const handleCheckboxChange = async e => {
