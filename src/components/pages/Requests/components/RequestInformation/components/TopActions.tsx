@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import { Menu, Dropdown, Space } from 'antd';
+import { Menu, Dropdown, Space, Button } from 'antd';
 
 import { UserOutlined } from '@ant-design/icons';
 
-export default function TopActions({ handleReviewSubmit }) {
+export default function TopActions({ handleReviewSubmit, returnToDash }) {
   return (
     <div
       style={{
@@ -15,6 +15,7 @@ export default function TopActions({ handleReviewSubmit }) {
         gap: '10px',
       }}
     >
+      <Button onClick={returnToDash}>Return To Dash</Button>
       <JudgeDropdown handleReviewSubmit={handleReviewSubmit} />
     </div>
   );

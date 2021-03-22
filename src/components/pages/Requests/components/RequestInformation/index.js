@@ -43,7 +43,12 @@ const approveOrDenyModal = (onOk, message) => {
   });
 };
 
-export default function Index({ request, setRequest, documents }) {
+export default function Index({
+  request,
+  setRequest,
+  documents,
+  returnToDash,
+}) {
   const [tab, setTab] = useState('basic');
   const [checklistValues, setChecklistValues] = useState({
     pmApproval: request.pmApproval,
@@ -114,7 +119,12 @@ export default function Index({ request, setRequest, documents }) {
         onTabChange={onTabChange}
         activeTabKey={tab}
         style={{ minHeight: '400px', width: '100%' }}
-        extra={[<TopActions handleReviewSubmit={props.handleReviewSubmit} />]}
+        extra={[
+          <TopActions
+            handleReviewSubmit={props.handleReviewSubmit}
+            returnToDash={returnToDash}
+          />,
+        ]}
       >
         <Content
           extra={tab !== 'comments' ? <Footer request={props.request} /> : null}
