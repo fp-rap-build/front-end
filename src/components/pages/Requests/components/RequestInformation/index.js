@@ -36,6 +36,7 @@ export default function Index({
   request,
   setRequest,
   documents,
+  setDocuments,
   budget,
   organizationId,
   setBudget,
@@ -175,6 +176,7 @@ export default function Index({
     handleCheckboxChange,
     request,
     documents,
+    setDocuments,
   };
 
   return (
@@ -230,7 +232,12 @@ const renderContent = props => {
         />
       );
     case 'documents':
-      return <Documents documents={props.documents} />;
+      return (
+        <Documents
+          documents={props.documents}
+          setDocuments={props.setDocuments}
+        />
+      );
     case 'comments':
       return <Comments request={props.request} />;
     default:

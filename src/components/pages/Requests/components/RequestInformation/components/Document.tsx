@@ -10,7 +10,7 @@ import styles from '../../../../../../styles/pages/request.module.css';
 
 const { Paragraph } = Typography;
 
-const Document = ({ document }) => {
+const Document = ({ document, setDocuments }) => {
   const [docState, setDocState] = useState(document);
 
   const handleChange = value => {
@@ -27,6 +27,15 @@ const Document = ({ document }) => {
       const res = await axiosWithAuth().put(
         `documents/${newDocument.id}`,
         newDocument
+      );
+
+      setDocuments(prevState =>
+        prevState.map(doc => {
+          if (doc.id == newDocument.id) {
+            return newDocument;
+          }
+          return doc;
+        })
       );
     } catch (error) {
       alert('Un-able to update document name');

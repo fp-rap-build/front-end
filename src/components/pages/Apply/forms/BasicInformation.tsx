@@ -230,7 +230,7 @@ export default function BasicInformation({ formValues, setFormValues }) {
       <Form.Item
         hasFeedback
         name="owed"
-        initialValue={formValues.rent}
+        initialValue={formValues.owed}
         label={
           formValues.role === 'landlord'
             ? 'Tenants Total Amount Owed'
@@ -253,7 +253,7 @@ export default function BasicInformation({ formValues, setFormValues }) {
       <Form.Item
         hasFeedback
         name="requested"
-        initialValue={formValues.rent}
+        initialValue={formValues.requested}
         label={
           formValues.role === 'landlord'
             ? 'Tenants Total Amount Requested'
