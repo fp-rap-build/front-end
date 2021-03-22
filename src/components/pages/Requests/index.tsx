@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import styles from '../../../styles/pages/request.module.css';
 
@@ -13,11 +13,12 @@ import RequestInformation from './components/RequestInformation';
 import { message, Button } from 'antd';
 
 export default function Index() {
-  // const { organizationId } = useSelector(state => state.user.currentUser);
+  const { organizationId } = useSelector(state => state.user.currentUser);
 
   const [loading, setLoading] = useState(false);
   const [request, setRequest] = useState({});
   const [documents, setDocuments] = useState([]);
+  const [budget, setBudget] = useState([]);
 
   const { id } = useParams();
 
@@ -46,8 +47,19 @@ export default function Index() {
     }
   };
 
+  const fetchBudget = async () => {
+    try {
+      let org = await axiosWithAuth().get(`/orgs/${organizationId}`);
+
+      setBudget(org.data.budget);
+    } catch (error) {
+      message.error('error fetching budget');
+    }
+  };
+
   useEffect(() => {
     fetchRequest();
+    fetchBudget();
     // eslint-disable-next-line
   }, []);
 
@@ -61,6 +73,9 @@ export default function Index() {
         request={request}
         setRequest={setRequest}
         documents={documents}
+        budget={budget}
+        organizationId={organizationId}
+        setBudget={setBudget}
         returnToDash={returnToDash}
       />
       <DocumentUploader setDocuments={setDocuments} request={request} />

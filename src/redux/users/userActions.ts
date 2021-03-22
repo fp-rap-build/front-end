@@ -101,6 +101,7 @@ export const registerAndApply = (requestValues, history) => async dispatch => {
     monthlyIncome: Number(requestValues.monthlyIncome),
     unEmp90: requestValues.unEmp90,
     foodWrkr: requestValues.foodWrkr,
+    totalChildren: requestValues.totalChildren,
     address: {
       address: requestValues.address,
       cityName: requestValues.cityName,
