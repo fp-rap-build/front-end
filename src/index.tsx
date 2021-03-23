@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import ReactGA from 'react-ga';
 
 import 'antd/dist/antd.less';
 
@@ -25,6 +26,9 @@ import { Provider } from 'react-redux';
 import PrivateRoute from './utils/auth/PrivateRoute';
 
 import Layout from './components/Layout';
+
+const TRACKING_ID = 'G-ZDW3ENHWE7'; // YOUR_OWN_TRACKING_ID
+ReactGA.initialize(TRACKING_ID);
 
 ReactDOM.render(
   <Router>
