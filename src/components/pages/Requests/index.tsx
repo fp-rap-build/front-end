@@ -16,7 +16,11 @@ export default function Index() {
   const { organizationId } = useSelector(state => state.user.currentUser);
 
   const [loading, setLoading] = useState(false);
-  const [request, setRequest] = useState({});
+  const [request, setRequest] = useState({
+    id: undefined,
+    requestStatus: '',
+  });
+
   const [documents, setDocuments] = useState([]);
   const [budget, setBudget] = useState([]);
 
@@ -51,11 +55,28 @@ export default function Index() {
     }
   };
 
+  const changeStatusToInReview = async () => {
+    if (request.requestStatus === 'received') {
+      setRequest({ ...request, requestStatus: 'inReview' });
+      try {
+        await axiosWithAuth().put(`/requests/${request.id}`, {
+          requestStatus: 'inReview',
+        });
+      } catch (error) {
+        message.error('Unable to update request status');
+      }
+    }
+  };
+
   useEffect(() => {
     fetchRequest();
     fetchBudget();
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    changeStatusToInReview();
+  }, [request]);
 
   if (loading) {
     return <LoadingComponent />;
