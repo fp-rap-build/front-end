@@ -15,6 +15,7 @@ const dsBaseUrl = process.env.REACT_APP_DS_API_URI;
 const ProgramSelection = ({ formValues }) => {
   let {
     zipCode,
+    cityName,
     familySize,
     children,
     monthlyIncome,
@@ -31,11 +32,6 @@ const ProgramSelection = ({ formValues }) => {
   const [availablePrograms, setAvailablePrograms] = useState({});
 
   // Only eligible for family promise if no other options are available
-  const eligibleForFP =
-    !availablePrograms.SNAP_ERA &&
-    !availablePrograms.SNAP_ERAP &&
-    !availablePrograms.CC &&
-    availablePrograms.FP;
 
   const checkPrograms = async () => {
     // convert bools to '0' or '1'
@@ -63,7 +59,7 @@ const ProgramSelection = ({ formValues }) => {
       foodWrkr = 0;
     }
 
-    const queryString = `?zipcode=${zipCode}&family_size=${familySize}&children=${children}&income=${monthlyIncome}&rent=${rent}&owed=${owed}&requested=${requested}&unEmp90=${unEmp90}&foodWrkr=${foodWrkr}&minorGuest=${minorGuest}&covidFH=${covidFH}`;
+    const queryString = `?zipcode=${zipCode}&cityName=${cityName}&family_size=${familySize}&children=${children}&income=${monthlyIncome}&rent=${rent}&owed=${owed}&requested=${requested}&unEmp90=${unEmp90}&foodWrkr=${foodWrkr}&minorGuest=${minorGuest}&covidFH=${covidFH}`;
     const callURL = dsBaseUrl + queryString;
     setLoadStatus(true);
     try {
