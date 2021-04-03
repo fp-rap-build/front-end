@@ -233,7 +233,7 @@ const renderContent = props => {
         />
       );
     case 'comments':
-      return <Comments request={props.request} />;
+      return <Comments request={props.request} category="external" />;
     default:
       return <Basic request={props.request} />;
   }
