@@ -24,7 +24,10 @@ const Comments = ({ request, category }) => {
   }, []);
   const fetchComments = async id => {
     try {
-      const res = await axiosWithAuth().get(`/comments/find/request/${id}`);
+      const res = await axiosWithAuth().post(
+        `/comments/find/request/${id}/category`,
+        { category: category }
+      );
       setComments(res.data);
     } catch (error) {
       console.log(error);
