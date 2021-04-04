@@ -1,31 +1,21 @@
+import 'antd/dist/antd.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ReactGA from 'react-ga';
-
-import 'antd/dist/antd.less';
-
-import './styles/global.css';
-
-import { NotFoundPage } from './components/pages/NotFound';
-
-import LoginPage from './components/pages/Login';
-import { HomePage } from './components/pages/Home';
-
-import Admin from './components/pages/Admin';
-
-import LandingPage from './components/pages/Landing';
-
-import Apply from './components/pages/Apply';
-
-import Requests from './components/pages/Requests';
-
-import store from './redux/store';
 import { Provider } from 'react-redux';
-
-import PrivateRoute from './utils/auth/PrivateRoute';
-
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Layout from './components/Layout';
+import Admin from './components/pages/Admin';
+import Apply from './components/pages/Apply';
+import { HomePage } from './components/pages/Home';
+import LandingPage from './components/pages/Landing';
+import LoginPage from './components/pages/Login';
+import { NotFoundPage } from './components/pages/NotFound';
+import ProgramManager from './components/pages/ProgramManager';
+import Requests from './components/pages/Requests';
+import store from './redux/store';
+import './styles/global.css';
+import PrivateRoute from './utils/auth/PrivateRoute';
 
 const TRACKING_ID = 'G-ZDW3ENHWE7'; // YOUR_OWN_TRACKING_ID
 ReactGA.initialize(TRACKING_ID);
@@ -55,6 +45,11 @@ function RAP() {
         <PrivateRoute exact path="/" component={HomePage} />
         <PrivateRoute path="/requests/:id" component={Requests} />
         <PrivateRoute path="/admin" roles={['admin']} component={Admin} />
+        <PrivateRoute
+          path="/program_manager"
+          roles={['programManager']}
+          component={ProgramManager}
+        />
         <Route component={NotFoundPage} />
       </Switch>
     </Layout>
