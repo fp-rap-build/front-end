@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
-import { checkCommentLength, getFormattedDate } from './utils/utils';
+import { checkCommentLength, getFormattedDate } from './utils';
 
-import RenderComment from './RenderComment';
-import CreateComment from './CreateComment';
-import NoComment from './NoComment';
+import RenderComment from './components/RenderComment';
+import CreateComment from './components/CreateComment';
+import NoComment from './components/NoComment';
 
 import { Button } from 'antd';
 
