@@ -11,6 +11,7 @@ import {
   Footer,
   TopActions,
   Comments,
+  CommentsContainer,
 } from './components';
 
 import { Card, Input, message, Modal } from 'antd';
@@ -233,7 +234,7 @@ const renderContent = props => {
         />
       );
     case 'comments':
-      return <Comments request={props.request} category="external" />;
+      return <CommentsContainer request={props.request} />;
     default:
       return <Basic request={props.request} />;
   }
