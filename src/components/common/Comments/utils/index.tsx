@@ -30,4 +30,16 @@ const checkCommentLength = comm => {
   return false;
 };
 
-export { checkCommentLength, getFormattedDate, formatDate };
+const fetchComments = async (id, category, setState) => {
+  try {
+    const res = await axiosWithAuth().post(
+      `/comments/find/request/${id}/category`,
+      { category: category }
+    );
+    setState(res.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { checkCommentLength, getFormattedDate, formatDate, fetchComments };

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
-import { checkCommentLength, getFormattedDate } from './utils';
+import { checkCommentLength, getFormattedDate, fetchComments } from './utils';
 
 import RenderComment from './components/RenderComment';
 import CreateComment from './components/CreateComment';
@@ -16,23 +16,11 @@ const Comments = ({ request, category }) => {
   const [newComment, setNewComment] = useState({ text: '' });
 
   const currentUser = useSelector(state => state.user.currentUser);
-  console.log(currentUser.id);
 
   useEffect(() => {
-    fetchComments(requestId);
+    fetchComments(requestId, category, setComments);
     //eslint-disable-next-line
   }, []);
-  const fetchComments = async id => {
-    try {
-      const res = await axiosWithAuth().post(
-        `/comments/find/request/${id}/category`,
-        { category: category }
-      );
-      setComments(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const addComment = async e => {
     e.stopPropagation();
@@ -46,7 +34,7 @@ const Comments = ({ request, category }) => {
 
     try {
       await axiosWithAuth().post('/comments', commentToPOST);
-      fetchComments(requestId);
+      fetchComments(requestId, category, setComments);
       setNewComment({ text: '' });
     } catch (error) {
       console.error(error);
