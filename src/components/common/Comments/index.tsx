@@ -2,50 +2,25 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
+import { checkCommentLength, getFormattedDate, fetchComments } from './utils';
 
-import RenderComment from './RenderComment';
-import CreateComment from './CreateComment';
-import NoComment from './NoComment';
+import RenderComment from './components/RenderComment';
+import CreateComment from './components/CreateComment';
+import NoComment from './components/NoComment';
 
 import { Button } from 'antd';
 
-const Comments = ({ request }) => {
+const Comments = ({ request, category }) => {
   const requestId = request.id;
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState({ text: '' });
 
   const currentUser = useSelector(state => state.user.currentUser);
-  console.log(currentUser.id);
-
-  const fetchComments = async id => {
-    try {
-      const res = await axiosWithAuth().get(`/comments/find/request/${id}`);
-      setComments(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   useEffect(() => {
-    fetchComments(requestId);
+    fetchComments(requestId, category, setComments);
     //eslint-disable-next-line
   }, []);
-
-  const checkCommentLength = comm => {
-    if (comm.text.length < 10) {
-      return true;
-    }
-    return false;
-  };
-
-  const getFormattedDate = () => {
-    const now = new Date();
-    const currentDate =
-      now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
-    const currentTime =
-      now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
-    return currentDate + ' ' + currentTime;
-  };
 
   const addComment = async e => {
     e.stopPropagation();
@@ -54,11 +29,12 @@ const Comments = ({ request }) => {
       authorId: currentUser.id,
       comment: newComment.text,
       createdAt: getFormattedDate(),
+      category: category,
     };
 
     try {
       await axiosWithAuth().post('/comments', commentToPOST);
-      fetchComments(requestId);
+      fetchComments(requestId, category, setComments);
       setNewComment({ text: '' });
     } catch (error) {
       console.error(error);

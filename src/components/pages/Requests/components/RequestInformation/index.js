@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import { useSelector } from 'react-redux';
-
-import { handleApproval, handleDenial, isChecklistCompleted } from './utils';
+import { isChecklistCompleted } from './utils';
 
 import {
   Basic,
@@ -10,7 +8,7 @@ import {
   Documents,
   Footer,
   TopActions,
-  Comments,
+  CommentsContainer,
 } from './components';
 
 import { Card, Input, message, Modal } from 'antd';
@@ -42,6 +40,7 @@ export default function Index({
   setBudget,
 }) {
   const [loading, setLoading] = useState(false);
+  //eslint-disable-next-line
   const [originalBudget, setOriginalBudget] = useState(budget);
   const [tab, setTab] = useState('basic');
   const [checklistValues, setChecklistValues] = useState({
@@ -86,7 +85,7 @@ export default function Index({
       // update the budget
       const newBudget = originalBudget - amountToGive;
 
-      let res = await axiosWithAuth().put(`/orgs/${organizationId}`, {
+      await axiosWithAuth().put(`/orgs/${organizationId}`, {
         budget: newBudget,
       });
 
@@ -106,8 +105,6 @@ export default function Index({
   const pleaseFinishChecklistModal = () => {
     Modal.error({ title: 'Please finish everything on your checklist' });
   };
-
-  const approvedModal = () => {};
 
   const deniedModal = (onOk, message) => {
     Modal.confirm({
@@ -233,7 +230,7 @@ const renderContent = props => {
         />
       );
     case 'comments':
-      return <Comments request={props.request} />;
+      return <CommentsContainer request={props.request} />;
     default:
       return <Basic request={props.request} />;
   }
