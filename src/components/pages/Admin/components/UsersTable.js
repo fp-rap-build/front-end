@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import MaterialTable from 'material-table';
+import MaterialTable from '@material-table/core';
 
 import { tableIcons } from '../../../../utils/tableIcons';
 import { axiosWithAuth } from '../../../../api/axiosWithAuth';
