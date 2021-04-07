@@ -9,6 +9,7 @@ import Analytics from './Analytics';
 import styles from '../../../../styles/pages/admin.module.css';
 
 import { Typography, Layout } from 'antd';
+import Organizations from './Organizations';
 const { Title } = Typography;
 const { Content, Header, Footer } = Layout;
 
@@ -40,6 +41,7 @@ const Dash = () => {
         {activeComponent.current === 'user' && <UsersTable />}
         {activeComponent.current === 'prgMgr' && <ProgramMgrForm />}
         {activeComponent.current === 'analytics' && <Analytics />}
+        {activeComponent.current === 'organizations' && <Organizations />}
       </Content>
       <Footer className={styles.footer} />
     </Layout>

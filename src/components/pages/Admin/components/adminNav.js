@@ -15,6 +15,9 @@ const AdminNav = props => {
 
   const menu = (
     <Menu onClick={handleClick} selectedKeys={activeComponent.current}>
+      <Menu.Item key="organizations" icon={<LineChartOutlined />}>
+        Manage Organizations
+      </Menu.Item>
       <Menu.Item key="requests" icon={<FolderOpenOutlined />}>
         Manage Requests
       </Menu.Item>
