@@ -25,7 +25,7 @@ const AdminNav = props => {
         Manage Users
       </Menu.Item>
       <Menu.Item key="prgMgr" icon={<UserAddOutlined />}>
-        Create Program Manager
+        Create new user
       </Menu.Item>
       <Menu.Item key="analytics" icon={<LineChartOutlined />}>
         Analytics

@@ -5,15 +5,15 @@ import styles from '../../../../styles/pages/create.module.css';
 import createProgramMgr from '../utils/createProgramMgr';
 import { axiosWithAuth } from '../../../../api/axiosWithAuth';
 
+const { Option } = Select;
+
 const INITIAL_VALUES = {
   id: '',
   firstName: '',
   lastName: '',
   email: '',
-  role: 'programManager',
+  role: '',
   organizationId: null,
-  // organization: 'Family Promise of Spokane',
-  // role: 'account manager',
 };
 
 const ProgramMgrForm = () => {
@@ -43,8 +43,14 @@ const ProgramMgrForm = () => {
     setFormValues({ ...formValues, organizationId: value });
   };
 
+  const onRoleChange = role => {
+    setFormValues({ ...formValues, role });
+  };
+
   const handleSumbit = async e => {
     setLoading(true);
+
+    console.log(formValues);
     try {
       await createProgramMgr(formValues);
       setFormValues(INITIAL_VALUES);
@@ -58,7 +64,7 @@ const ProgramMgrForm = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Create a Program Manager:</h2>
+      <h2>Create a User:</h2>
       <Form onFinish={handleSumbit} className={styles.form} layout="vertical">
         <Form.Item
           initialValue={formValues.firstName}
@@ -135,6 +141,24 @@ const ProgramMgrForm = () => {
             value={formValues.password}
             onChange={onChange}
           />
+        </Form.Item>
+
+        <Form.Item
+          hasFeedback
+          label="Role"
+          name="role"
+          rules={[{ required: true, message: 'role is required' }]}
+        >
+          <Select
+            onChange={onRoleChange}
+            name="role"
+            showSearch
+            placeholder="Select a role"
+          >
+            <Option value={'programManager'}>Program Manager</Option>
+            <Option value={'orgAdmin'}>Organization Admin</Option>
+            <Option value={'admin'}>Admin</Option>
+          </Select>
         </Form.Item>
 
         <Form.Item
