@@ -77,7 +77,7 @@ const INITIAL_VALUES_PROD = {
   foodWrkr: false,
 };
 
-const finalStep = 3;
+const finalStep = 5;
 
 export default function Index() {
   const loading = useSelector(state => state.global.isLoading);
