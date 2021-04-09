@@ -1,6 +1,6 @@
-import React from 'react';
+import { Form, Input, Card, Typography, Divider } from 'antd';
 
-import { Form, Input } from 'antd';
+const { Title, Text } = Typography;
 
 export default function SecondaryContact({ formValues, setFormValues }) {
   return (
@@ -16,13 +16,12 @@ export default function SecondaryContact({ formValues, setFormValues }) {
 
 const TenantInfoForm = ({ formValues }) => {
   return (
-    <div>
-      <h2>Tenant info (optional)</h2>
-      <h4>
+    <Card title={<Title level={4}>Tenant info (optional)</Title>}>
+      <Text type="secondary">
         This will help us contact your tenant once you've been approved for
         Rental Assistance
-      </h4>
-
+      </Text>
+      <Divider dashed />
       <Form.Item
         initialValue={formValues.tenantName}
         label="Name"
@@ -50,19 +49,17 @@ const TenantInfoForm = ({ formValues }) => {
       >
         <Input placeholder="(111)-111-1111" name="tenantPhoneNumber" />
       </Form.Item>
-    </div>
+    </Card>
   );
 };
 
 const LandlordInfoForm = ({ formValues }) => {
   return (
-    <div>
-      <h2>Landlord info (optional)</h2>
-      <h4>
+    <Card title={<Title level={4}>Landlord info (optional)</Title>}>
+      <Text type="secondary">
         This will help us contact your landlord once you've been approved for
         Rental Assistance
-      </h4>
-
+      </Text>
       <Form.Item
         initialValue={formValues.landlordName}
         label="Name"
@@ -94,6 +91,6 @@ const LandlordInfoForm = ({ formValues }) => {
       >
         <Input placeholder="(111)-111-1111" name="landlordPhoneNumber" />
       </Form.Item>
-    </div>
+    </Card>
   );
 };
