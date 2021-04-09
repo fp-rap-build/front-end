@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 import { Form } from 'antd';
 
-import BasicInformation from './forms/BasicInformation';
+import Elegibility from './forms/Eligibility/index';
 
 import SecondaryContact from './forms/SecondaryContact';
 
@@ -17,6 +17,7 @@ import ProgramSelection from './forms/ProgramSelection';
 import Button from 'antd/lib/button';
 
 import styles from '../../../styles/pages/apply.module.css';
+
 import { registerAndApply } from '../../../redux/users/userActions';
 
 import { clearErrorMessage } from '../../../redux/users/userActions';
@@ -174,10 +175,7 @@ const RenderForm = ({ step, formValues, setFormValues }) => {
 
   switch (step) {
     case 0:
-      return <BasicInformation {...props} />;
-
-    // until ds api is working
-
+      return <Elegibility {...props} />;
     case 1:
       return <ProgramSelection {...props} />;
     case 2:
