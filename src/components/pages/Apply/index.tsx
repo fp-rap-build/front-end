@@ -6,7 +6,11 @@ import { useHistory } from 'react-router-dom';
 
 import { Form } from 'antd';
 
-import Elegibility from './forms/Eligibility/index';
+import BasicInformation from './forms/Eligibility/BasicInformation';
+
+import HouseholdInformation from './forms/Eligibility/HouseholdInformation';
+
+import AdditionalInformation from './forms/Eligibility/AdditionalInformation';
 
 import SecondaryContact from './forms/SecondaryContact';
 
@@ -121,6 +125,22 @@ export default function Index() {
     dispatch(registerAndApply(formValues, history));
   };
 
+  function onChange(value) {
+    setFormValues({ ...formValues, state: value });
+  }
+
+  const onRoleChange = value => {
+    setFormValues({ ...formValues, role: value });
+  };
+
+  const handleCheckBoxChange = e => {
+    e.stopPropagation();
+
+    const { name, checked } = e.target;
+
+    setFormValues({ ...formValues, [name]: checked });
+  };
+
   let props = {
     formValues,
     step,
@@ -128,6 +148,9 @@ export default function Index() {
     goBackwards,
     goForward,
     loading,
+    onChange,
+    onRoleChange,
+    handleCheckBoxChange,
   };
 
   return (
@@ -159,7 +182,7 @@ const FormNavigation = ({ step, goBackwards, loading }) => {
         </Button>
       ) : (
         <Button
-          style={step == 1 ? { display: 'none' } : {}}
+          style={step === 3 ? { display: 'none' } : {}}
           type="primary"
           htmlType="submit"
         >
@@ -170,17 +193,19 @@ const FormNavigation = ({ step, goBackwards, loading }) => {
   );
 };
 
-const RenderForm = ({ step, formValues, setFormValues }) => {
-  const props = { formValues, setFormValues };
-
-  switch (step) {
+const RenderForm = props => {
+  switch (props.step) {
     case 0:
-      return <Elegibility {...props} />;
+      return <BasicInformation {...props} />;
     case 1:
-      return <ProgramSelection {...props} />;
+      return <HouseholdInformation {...props} />;
     case 2:
-      return <SecondaryContact {...props} />;
+      return <AdditionalInformation {...props} />;
     case 3:
+      return <ProgramSelection {...props} />;
+    case 4:
+      return <SecondaryContact {...props} />;
+    case 5:
       return <CreateAccount {...props} />;
   }
 };

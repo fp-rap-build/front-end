@@ -1,5 +1,5 @@
 //UI
-import { Card, Typography, Form, Checkbox } from 'antd';
+import { Card, Typography, Form, Checkbox, Divider } from 'antd';
 const { Title, Text } = Typography;
 
 export default function AdditionalInformation({
@@ -26,7 +26,8 @@ export default function AdditionalInformation({
     <div>
       <Card title={<Title level={4}>Additional Information</Title>}>
         <Text type="secondary">{setIntroMessage(role)}</Text>
-        <Form.Item style={{ marginTop: '10px' }}>
+        <Divider dashed />
+        <Form.Item>
           <Checkbox
             checked={formValues.minorGuest}
             name="minorGuest"

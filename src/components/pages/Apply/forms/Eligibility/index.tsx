@@ -1,10 +1,10 @@
+import { useState } from 'react';
 //Components
 import BasicInformation from './BasicInformation';
 import HouseholdInformation from './HouseholdInformation';
-import AdditonalInformation from './AdditionalInformation';
-//UI
-import { Divider } from 'antd';
 import AdditionalInformation from './AdditionalInformation';
+//UI
+import { Divider, Button } from 'antd';
 
 export default function Eligibility({ formValues, setFormValues }) {
   const { role } = formValues;
@@ -25,13 +25,13 @@ export default function Eligibility({ formValues, setFormValues }) {
     setFormValues({ ...formValues, [name]: checked });
   };
 
-  //This prop drilling is turning into a pain in the ass
+  //This prop drilling is turning into a pain
   const props = {
     formValues,
     setFormValues,
+    role,
     onRoleChange,
     onChange,
-    role,
     handleCheckBoxChange,
   };
 
@@ -42,8 +42,6 @@ export default function Eligibility({ formValues, setFormValues }) {
       <HouseholdInformation {...props} />
       <Divider />
       <AdditionalInformation {...props} />
-
-      <hr></hr>
     </div>
   );
 }

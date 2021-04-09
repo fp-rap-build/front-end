@@ -1,5 +1,5 @@
 //UI
-import { Card, Typography, Form, Input } from 'antd';
+import { Card, Typography, Form, Input, Divider } from 'antd';
 const { Title, Text } = Typography;
 
 export default function HouseHoldInformation({
@@ -27,6 +27,7 @@ export default function HouseHoldInformation({
     <div>
       <Card title={<Title level={4}>Household Information</Title>}>
         <Text type="secondary">{setIntroMessage(role)}</Text>
+        <Divider dashed />
         <Form.Item
           name="familySize"
           initialValue={formValues.familySize}
