@@ -13,6 +13,11 @@
   gap: 1rem;
 }
 
+.formNavigation {
+  display: flex;
+  justify-content: space-between;
+}
+
 @media (max-width: 900px) {
   .container {
     width: 80%;
