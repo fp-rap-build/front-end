@@ -50,7 +50,6 @@ const ProgramMgrForm = () => {
   const handleSumbit = async e => {
     setLoading(true);
 
-    console.log(formValues);
     try {
       await createProgramMgr(formValues);
       setFormValues(INITIAL_VALUES);

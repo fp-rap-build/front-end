@@ -44,7 +44,11 @@ function RAP() {
         {/* Any routes you need secured by role should be registered as PrivateRoutes */}
         <PrivateRoute exact path="/" component={HomePage} />
         <PrivateRoute path="/requests/:id" component={Requests} />
-        <PrivateRoute path="/admin" roles={['admin']} component={Admin} />
+        <PrivateRoute
+          path="/admin"
+          roles={['admin', 'orgAdmin']}
+          component={Admin}
+        />
         <PrivateRoute
           path="/program_manager"
           roles={['programManager']}
