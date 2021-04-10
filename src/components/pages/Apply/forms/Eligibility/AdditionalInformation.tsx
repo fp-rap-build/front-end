@@ -1,3 +1,5 @@
+//Components
+import CardTitle from '../../CardTitle';
 //UI
 import { Card, Typography, Form, Checkbox, Divider } from 'antd';
 const { Title, Text } = Typography;
@@ -24,7 +26,9 @@ export default function AdditionalInformation({
 
   return (
     <div>
-      <Card title={<Title level={4}>Additional Information</Title>}>
+      <Card
+        title={<CardTitle percentage={75} title="Additional Information" />}
+      >
         <Text type="secondary">{setIntroMessage(role)}</Text>
         <Divider dashed />
         <Form.Item>

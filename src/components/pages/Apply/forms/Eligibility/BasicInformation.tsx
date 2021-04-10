@@ -1,9 +1,10 @@
+//Components
+import CardTitle from '../../CardTitle';
 //Utils
 import { states } from '../../../../../utils/data/states';
 //UI
-import { Card, Form, Select, Input, InputNumber, Typography } from 'antd';
+import { Card, Form, Select, Input, InputNumber } from 'antd';
 const { Option } = Select;
-const { Title } = Typography;
 
 const BasicInformation = ({
   formValues,
@@ -13,7 +14,7 @@ const BasicInformation = ({
 }) => {
   return (
     <div>
-      <Card title={<Title level={4}>Basic Information</Title>}>
+      <Card title={<CardTitle percentage={25} title="Basic Information" />}>
         <Form.Item
           hasFeedback
           initialValue={formValues.role}

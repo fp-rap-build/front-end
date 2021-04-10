@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
+import CardTitle from '../CardTitle';
+
 import { Divider, Typography, Button, Row, Col, Spin, Card } from 'antd';
 
 // urls
@@ -81,7 +83,11 @@ const ProgramSelection = ({ formValues }) => {
 
   return (
     <Spin spinning={loadStatus} tip="Checking your eligibility...">
-      <Card title={<Title level={4}>Programs You May Qualify For:</Title>}>
+      <Card
+        title={
+          <CardTitle percentage={100} title="Programs You May Qualify For:" />
+        }
+      >
         <Row align="middle">
           <Col span={15}>
             <Paragraph strong={availablePrograms.SNAP_ERA}>
