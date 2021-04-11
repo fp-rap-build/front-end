@@ -19,19 +19,19 @@ export default function Index() {
     <div>
       <header className={styles.header}>
         <div className={styles.contentContainer}>
-          <h1>Are you in need of Rental Assistance?</h1>
+          <h1>Are you in need of Housing Assistance?</h1>
           <p>
-            Family Promise of Spokane can help provide relief to residents who
-            have missed payments or are struggling to pay their current rent due
-            to the pandemic. Landlords are also encouraged to request assistance
-            with past due rent owed to them
+            Many in our community owe back rent or are struggling to pay their
+            current housing expenses. The Housing Assistance Portal connects
+            landlords and tenants to community housing assistance resources for
+            which they qualify
           </p>
           <Button onClick={redirectToRentalAssistanceForm}>
-            Check your Eligibility
+            Check Eligibility and Apply
           </Button>
           <h5>
             Already have an account?{' '}
-            <Link style={{ color: 'lightblue' }} to="/login">
+            <Link style={{ color: '#4faaff' }} to="/login">
               Login to view your status
             </Link>
           </h5>
