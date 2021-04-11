@@ -6,12 +6,7 @@ import { states } from '../../../../../utils/data/states';
 import { Card, Form, Select, Input, InputNumber } from 'antd';
 const { Option } = Select;
 
-const BasicInformation = ({
-  formValues,
-  setFormValues,
-  onRoleChange,
-  onChange,
-}) => {
+const BasicInformation = ({ formValues, onRoleChange, onStateChange }) => {
   return (
     <div>
       <Card title={<CardTitle percentage={25} title="Basic Information" />}>
@@ -43,7 +38,7 @@ const BasicInformation = ({
           rules={[{ required: true, message: 'State is required' }]}
         >
           <Select
-            onChange={onChange}
+            onChange={onStateChange}
             showSearch
             placeholder="Select a state"
             optionFilterProp="children"
@@ -86,6 +81,14 @@ const BasicInformation = ({
           ]}
         >
           <Input name="address" />
+        </Form.Item>
+        <Form.Item
+          hasFeedback
+          initialValue={formValues.addressLine2}
+          label="Address Line Two"
+          name="addressLine2"
+        >
+          <Input name="addressLine2" />
         </Form.Item>
         <Form.Item
           hasFeedback

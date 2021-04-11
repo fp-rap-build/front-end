@@ -37,6 +37,7 @@ const INITIAL_VALUES_DEV = {
   password: 'testpassword',
   confirmPassword: 'testpassword',
   address: '1211 test St',
+  addressLine2: 'Unit 100',
   cityName: 'test',
   zipCode: 99205,
   state: 'Washington',
@@ -63,6 +64,7 @@ const INITIAL_VALUES_PROD = {
   password: '',
   confirmPassword: '',
   address: '',
+  addressLine2: '',
   cityName: '',
   zipCode: '',
   state: '',
@@ -107,6 +109,22 @@ export default function Index() {
     });
   };
 
+  function onStateChange(value) {
+    setFormValues({ ...formValues, state: value });
+  }
+
+  const onRoleChange = value => {
+    setFormValues({ ...formValues, role: value });
+  };
+
+  const handleCheckBoxChange = e => {
+    e.stopPropagation();
+
+    const { name, checked } = e.target;
+
+    setFormValues({ ...formValues, [name]: checked });
+  };
+
   const handleSubmit = () => {
     // Break out of the submit if there are errors
     if (errorMessage) return;
@@ -125,22 +143,6 @@ export default function Index() {
     dispatch(registerAndApply(formValues, history));
   };
 
-  function onChange(value) {
-    setFormValues({ ...formValues, state: value });
-  }
-
-  const onRoleChange = value => {
-    setFormValues({ ...formValues, role: value });
-  };
-
-  const handleCheckBoxChange = e => {
-    e.stopPropagation();
-
-    const { name, checked } = e.target;
-
-    setFormValues({ ...formValues, [name]: checked });
-  };
-
   let props = {
     formValues,
     step,
@@ -148,7 +150,7 @@ export default function Index() {
     goBackwards,
     goForward,
     loading,
-    onChange,
+    onStateChange,
     onRoleChange,
     handleCheckBoxChange,
   };
@@ -182,7 +184,7 @@ const FormNavigation = ({ step, goBackwards, loading }) => {
         </Button>
       ) : (
         <Button
-          style={step == 3 ? { display: 'none' } : {}}
+          style={step === 3 ? { display: 'none' } : {}}
           type="primary"
           htmlType="submit"
         >

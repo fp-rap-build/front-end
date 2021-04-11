@@ -30,6 +30,8 @@ const ProgramSelection = ({ formValues }) => {
     covidFH,
   } = formValues;
 
+  console.log(formValues);
+
   const [loadStatus, setLoadStatus] = useState(false);
   const [availablePrograms, setAvailablePrograms] = useState({});
 

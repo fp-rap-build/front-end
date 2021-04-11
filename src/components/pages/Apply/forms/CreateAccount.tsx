@@ -12,8 +12,8 @@ export default function CreateAccount({ formValues, setFormValues }) {
     <div>
       <Card title={<Title level={4}>Sign Up - Family Promise Account</Title>}>
         <Text type="secondary">
-          We will send you an Email once your request has been reviewed or you
-          can login to check your status
+          We will send you an email once your request has been reviewed! You can
+          also login to check your status.
         </Text>
         <Divider dashed />
         <Form.Item

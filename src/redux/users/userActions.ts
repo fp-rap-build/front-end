@@ -105,6 +105,7 @@ export const registerAndApply = (requestValues, history) => async dispatch => {
     amountRequested: requestValues.amountRequested,
     address: {
       address: requestValues.address,
+      addressLine2: requestValues.addressLine2,
       cityName: requestValues.cityName,
       zipCode: requestValues.zipCode,
       state: requestValues.state,
