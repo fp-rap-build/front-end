@@ -30,9 +30,14 @@ const ProgramSelection = ({ formValues }) => {
 
   const [loadStatus, setLoadStatus] = useState(false);
   const [availablePrograms, setAvailablePrograms] = useState({});
+  const [programs, setPrograms] = useState([]);
+
+  const fetchPrograms = async () => {
+    try {
+    } catch (error) {}
+  };
 
   // Only eligible for family promise if no other options are available
-
   const checkPrograms = async () => {
     // convert bools to '0' or '1'
     if (unEmp90) {
@@ -83,6 +88,7 @@ const ProgramSelection = ({ formValues }) => {
     <Spin spinning={loadStatus} tip="Checking your eligibility...">
       <h2>Programs You May Qualify For:</h2>
       <div style={{ height: '1rem' }}></div>
+
       <Row align="middle">
         <Col span={15}>
           <Paragraph strong={availablePrograms.SNAP_ERA}>
