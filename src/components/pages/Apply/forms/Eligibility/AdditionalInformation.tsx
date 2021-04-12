@@ -1,14 +1,24 @@
+import { useEffect } from 'react';
 //Components
 import CardTitle from '../../CardTitle';
 //UI
 import { Card, Typography, Form, Checkbox, Divider } from 'antd';
+
 const { Text } = Typography;
 
 export default function AdditionalInformation({
   role,
   formValues,
   handleCheckBoxChange,
+  formConsent,
+  setFormConsent,
 }) {
+  //Bug fix for moving backwards through form and consent not being required again
+  useEffect(() => {
+    setFormConsent(false);
+    //eslint-disable-next-line
+  }, []);
+
   const introMessage = {
     tenant:
       'Please place a checkmark next to all of the statements below that are true for you and/or somebody in your household:',
@@ -71,6 +81,12 @@ export default function AdditionalInformation({
             Have been impacted by Covid.
           </Checkbox>
         </Form.Item>
+        <Divider orientation="left">
+          <Text strong>Release Consent</Text>
+        </Divider>
+        <Checkbox name="consent" onChange={() => setFormConsent(!formConsent)}>
+          No Warranty/ Release of information consent placeholder{' '}
+        </Checkbox>
       </Card>
     </div>
   );

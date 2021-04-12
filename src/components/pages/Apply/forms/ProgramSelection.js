@@ -30,8 +30,6 @@ const ProgramSelection = ({ formValues }) => {
     covidFH,
   } = formValues;
 
-  console.log(formValues);
-
   const [loadStatus, setLoadStatus] = useState(false);
   const [availablePrograms, setAvailablePrograms] = useState({});
 
@@ -39,6 +37,7 @@ const ProgramSelection = ({ formValues }) => {
 
   const checkPrograms = async () => {
     // convert bools to '0' or '1'
+
     if (unEmp90) {
       unEmp90 = 1;
     } else {

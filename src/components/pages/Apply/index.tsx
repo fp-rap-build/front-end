@@ -115,11 +115,14 @@ export default function Index() {
   const history = useHistory();
   const [step, setStep] = useState(0);
 
-  const goForward = () => setStep(step + 1);
+  const goForward = () => {
+    setStep(step + 1);
+  };
 
   const goBackwards = () => setStep(step - 1);
 
   const [formValues, setFormValues] = useState(INITIAL_VALUES_DEV);
+  const [formConsent, setFormConsent] = useState(false);
 
   const handleChange = e => {
     // Clean up any error message after the user types
@@ -177,6 +180,8 @@ export default function Index() {
     onStateChange,
     onRoleChange,
     handleCheckBoxChange,
+    formConsent,
+    setFormConsent,
   };
 
   return (
@@ -194,7 +199,15 @@ export default function Index() {
   );
 }
 
-const FormNavigation = ({ step, goBackwards, loading }) => {
+const manageFormButton = (step, formConsent) => {
+  if (step === 3 && formConsent === false) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const FormNavigation = ({ step, goBackwards, loading, formConsent }) => {
   return (
     <div className={styles.formNavigation}>
       {step > 0 && <Button onClick={() => goBackwards()}>Previous</Button>}
@@ -211,6 +224,7 @@ const FormNavigation = ({ step, goBackwards, loading }) => {
           style={step === 4 ? { display: 'none' } : {}}
           type="primary"
           htmlType="submit"
+          disabled={manageFormButton(step, formConsent)}
         >
           Next
         </Button>
