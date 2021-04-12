@@ -106,9 +106,7 @@ const ProgramSelection = ({ formValues }) => {
               size="medium"
               disabled={!availablePrograms.SNAP_ERA}
             >
-              {availablePrograms.SNAP_ERA
-                ? 'Eligible for SNAP ERA Program!  Apply Now!'
-                : 'Not Available'}
+              {availablePrograms.SNAP_ERA ? 'Apply Now!' : 'Not Available'}
             </Button>
           </Col>
         </Row>
@@ -130,9 +128,7 @@ const ProgramSelection = ({ formValues }) => {
               size="medium"
               disabled={!availablePrograms.SNAP_ERAP}
             >
-              {availablePrograms.SNAP_ERAP
-                ? 'Eligible for SNAP ERAP Program!  Apply Now!'
-                : 'Not Available'}
+              {availablePrograms.SNAP_ERAP ? 'Apply Now!' : 'Not Available'}
             </Button>
           </Col>
         </Row>
