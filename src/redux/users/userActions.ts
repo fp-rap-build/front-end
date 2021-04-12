@@ -103,6 +103,13 @@ export const registerAndApply = (requestValues, history) => async dispatch => {
     foodWrkr: requestValues.foodWrkr,
     totalChildren: requestValues.totalChildren,
     amountRequested: requestValues.amountRequested,
+    hispanic: requestValues.hispanic,
+    asian: requestValues.asian,
+    black: requestValues.black,
+    pacific: requestValues.pacific,
+    white: requestValues.white,
+    native: requestValues.native,
+    demoNotSay: requestValues.demoNotSay,
     address: {
       address: requestValues.address,
       addressLine2: requestValues.addressLine2,
