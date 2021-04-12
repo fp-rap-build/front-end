@@ -11,7 +11,6 @@ const CardTitle = ({ percentage, title }) => {
           '100%': ' #004477',
         }}
         percent={percentage}
-        showInfo={false}
         status="active"
       />
     </>
