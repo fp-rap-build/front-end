@@ -9,7 +9,7 @@ const { Option } = Select;
 const BasicInformation = ({ formValues, onRoleChange, onStateChange }) => {
   return (
     <div>
-      <Card title={<CardTitle percentage={25} title="Basic Information" />}>
+      <Card title={<CardTitle percentage={20} title="Basic Information" />}>
         <Form.Item
           hasFeedback
           initialValue={formValues.role}

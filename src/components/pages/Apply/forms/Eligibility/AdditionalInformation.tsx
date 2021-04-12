@@ -2,7 +2,7 @@
 import CardTitle from '../../CardTitle';
 //UI
 import { Card, Typography, Form, Checkbox, Divider } from 'antd';
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 export default function AdditionalInformation({
   role,
@@ -27,7 +27,7 @@ export default function AdditionalInformation({
   return (
     <div>
       <Card
-        title={<CardTitle percentage={75} title="Additional Information" />}
+        title={<CardTitle percentage={80} title="Additional Information" />}
       >
         <Text type="secondary">{setIntroMessage(role)}</Text>
         <Divider dashed />

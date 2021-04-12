@@ -2,14 +2,9 @@
 import CardTitle from '../../CardTitle';
 //UI
 import { Card, Typography, Form, Input, Divider } from 'antd';
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
-export default function HouseHoldInformation({
-  formValues,
-  onRoleChange,
-  onChange,
-  role,
-}) {
+export default function HouseHoldInformation({ formValues, role }) {
   const introMessage = {
     tenant:
       'Please place a checkmark next to all of the statements below that are true for you and/or somebody in your household:',
@@ -27,7 +22,7 @@ export default function HouseHoldInformation({
 
   return (
     <div>
-      <Card title={<CardTitle percentage={50} title="Household Information" />}>
+      <Card title={<CardTitle percentage={40} title="Household Information" />}>
         <Text type="secondary">{setIntroMessage(role)}</Text>
         <Divider dashed />
         <Form.Item

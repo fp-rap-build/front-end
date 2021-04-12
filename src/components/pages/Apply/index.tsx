@@ -10,6 +10,8 @@ import BasicInformation from './forms/Eligibility/BasicInformation';
 
 import HouseholdInformation from './forms/Eligibility/HouseholdInformation';
 
+import Demographics from './forms/Eligibility/Demographics';
+
 import AdditionalInformation from './forms/Eligibility/AdditionalInformation';
 
 import SecondaryContact from './forms/SecondaryContact';
@@ -55,6 +57,15 @@ const INITIAL_VALUES_DEV = {
   requested: 450,
   rent: 500,
   totalChildren: 2,
+  unEmp90: false,
+  foodWrkr: false,
+  hispanic: false,
+  asian: false,
+  black: false,
+  pacific: false,
+  white: false,
+  native: false,
+  demoNotSay: false,
 };
 
 const INITIAL_VALUES_PROD = {
@@ -73,13 +84,26 @@ const INITIAL_VALUES_PROD = {
   monthlyIncome: 0,
   tenantName: '',
   tenantEmail: '',
+  tenantPhoneNumber: '',
   landlordName: '',
   landlordEmail: '',
+  landlordPhoneNumber: '',
+  owed: null,
+  requested: null,
+  rent: null,
+  totalChildren: null,
   unEmp90: false,
   foodWrkr: false,
+  hispanic: false,
+  asian: false,
+  black: false,
+  pacific: false,
+  white: false,
+  native: false,
+  demoNotSay: false,
 };
 
-const finalStep = 5;
+const finalStep = 6;
 
 export default function Index() {
   const loading = useSelector(state => state.global.isLoading);
@@ -184,7 +208,7 @@ const FormNavigation = ({ step, goBackwards, loading }) => {
         </Button>
       ) : (
         <Button
-          style={step === 3 ? { display: 'none' } : {}}
+          style={step === 4 ? { display: 'none' } : {}}
           type="primary"
           htmlType="submit"
         >
@@ -202,12 +226,14 @@ const RenderForm = props => {
     case 1:
       return <HouseholdInformation {...props} />;
     case 2:
-      return <AdditionalInformation {...props} />;
+      return <Demographics {...props} />;
     case 3:
-      return <ProgramSelection {...props} />;
+      return <AdditionalInformation {...props} />;
     case 4:
-      return <SecondaryContact {...props} />;
+      return <ProgramSelection {...props} />;
     case 5:
+      return <SecondaryContact {...props} />;
+    case 6:
       return <CreateAccount {...props} />;
   }
 };
