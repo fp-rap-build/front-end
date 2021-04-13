@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { useHistory } from 'react-router-dom';
+
 import MaterialTable from '@material-table/core';
 
 import { tableIcons } from '../../../../utils/tableIcons';
@@ -13,9 +15,13 @@ import {
   DownOutlined,
   LineChartOutlined,
 } from '@ant-design/icons';
+
+import AppsIcon from '@material-ui/icons/Apps';
+
 import axios from 'axios';
 
-export default function UsersTable() {
+export default function Organizations() {
+  const history = useHistory();
   const [isFetching, setIsFetching] = useState(false);
   const [state, setState] = useState({
     columns: [
@@ -43,6 +49,9 @@ export default function UsersTable() {
     fetchOrganizations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const redirectToPrograms = orgId =>
+    history.push(`/organizations/${orgId}/programs`);
 
   return (
     <>
@@ -89,6 +98,14 @@ export default function UsersTable() {
             tooltip: 'Analytics',
             onClick: async (event, rowData) => {
               // Update the users request to be in review
+            },
+          },
+          {
+            icon: AppsIcon,
+            tooltip: 'Programs',
+            onClick: async (event, rowData) => {
+              const { id } = rowData;
+              redirectToPrograms(id);
             },
           },
         ]}
