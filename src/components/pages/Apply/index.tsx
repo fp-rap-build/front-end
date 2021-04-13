@@ -54,7 +54,7 @@ const INITIAL_VALUES_DEV = {
   landlordEmail: 'landlord@gmail.com',
   landlordPhoneNumber: '111-222-3333',
   owed: 600,
-  requested: 450,
+  amountRequested: 450,
   rent: 500,
   totalChildren: 2,
   unEmp90: false,

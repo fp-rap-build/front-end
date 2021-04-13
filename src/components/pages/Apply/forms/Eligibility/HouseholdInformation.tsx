@@ -47,7 +47,7 @@ export default function HouseHoldInformation({ formValues, role }) {
         </Form.Item>
 
         <Form.Item
-          name="children"
+          name="totalChildren"
           initialValue={formValues.totalChildren}
           label="Children in Household"
           required

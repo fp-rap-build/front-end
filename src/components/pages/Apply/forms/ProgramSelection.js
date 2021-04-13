@@ -19,14 +19,14 @@ const ProgramSelection = ({ formValues }) => {
     zipCode,
     cityName,
     familySize,
-    children,
+    totalChildren,
     monthlyIncome,
     unEmp90,
     foodWrkr,
     minorGuest,
     rent,
     owed,
-    requested,
+    amountRequested,
     covidFH,
   } = formValues;
 
@@ -38,31 +38,7 @@ const ProgramSelection = ({ formValues }) => {
   const checkPrograms = async () => {
     // convert bools to '0' or '1'
 
-    if (unEmp90) {
-      unEmp90 = 1;
-    } else {
-      unEmp90 = 0;
-    }
-
-    if (covidFH) {
-      covidFH = 1;
-    } else {
-      covidFH = 0;
-    }
-
-    if (minorGuest) {
-      minorGuest = 1;
-    } else {
-      minorGuest = 0;
-    }
-
-    if (foodWrkr) {
-      foodWrkr = 1;
-    } else {
-      foodWrkr = 0;
-    }
-
-    const queryString = `?zipcode=${zipCode}&cityName=${cityName}&family_size=${familySize}&children=${children}&income=${monthlyIncome}&rent=${rent}&owed=${owed}&requested=${requested}&unEmp90=${unEmp90}&foodWrkr=${foodWrkr}&minorGuest=${minorGuest}&covidFH=${covidFH}`;
+    const queryString = `?zipcode=${zipCode}&cityName=${cityName}&family_size=${familySize}&totalChildren=${totalChildren}&income=${monthlyIncome}&rent=${rent}&owed=${owed}&amountRequested=${amountRequested}&unEmp90=${unEmp90}&foodWrkr=${foodWrkr}&minorGuest=${minorGuest}&covidFH=${covidFH}`;
     const callURL = dsBaseUrl + queryString;
     setLoadStatus(true);
     try {
