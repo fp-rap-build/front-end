@@ -8,7 +8,7 @@ import Zendesk from 'react-zendesk';
 
 const setting = {
   color: {
-    theme: '#006ab3',
+    theme: '#004477',
   },
   launcher: {
     chatLabel: {
