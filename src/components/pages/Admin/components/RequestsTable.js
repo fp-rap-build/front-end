@@ -26,6 +26,10 @@ export default function RequestsTable() {
         field: 'email',
       },
       {
+        title: 'role',
+        field: 'role',
+      },
+      {
         title: 'Request Status',
         field: 'requestStatus',
         lookup: {
@@ -38,6 +42,9 @@ export default function RequestsTable() {
       { title: 'date', field: 'requestDate', type: 'date' },
     ],
     data: [],
+    options: {
+      filtering: true,
+    },
   });
 
   const fetchUsers = async () => {
@@ -64,6 +71,7 @@ export default function RequestsTable() {
         style={{ width: '100%' }}
         isLoading={isFetching}
         options={{
+          filtering: true,
           // Allows users to export the data as a CSV file
           exportButton: true,
         }}
