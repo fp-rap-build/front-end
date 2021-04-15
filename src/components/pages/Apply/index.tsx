@@ -89,7 +89,7 @@ const INITIAL_VALUES_PROD = {
   landlordEmail: '',
   landlordPhoneNumber: '',
   owed: null,
-  requested: null,
+  amountRequested: null,
   rent: null,
   totalChildren: null,
   unEmp90: false,
