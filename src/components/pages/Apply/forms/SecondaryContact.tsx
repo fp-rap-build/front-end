@@ -16,7 +16,7 @@ export default function SecondaryContact({ formValues, setFormValues }) {
 
 const TenantInfoForm = ({ formValues }) => {
   return (
-    <Card title={<Title level={4}>Tenant info (optional)</Title>}>
+    <Card title={<Title level={4}>Tenant Information</Title>}>
       <Text type="secondary">
         This will help us contact your tenant once you've been approved for
         Rental Assistance
@@ -26,6 +26,13 @@ const TenantInfoForm = ({ formValues }) => {
         initialValue={formValues.tenantName}
         label="Name"
         name="tenantName"
+        rules={[
+          {
+            type: 'string',
+            required: true,
+            message: "Please enter your Tenant's name",
+          },
+        ]}
       >
         <Input
           name="tenantName"
@@ -38,6 +45,13 @@ const TenantInfoForm = ({ formValues }) => {
         initialValue={formValues.tenantEmail}
         label="Email"
         name="tenantEmail"
+        rules={[
+          {
+            type: 'email',
+            required: true,
+            message: 'Please enter a valid email',
+          },
+        ]}
       >
         <Input type="email" placeholder="wayne@gmail.com" name="tenantEmail" />
       </Form.Item>
@@ -46,6 +60,13 @@ const TenantInfoForm = ({ formValues }) => {
         initialValue={formValues.tenantPhoneNumber}
         label="Phone number"
         name="tenantPhoneNumber"
+        rules={[
+          {
+            type: 'string',
+            required: true,
+            message: 'Please enter a phone number',
+          },
+        ]}
       >
         <Input placeholder="(111)-111-1111" name="tenantPhoneNumber" />
       </Form.Item>
@@ -55,7 +76,7 @@ const TenantInfoForm = ({ formValues }) => {
 
 const LandlordInfoForm = ({ formValues }) => {
   return (
-    <Card title={<Title level={4}>Landlord info (optional)</Title>}>
+    <Card title={<Title level={4}>Landlord Information</Title>}>
       <Text type="secondary">
         This will help us contact your landlord once you've been approved for
         Rental Assistance
@@ -64,6 +85,13 @@ const LandlordInfoForm = ({ formValues }) => {
         initialValue={formValues.landlordName}
         label="Name"
         name="landlordName"
+        rules={[
+          {
+            type: 'string',
+            required: true,
+            message: "Please enter your Land Lord's name",
+          },
+        ]}
       >
         <Input
           name="landlordName"
@@ -76,6 +104,13 @@ const LandlordInfoForm = ({ formValues }) => {
         initialValue={formValues.landlordEmail}
         label="Email"
         name="landlordEmail"
+        rules={[
+          {
+            type: 'email',
+            required: true,
+            message: 'Please enter a valid email',
+          },
+        ]}
       >
         <Input
           type="email"
@@ -88,6 +123,13 @@ const LandlordInfoForm = ({ formValues }) => {
         initialValue={formValues.landlordPhoneNumber}
         label="Phone number"
         name="landlordPhoneNumber"
+        rules={[
+          {
+            type: 'string',
+            required: true,
+            message: 'Please enter a phone number',
+          },
+        ]}
       >
         <Input placeholder="(111)-111-1111" name="landlordPhoneNumber" />
       </Form.Item>
