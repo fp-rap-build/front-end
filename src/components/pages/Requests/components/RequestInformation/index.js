@@ -46,6 +46,10 @@ export default function Index({
   const [checklistValues, setChecklistValues] = useState({
     pmApproval: request.pmApproval,
     verifiedDocuments: request.verifiedDocuments,
+    verifiedLedger: request.verifiedLedger,
+    checkRequested: request.checkRequested,
+    checkSent: request.checkSent,
+    checkReceived: request.checkReceived,
   });
 
   const [amountToGive, setAmountToGive] = useState();

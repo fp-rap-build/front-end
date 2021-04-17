@@ -14,7 +14,10 @@ const Checklist = ({ handleCheckboxChange, request }) => {
         handleCheckboxChange={handleCheckboxChange}
         request={request}
       />
-      <PostApprovalChecklist />
+      <PostApprovalChecklist
+        handleCheckboxChange={handleCheckboxChange}
+        request={request}
+      />
     </div>
   );
 };
@@ -38,21 +41,45 @@ const PreApprovalChecklist = ({ handleCheckboxChange, request }) => {
       >
         Approved by program manager
       </Checkbox>
-      <Checkbox style={marginFix}>
+      <Checkbox
+        checked={request.verifiedLedger}
+        name="verifiedLedger"
+        onChange={handleCheckboxChange}
+        style={marginFix}
+      >
         Rent payment ledger received from landlord
       </Checkbox>
     </div>
   );
 };
 
-const PostApprovalChecklist = props => {
+const PostApprovalChecklist = ({ request, handleCheckboxChange }) => {
   return (
     <div className={styles.checklist}>
       <Title level={5}>Post-Approval Checklist</Title>
-      <Checkbox>Placeholder</Checkbox>
-      <Checkbox style={marginFix}>Placeholder</Checkbox>
-      <Checkbox style={marginFix}>Placeholder</Checkbox>
-      <Checkbox style={marginFix}>Placeholder</Checkbox>
+      <Checkbox
+        checked={request.checkRequested}
+        name="checkRequested"
+        onChange={handleCheckboxChange}
+      >
+        Request for check sent
+      </Checkbox>
+      <Checkbox
+        checked={request.checkSent}
+        name="checkSent"
+        onChange={handleCheckboxChange}
+        style={marginFix}
+      >
+        Check sent to applicant
+      </Checkbox>
+      <Checkbox
+        checked={request.checkReceived}
+        name="checkReceived"
+        onChange={handleCheckboxChange}
+        style={marginFix}
+      >
+        Check received/ cashed by applicant
+      </Checkbox>
     </div>
   );
 };
