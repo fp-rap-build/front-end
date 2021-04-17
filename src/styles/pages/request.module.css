@@ -22,9 +22,8 @@
 }
 
 .checklistsContainer {
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
-  border: 1px solid blue;
 }
 
 .checklist {
@@ -35,4 +34,13 @@
   align-items: flex-start;
 }
 
+@media (max-width: 620px) {
+  .checklistsContainer {
+    flex-flow: column nowrap;
+  }
 
+  .checklist {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+}
