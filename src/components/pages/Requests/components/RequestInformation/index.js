@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { isChecklistCompleted } from './utils';
 
@@ -46,6 +46,10 @@ export default function Index({
   const [checklistValues, setChecklistValues] = useState({
     pmApproval: request.pmApproval,
     verifiedDocuments: request.verifiedDocuments,
+    verifiedLedger: request.verifiedLedger,
+    checkRequested: request.checkRequested,
+    checkSent: request.checkSent,
+    checkReceived: request.checkReceived,
   });
 
   const [amountToGive, setAmountToGive] = useState();
@@ -152,7 +156,7 @@ export default function Index({
 
     // persist changes
     try {
-      let res = await axiosWithAuth().put(`/requests/${request.id}`, {
+      await axiosWithAuth().put(`/requests/${request.id}`, {
         [name]: checked,
       });
     } catch (error) {
@@ -202,7 +206,11 @@ export default function Index({
         extra={[<TopActions handleReviewSubmit={props.handleReviewSubmit} />]}
       >
         <Content
-          extra={tab !== 'comments' ? <Footer request={props.request} /> : null}
+          extra={
+            tab !== 'comments' && tab !== 'checklist' ? (
+              <Footer request={props.request} />
+            ) : null
+          }
         >
           {renderContent(props)}
         </Content>
