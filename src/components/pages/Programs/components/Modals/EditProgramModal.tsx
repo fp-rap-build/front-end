@@ -13,6 +13,7 @@ export default function EditProgramModal({
   const [formValues, setFormValues] = useState({
     name: '',
     budget: null,
+    id: null,
   });
 
   const updateFormValues = e => {
@@ -25,9 +26,11 @@ export default function EditProgramModal({
 
   const handleSubmit = async () => {
     const updatedProgram = {
+      id: formValues.id,
       name: formValues.name,
       budget: formValues.budget,
     };
+
     try {
       await axiosWithAuth().put(
         `/programs/${currentProgram.id}`,
@@ -36,7 +39,10 @@ export default function EditProgramModal({
 
       setPrograms(prevState =>
         prevState.map(program => {
-          if (program.id === currentProgram.id) return;
+          if (program.id === currentProgram.id) {
+            return updatedProgram;
+          }
+          return program;
         })
       );
     } catch (error) {

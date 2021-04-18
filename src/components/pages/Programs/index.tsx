@@ -16,7 +16,10 @@ export default function Index() {
   const params = useParams();
 
   const [programs, setPrograms] = useState([]);
-  const [currentProgram, setCurrentProgram] = useState({});
+  const [currentProgram, setCurrentProgram] = useState({
+    name: '',
+    budget: null,
+  });
 
   const [loading, setLoading] = useState(false);
 
