@@ -20,3 +20,27 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+.checklistsContainer {
+  padding: 0.5rem;
+  display: flex;
+}
+
+.checklist {
+  width: 50%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+@media (max-width: 620px) {
+  .checklistsContainer {
+    flex-flow: column nowrap;
+  }
+
+  .checklist {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+}

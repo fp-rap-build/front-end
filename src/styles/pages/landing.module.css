@@ -1,3 +1,5 @@
+@import '../global.css';
+
 .header {
   font-size: 1.3rem;
   display: flex;
@@ -5,7 +7,7 @@
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  background-image: linear-gradient(to right bottom, #8d4982, #8d49826e),
+  background-image: linear-gradient(to right bottom, #8d4982, #8d4982bb),
     url('../../assets/rentdue.png');
   background-size: cover;
   background-position: center;
@@ -28,6 +30,10 @@
 
 .header p {
   width: 60%;
+}
+
+.link {
+  color: var(--color-secondary-blue);
 }
 
 @media (max-width: 1200px) {
