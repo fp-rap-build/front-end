@@ -10,7 +10,7 @@ import { axiosWithAuth } from '../../../api/axiosWithAuth';
 import DocumentUploader from './components/RequestInformation/components/DocumentUploader';
 import LoadingComponent from '../../common/LoadingComponent';
 import RequestInformation from './components/RequestInformation';
-import { message, Button } from 'antd';
+import { message } from 'antd';
 
 export default function Index() {
   const { organizationId } = useSelector(state => state.user.currentUser);
@@ -19,6 +19,7 @@ export default function Index() {
   const [request, setRequest] = useState({
     id: undefined,
     requestStatus: '',
+    email: '',
   });
 
   const [documents, setDocuments] = useState([]);
@@ -61,36 +62,7 @@ export default function Index() {
       try {
         await axiosWithAuth().put(`/requests/${request.id}`, {
           requestStatus: 'inReview',
-        });
-      } catch (error) {
-        message.error('Unable to update request status');
-      }
-    }
-  };
-
-  const statusPending = async () => {
-    if (request.requestStatus === 'pending') {
-      return;
-    } else {
-      setRequest({ ...request, requestStatus: 'pending' });
-      try {
-        await axiosWithAuth().put(`requests/${request.id}`, {
-          requestStatus: 'pending',
-        });
-      } catch (error) {
-        message.error('Unable to update request status');
-      }
-    }
-  };
-
-  const statusReceived = async () => {
-    if (request.requestStatus === 'received') {
-      return;
-    } else {
-      setRequest({ ...request, requestStatus: 'received' });
-      try {
-        await axiosWithAuth().put(`requests/${request.id}`, {
-          requestStatus: 'received',
+          email: request.email,
         });
       } catch (error) {
         message.error('Unable to update request status');
@@ -104,9 +76,9 @@ export default function Index() {
     // eslint-disable-next-line
   }, []);
 
-  // useEffect(() => {
-  //   changeStatusToInReview();
-  // }, [request]);
+  useEffect(() => {
+    changeStatusToInReview();
+  }, [request]);
 
   if (loading) {
     return <LoadingComponent />;
@@ -124,8 +96,6 @@ export default function Index() {
         setBudget={setBudget}
       />
       <DocumentUploader setDocuments={setDocuments} request={request} />
-      <Button onClick={statusPending}>Set To Pending</Button>
-      <Button onClick={statusReceived}>Set to Received</Button>
     </div>
   );
 }
