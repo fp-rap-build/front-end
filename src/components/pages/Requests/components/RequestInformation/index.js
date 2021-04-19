@@ -82,6 +82,7 @@ export default function Index({
       // approve request
       await axiosWithAuth().put(`/requests/${request.id}`, {
         requestStatus: 'approved',
+        email: request.email,
       });
 
       setRequest({ ...request, requestStatus: 'approved' });
@@ -132,9 +133,11 @@ export default function Index({
     if (!completedChecklist) return pleaseFinishChecklistModal();
 
     const handleDenial = async () => {
+      console.log(request);
       try {
         await axiosWithAuth().put(`/requests/${request.id}`, {
           requestStatus: status,
+          email: request.email,
         });
 
         setRequest({ ...request, requestStatus: status });

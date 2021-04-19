@@ -19,6 +19,7 @@ export default function Index() {
   const [request, setRequest] = useState({
     id: undefined,
     requestStatus: '',
+    email: '',
   });
 
   const [documents, setDocuments] = useState([]);
@@ -61,6 +62,7 @@ export default function Index() {
       try {
         await axiosWithAuth().put(`/requests/${request.id}`, {
           requestStatus: 'inReview',
+          email: request.email,
         });
       } catch (error) {
         message.error('Unable to update request status');
@@ -76,6 +78,7 @@ export default function Index() {
 
   useEffect(() => {
     changeStatusToInReview();
+    // eslint-disable-next-line
   }, [request]);
 
   if (loading) {
