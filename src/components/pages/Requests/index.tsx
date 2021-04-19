@@ -78,6 +78,7 @@ export default function Index() {
 
   useEffect(() => {
     changeStatusToInReview();
+    // eslint-disable-next-line
   }, [request]);
 
   if (loading) {
