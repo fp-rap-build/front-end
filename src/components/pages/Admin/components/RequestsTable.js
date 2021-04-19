@@ -13,8 +13,8 @@ import GavelIcon from '@material-ui/icons/Gavel';
 
 export default function RequestsTable() {
   const history = useHistory();
-  const [isOpen, setIsOpen] = useState(false);
-  const [requestBeingReviewed, setRequestBeingReviewed] = useState(null);
+  // const [isOpen, setIsOpen] = useState(false);
+  // const [requestBeingReviewed, setRequestBeingReviewed] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
 
   const [state, setState] = useState({
