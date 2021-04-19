@@ -96,9 +96,11 @@ export default function Index({
     if (!completedChecklist) return pleaseFinishChecklistModal();
 
     const handleDenial = async () => {
+      console.log(request);
       try {
         await axiosWithAuth().put(`/requests/${request.id}`, {
           requestStatus: status,
+          email: request.email,
         });
 
         setRequest({ ...request, requestStatus: status });
