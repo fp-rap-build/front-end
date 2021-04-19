@@ -32,9 +32,14 @@ const ProgramSelection = ({ formValues }) => {
 
   const [loadStatus, setLoadStatus] = useState(false);
   const [availablePrograms, setAvailablePrograms] = useState({});
+  const [programs, setPrograms] = useState([]);
+
+  const fetchPrograms = async () => {
+    try {
+    } catch (error) {}
+  };
 
   // Only eligible for family promise if no other options are available
-
   const checkPrograms = async () => {
     // convert bools to '0' or '1'
 

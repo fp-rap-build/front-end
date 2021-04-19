@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import MaterialTable from 'material-table';
+import MaterialTable from '@material-table/core';
 
 import styles from '../../../../styles/pages/admin.module.css';
 

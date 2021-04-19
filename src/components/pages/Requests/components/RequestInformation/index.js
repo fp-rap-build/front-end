@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { isChecklistCompleted } from './utils';
+
+import ApproveRequestModal from './components/ApproveRequestModal';
 
 import {
   Basic,
@@ -35,40 +37,27 @@ export default function Index({
   setRequest,
   documents,
   setDocuments,
-  budget,
   organizationId,
-  setBudget,
+  programs,
+  setPrograms,
 }) {
   const [loading, setLoading] = useState(false);
   //eslint-disable-next-line
-  const [originalBudget, setOriginalBudget] = useState(budget);
   const [tab, setTab] = useState('basic');
-  const [checklistValues, setChecklistValues] = useState({
+
+  const [modalContent, setModalContent] = useState('programSelection');
+
+  const [preChecklistValues, setPreChecklistValues] = useState({
     pmApproval: request.pmApproval,
     verifiedDocuments: request.verifiedDocuments,
     verifiedLedger: request.verifiedLedger,
+  });
+
+  const [postChecklistValues, setPostChecklistValues] = useState({
     checkRequested: request.checkRequested,
     checkSent: request.checkSent,
     checkReceived: request.checkReceived,
   });
-
-  const [amountToGive, setAmountToGive] = useState();
-
-  const handleAmountToGive = e => {
-    const { value } = e.target;
-
-    const newBudget = originalBudget - value;
-
-    if (newBudget < 0) return;
-
-    if (isNaN(value)) return;
-
-    if (value.split('')[0] === '0') return; // Can't give a request 0 dollars lol
-
-    setBudget(newBudget);
-
-    setAmountToGive(value);
-  };
 
   const [isApprovedModalVisible, setIsApprovedModalVisible] = useState(false);
 
@@ -76,35 +65,9 @@ export default function Index({
     setIsApprovedModalVisible(true);
   };
 
-  const handleApprovalSubmit = async () => {
-    setLoading(true);
-    try {
-      // approve request
-      await axiosWithAuth().put(`/requests/${request.id}`, {
-        requestStatus: 'approved',
-        email: request.email,
-      });
-
-      setRequest({ ...request, requestStatus: 'approved' });
-
-      // update the budget
-      const newBudget = originalBudget - amountToGive;
-
-      await axiosWithAuth().put(`/orgs/${organizationId}`, {
-        budget: newBudget,
-      });
-
-      message.success('Successfully approved request!');
-    } catch (error) {
-      message.error('Unable to approve request!');
-    } finally {
-      setIsApprovedModalVisible(false);
-      setLoading(false);
-    }
-  };
-
   const handleCancel = () => {
     setIsApprovedModalVisible(false);
+    setModalContent('programSelection');
   };
 
   const pleaseFinishChecklistModal = () => {
@@ -124,11 +87,11 @@ export default function Index({
       request.requestStatus === 'approved' ||
       request.requestStatus === 'denied';
 
-    if (alreadyReviewed) {
-      return message.error('This request has already been reviewed');
-    }
+    // if (alreadyReviewed) {
+    //   return message.error('This request has already been reviewed');
+    // }
 
-    let completedChecklist = isChecklistCompleted(checklistValues);
+    let completedChecklist = isChecklistCompleted(preChecklistValues);
 
     if (!completedChecklist) return pleaseFinishChecklistModal();
 
@@ -153,7 +116,11 @@ export default function Index({
   const handleCheckboxChange = async e => {
     const { name, checked } = e.target;
 
-    setChecklistValues({ ...checklistValues, [name]: checked });
+    if (name in preChecklistValues) {
+      setPreChecklistValues({ ...preChecklistValues, [name]: checked });
+    } else {
+      setPostChecklistValues({ ...postChecklistValues, [name]: checked });
+    }
 
     setRequest({ ...request, [name]: checked });
 
@@ -182,22 +149,21 @@ export default function Index({
     setDocuments,
   };
 
+  const approveModalProps = {
+    isApprovedModalVisible,
+    setRequest,
+    request,
+    loading,
+    handleCancel,
+    programs,
+    setPrograms,
+    setModalContent,
+    modalContent,
+  };
+
   return (
     <div>
-      <Modal
-        title={`Budget: $${budget}`}
-        visible={isApprovedModalVisible}
-        onOk={handleApprovalSubmit}
-        confirmLoading={loading}
-        onCancel={handleCancel}
-      >
-        <h3>Amount to give:</h3>
-        <Input
-          placeholder="amount"
-          value={amountToGive}
-          onChange={handleAmountToGive}
-        />
-      </Modal>
+      <ApproveRequestModal {...approveModalProps} />
 
       <Card
         className="site-page-header-responsive"

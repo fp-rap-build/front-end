@@ -9,6 +9,8 @@ function RenderHomePage(props) {
   switch (currentUser.role) {
     case 'admin':
       return <Redirect to="/admin" />;
+    case 'orgAdmin':
+      return <Redirect to="/admin" />;
     case 'programManager':
       return <Redirect to="/program_manager" />;
     default:

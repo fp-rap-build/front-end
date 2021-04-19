@@ -23,7 +23,7 @@ export default function Index() {
   });
 
   const [documents, setDocuments] = useState([]);
-  const [budget, setBudget] = useState([]);
+  const [programs, setPrograms] = useState([]);
 
   const { id } = useParams();
 
@@ -37,22 +37,17 @@ export default function Index() {
         `/requests/${id}/documents`
       );
 
+      let orgPrograms = await axiosWithAuth().get(
+        `/orgs/${requestInfo.data.request.orgId}/programs`
+      );
+
       setRequest(requestInfo.data.request);
       setDocuments(requestDocuments.data.documents);
+      setPrograms(orgPrograms.data.programs);
     } catch (error) {
       message.error('Unable to fetch request');
     } finally {
       setLoading(false);
-    }
-  };
-
-  const fetchBudget = async () => {
-    try {
-      let org = await axiosWithAuth().get(`/orgs/${organizationId}`);
-
-      setBudget(org.data.budget);
-    } catch (error) {
-      message.error('error fetching budget');
     }
   };
 
@@ -72,7 +67,6 @@ export default function Index() {
 
   useEffect(() => {
     fetchRequest();
-    fetchBudget();
     // eslint-disable-next-line
   }, []);
 
@@ -92,9 +86,9 @@ export default function Index() {
         setRequest={setRequest}
         documents={documents}
         setDocuments={setDocuments}
-        budget={budget}
         organizationId={organizationId}
-        setBudget={setBudget}
+        programs={programs}
+        setPrograms={setPrograms}
       />
       <DocumentUploader setDocuments={setDocuments} request={request} />
     </div>

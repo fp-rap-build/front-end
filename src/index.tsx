@@ -12,6 +12,9 @@ import LandingPage from './components/pages/Landing';
 import LoginPage from './components/pages/Login';
 import { NotFoundPage } from './components/pages/NotFound';
 import ProgramManager from './components/pages/ProgramManager';
+
+import Programs from './components/pages/Programs';
+
 import Requests from './components/pages/Requests';
 import store from './redux/store';
 import './styles/global.css';
@@ -44,12 +47,17 @@ function RAP() {
         {/* Any routes you need secured by role should be registered as PrivateRoutes */}
         <PrivateRoute exact path="/" component={HomePage} />
         <PrivateRoute path="/requests/:id" component={Requests} />
-        <PrivateRoute path="/admin" roles={['admin']} component={Admin} />
+        <PrivateRoute
+          path="/admin"
+          roles={['admin', 'orgAdmin']}
+          component={Admin}
+        />
         <PrivateRoute
           path="/program_manager"
           roles={['programManager']}
           component={ProgramManager}
         />
+        <PrivateRoute path="/organizations/:id/programs" component={Programs} />
         <Route component={NotFoundPage} />
       </Switch>
     </Layout>

@@ -15,6 +15,9 @@ const AdminNav = props => {
 
   const menu = (
     <Menu onClick={handleClick} selectedKeys={activeComponent.current}>
+      <Menu.Item key="organizations" icon={<LineChartOutlined />}>
+        Manage Organizations
+      </Menu.Item>
       <Menu.Item key="requests" icon={<FolderOpenOutlined />}>
         Manage Requests
       </Menu.Item>
@@ -22,7 +25,7 @@ const AdminNav = props => {
         Manage Users
       </Menu.Item>
       <Menu.Item key="prgMgr" icon={<UserAddOutlined />}>
-        Create Program Manager
+        Create new user
       </Menu.Item>
       <Menu.Item key="analytics" icon={<LineChartOutlined />}>
         Analytics
