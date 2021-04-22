@@ -26,9 +26,6 @@ export default function index({ children }) {
       <Navbar />
       <main>{children}</main>
       <div>
-        <a href="http://www.familypromiseofspokane.org/">
-          Powered by Family Promise of Spokane
-        </a>
         <Zendesk zendeskKey={process.env.REACT_APP_ZENDESK_KEY} {...setting} />
       </div>
     </div>
