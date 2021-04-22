@@ -1,10 +1,8 @@
 // Place any components you want to persist accross all pages
 
 import React from 'react';
-
-import Navbar from './components/Navbar';
-
 import Zendesk from 'react-zendesk';
+import Navbar from './components/Navbar';
 
 const setting = {
   color: {
@@ -27,7 +25,9 @@ export default function index({ children }) {
     <div>
       <Navbar />
       <main>{children}</main>
-      <Zendesk zendeskKey={process.env.REACT_APP_ZENDESK_KEY} {...setting} />
+      <div>
+        <Zendesk zendeskKey={process.env.REACT_APP_ZENDESK_KEY} {...setting} />
+      </div>
     </div>
   );
 }
